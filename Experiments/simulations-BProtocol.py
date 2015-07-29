@@ -22,118 +22,118 @@ if __name__ == "__main__":
 	from testing import *
 	from parameters import *
 
-	folder = '../Results/B-Results'
+	folder = '../Results/B'
 	if not os.path.exists(folder):
 		os.makedirs(folder)
 
-	f = None
+	folderL = folder + '/Learning'
+	if not os.path.exists(folderL):
+		os.makedirs(folderL)
+	folderTf = folder + '/Testing_fam'
+	if not os.path.exists(folderTf):
+		os.makedirs(folderTf)
+	folderTuf = folder + '/Testing_unfam'
+	if not os.path.exists(folderTuf):
+		os.makedirs(folderTuf)
+	folderTfnG = folder + '/Testing_fam_NoGPi'
+	if not os.path.exists(folderTfnG):
+		os.makedirs(folderTfnG)
+	folderTufnG = folder + '/Testing_unfam_NoGPi'
+	if not os.path.exists(folderTufnG):
+		os.makedirs(folderTufnG)
 
-	CVtotal = np.zeros((simulations, n))
 
-	WtotalSTR = np.zeros((simulations, n_learning_trials, n))
-	WtotalCog  = np.zeros((simulations, n_learning_trials, n))
-	WtotalMot  = np.zeros((simulations, n_learning_trials, n))
-
-	Ptest_fam = np.zeros((simulations, n_testing_trials))
-	RTtest_fam = np.zeros((simulations, n_testing_trials))
-
-	Ptest_unfam = np.zeros((simulations, n_testing_trials))
-	RTtest_unfam = np.zeros((simulations, n_testing_trials))
-
-	Ptest_fam_NoGPi = np.zeros((simulations, n_testing_trials))
-	RTtest_fam_NoGPi = np.zeros((simulations, n_testing_trials))
-
-	Ptest_unfam_NoGPi = np.zeros((simulations, n_testing_trials))
-	RTtest_unfam_NoGPi = np.zeros((simulations, n_testing_trials))
 	for i in range(simulations):
 		print 'Experiment: ', i + 1
-		reset(protocol = 'Piron')
+		reset(protocol = 'Piron', ntrials = n_learning_trials)
+		global learning_cues_cog, testing_cues_cog_fam, testing_cues_cog_unfam, learning_cues_mot, testing_cues_mot_fam, testing_cues_mot_unfam
+		learning_cues_cog, testing_cues_cog_fam, testing_cues_cog_unfam, learning_cues_mot, testing_cues_mot_fam, testing_cues_mot_unfam = trials_cues(protocol = 'Piron', ltrials = n_learning_trials, ttrials = n_testing_trials)
+
+
 		print '-----------------Learning Phase----------------'
 		#f.write('\n-----------------Learning Phase----------------')
 		# Formation of Habits
-		t1, t2, WtotalCog[i,:], WtotalMot[i,:], WtotalSTR[i,:] = learning_trials(trials = n_learning_trials, f = f, debugging = False, save = True, protocol = 'Piron', familiar = True, less_trained_trials = 5)
-		CVtotal[i, :] = CUE["value"]
-		wCog = connections["CTX.cog -> CTX.ass"].weights
-		wMot = connections["CTX.mot -> CTX.ass"].weights
-		wStr = connections["CTX.cog -> STR.cog"].weights
-		debug_learning(wCog, wMot, wStr, cues_value = CUE["value"], f = f)
+
+		result = learning_trials(protocol = 'Piron', trials = n_learning_trials, debugging = False, trained = False, save = True, less_trained_trials = 5, Piron_learning = True, debug_simulation = True)
+
+		file = folderL + '/All-Results' + "%03d" % (i+1) + '.npy'
+		np.save(file,result)
+		#debug(RT = result["RT"]["mot"], P = result["P"])
+		#debug_learning(result["W"]["CTXcog"][-1], result["W"]["CTXmot"][-1], result["W"]["STR"][-1], result["Values"][-1])
+
 
 		print '\n\n-----------------Testing Phase----------------'
 		#f.write('\n\n\n-----------------Testing Phase----------------')
-		# Make GPI lesion
+		# Make GPI lesion and Testing changing between familiar and unfamiliar cues every 10 trials
 		connections["GPI.cog -> THL.cog"].active = False
 		connections["GPI.mot -> THL.mot"].active = False
 
+		reset_activities()
+
+		result_fam = results(n_trials = n_testing_trials)
+		result_unfam = results(n_trials = n_testing_trials)
+		steps = n_testing_trials/10
+		print 'Starting   ',
 		for j in range(n_testing_trials/10):
-			Ptest_fam_NoGPi[i,j*10:(j+1)*10], RTtest_fam_NoGPi[i,j*10:(j+1)*10], t1,t2,t3 = learning_trials(trials = 10, f = f, debugging = False, save = True, trained = True)
 
-			Ptest_unfam_NoGPi[i,j*10:(j+1)*10], RTtest_unfam_NoGPi[i,j*10:(j+1)*10], t1,t2,t3 = learning_trials(trials = 10, f = f, debugging = False, save = True, familiar = False, trained = True)
-
-		wCog = connections["CTX.cog -> CTX.ass"].weights
-		wMot = connections["CTX.mot -> CTX.ass"].weights
-		wStr = connections["CTX.cog -> STR.cog"].weights
-		debug_learning(wCog, wMot, wStr, cues_value = CUE["value"], f = f)
+			result_fam[j*10:(j+1)*10]  	= learning_trials(protocol = 'Piron', trials = 10, debugging = False, trained = True, save = True)
+			print '\b.',
+			sys.stdout.flush()
+			result_unfam[j*10:(j+1)*10] = learning_trials(protocol = 'Piron', trials = 10, debugging = False, trained = True, save = True, familiar = False)
+			print '\b.',
+			sys.stdout.flush()
+		print '   Done!'
 		print '\n--------Testing Familiar without GPi--------'
-		debug(RT = RTtest_fam_NoGPi[i,:], P = Ptest_fam_NoGPi[i,:])
+		debug(RT = result_fam["RT"]["mot"], P = result_fam["P"])
 		print
 		print '--------Testing UnFamiliar without GPi--------'
-		debug(RT = RTtest_unfam_NoGPi[i,:], P = Ptest_unfam_NoGPi[i,:])
+		debug(RT = result_unfam["RT"]["mot"], P = result_unfam["P"])
 		print
 
+		file = folderTfnG + '/All-Results'  + "%03d" % (i+1) + '.npy'
+		np.save(file,result_fam)
+		file = folderTufnG + '/All-Results' + "%03d" % (i+1) + '.npy'
+		np.save(file,result_unfam)
+
+		#Reactivation of GPi and Testing  changing between familiar and unfamiliar cues every 10 trials
 		connections["GPI.cog -> THL.cog"].active = True
 		connections["GPI.mot -> THL.mot"].active = True
-
 
 		connections["CTX.cog -> CTX.ass"].weights[2:] = weights(2, 0.00005)#0.5*np.ones(4)
 		connections["CTX.mot -> CTX.ass"].weights[2:] = weights(2, 0.00005)#0.5*np.ones(4)
 		connections["CTX.cog -> STR.cog"].weights[2:] = weights(2)
 		CUE["value"][2:]  = 0.5
 
+		learning_cues_cog, testing_cues_cog_fam, testing_cues_cog_unfam, learning_cues_mot, testing_cues_mot_fam, testing_cues_mot_unfam = trials_cues(protocol = 'Piron', ltrials = n_learning_trials, ttrials = n_testing_trials)
 
+
+		result_fam = results(n_trials = n_testing_trials)
+		result_unfam = results(n_trials = n_testing_trials)
+
+		print 'Starting   ',
 		for j in range(n_testing_trials/10):
-			Ptest_fam[i,j*10:(j+1)*10], RTtest_fam[i,j*10:(j+1)*10],t1,t2,t3 = learning_trials(trials = 10, f = f, debugging = False, save = True, trained = True)
 
-			Ptest_unfam[i,j*10:(j+1)*10], RTtest_unfam[i,j*10:(j+1)*10], t1,t2,t3 = learning_trials(trials = 10, f = f, debugging = False, save = True, familiar = False, trained = True)
+			result_fam[j*10:(j+1)*10]  	= learning_trials(protocol = 'Piron', trials = 10, debugging = False, trained = True, save = True)
+			print '\b.',
+			sys.stdout.flush()
+			result_unfam[j*10:(j+1)*10] = learning_trials(protocol = 'Piron', trials = 10, debugging = False, trained = True, save = True, familiar = False)
+			print '\b.',
+			sys.stdout.flush()
 
-		wCog = connections["CTX.cog -> CTX.ass"].weights
-		wMot = connections["CTX.mot -> CTX.ass"].weights
-		wStr = connections["CTX.cog -> STR.cog"].weights
-		debug_learning(wCog, wMot, wStr, cues_value = CUE["value"], f = f)
-		print '--------Testing Familiar with GPi--------'
-		debug(RT = RTtest_fam[i,:], P = Ptest_fam[i,:])
+		print '   Done!'
+
+		print '\n--------Testing Familiar with GPi--------'
+		debug(RT = result_fam["RT"]["mot"], P = result_fam["P"])
+		print
+		print '--------Testing UnFamiliar with GPi--------'
+		debug(RT = result_unfam["RT"]["mot"], P = result_unfam["P"])
 		print
 
-		print '\n--------Testing UnFamiliar with GPi--------'
-		debug(RT = RTtest_unfam[i,:], P = Ptest_unfam[i,:])
+		file = folderTf  + '/All-Results' + "%03d" % (i+1) + '.npy'
+		np.save(file,result_fam)
+		file = folderTuf + '/All-Results' + "%03d" % (i+1) + '.npy'
+		np.save(file,result_unfam)
+
+		debug_learning(result["W"]["CTXcog"][-1], result["W"]["CTXmot"][-1], result["W"]["STR"][-1], result["Values"][-1])
+
 		print
-		print
-
-	file = path + '/MeanCuesValues.npy'
-	np.save(file,CVtotal)
-	file = path + '/Weights_Str.npy'
-	np.save(file,WtotalSTR)
-	file = path + '/Weights_Cog.npy'
-	np.save(file,WtotalCog)
-	file = path + '/Weights_Mot.npy'
-	np.save(file,WtotalMot)
-
-	file = path + '/RT-fam_NoGPi.npy'
-	np.save(file,RTtest_fam_NoGPi)
-	file = path + '/Performance-fam_NoGPi.npy'
-	np.save(file,Ptest_fam_NoGPi)
-
-	file = path + '/RT-unfam_NoGPi.npy'
-	np.save(file,RTtest_unfam_NoGPi)
-	file = path + '/Performance-unfam_NoGPi.npy'
-	np.save(file,Ptest_unfam_NoGPi)
-
-	file = path + '/RT-fam.npy'
-	np.save(file,RTtest_fam)
-	file = path + '/Performance-fam.npy'
-	np.save(file,Ptest_fam)
-	file = path + '/DifferentChoices-fam.npy'
-
-	file = path + '/RT-unfam.npy'
-	np.save(file,RTtest_unfam)
-	file = path + '/Performance-unfam.npy'
-	np.save(file,Ptest_unfam)

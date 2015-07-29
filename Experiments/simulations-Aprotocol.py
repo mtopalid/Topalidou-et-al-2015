@@ -20,45 +20,23 @@ if __name__ == "__main__":
 	from learning import *
 	from testing import *
 	from parameters import *
-	folder = '../Results/A-Results'
+
+	folder = '../Results/AtestRand'
 	if not os.path.exists(folder):
 		os.makedirs(folder)
 
-
-	CVtotal = np.zeros((simulations, n))
-	WtotalSTR = np.zeros((simulations, n_trials, n))
-	WtotalCog = np.zeros((simulations, n_trials, n))
-	WtotalMot = np.zeros((simulations, n_trials, n))
-
-	P = np.zeros((simulations, n_trials))
-	RT = np.zeros((simulations, n_trials))
-
-
 	for i in range(simulations):
-		print 'Experiment: ', i + 1
+		print 'Simulation: ', i + 1
 		reset(protocol = 'Guthrie')
+		global cues_cog, cues_mot
+		cues_cog, cues_mot = trials_cues(protocol = 'Guthrie', ntrials = n_trials)
 
-		P[i,:], RT[i,:], WtotalCog[i,:], WtotalMot[i,:], WtotalSTR[i,:] = learning_trials(protocol = 'Guthrie', trials = n_trials, debugging = False, save = True)
-		CVtotal[i, :] = CUE["value"]
-		wCog = connections["CTX.cog -> CTX.ass"].weights
-		wMot = connections["CTX.mot -> CTX.ass"].weights
-		wStr = connections["CTX.cog -> STR.cog"].weights
-		debug_learning(wCog, wMot, wStr, cues_value = CUE["value"])
-		debug(RT = RT[i,:], P = P[i,:])
-		print
+		result = learning_trials(protocol = 'Guthrie', trials = n_trials, debugging = False, trained = False, save = True, debug_simulation = True, learn = True)
+
+		file = folder + '/All-Results'  + "%03d" % (i+1) + '.npy'
+		np.save(file,result)
 		print
 
-	debug_total(P, RT, CVtotal, WtotalCog, WtotalMot, WtotalSTR)
-	file = path + '/Weights_Str.npy'
-	np.save(file,WtotalSTR)
-	file = path + '/Weights_Cog.npy'
-	np.save(file,WtotalCog)
-	file = path + '/Weights_Mot.npy'
-	np.save(file,WtotalMot)
 
-	file = path + '/MeanCuesValues.npy'
-	np.save(file,CVtotal)
-	file = path + '/RT.npy'
-	np.save(file,RT)
-	file = path + '/Performance.npy'
-	np.save(file,P)
+
+

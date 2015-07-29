@@ -21,8 +21,11 @@ if __name__ == "__main__":
 	reset(protocol = 'Piron')
 	# Make GPi lesion
 	#connections["GPI.cog -> THL.cog"].active = False
-	#connections["GPI.mot -> THL.mot"].active = False
-	histor, time = trial(hist = True, debugging = True, protocol = 'Piron', cues_pres = cues_pres, wholeFig = True)
+	#connections["GPI.mot -> THL.mot"].active = Falsereset(protocol = 'Guthrie')
+	global learning_cues_cog, testing_cues_cog_fam, testing_cues_cog_unfam, learning_cues_mot, testing_cues_mot_fam, testing_cues_mot_unfam
+	learning_cues_cog, testing_cues_cog_fam, testing_cues_cog_unfam, learning_cues_mot, testing_cues_mot_fam, testing_cues_mot_unfam = trials_cues(protocol = 'Piron')
+	result = results(n_trials = 1)
+	histor, time = trial(result = result, hist = True, debugging = True, protocol = 'Piron', cues_pres = cues_pres, wholeFig = True)
 	if 1: display_ctx(histor, 3.0)
 	if 0: display_ctx(histor, 3.0, "single-trial-NoBG.pdf")
 	if 0: display_all(histor, 3.0)#, "single-trial-all.pdf")

@@ -9,10 +9,15 @@
 
 # Population size
 n = 4
-
-n_trials = 240
-n_learning_trials = 120
+# Protocol A
+n_trials = 240#240
+# Protocol C
+n_reverse_trials = 720#4800#
+n_reverse_trials_Piron = 960#720#240#1200#
+# Protocol B, D
+n_learning_trials = 960
 n_testing_trials  = 120
+
 simulations = 250
 threshold  = 40
 
@@ -23,10 +28,11 @@ dt           = 1*ms
 tau          = 10*ms
 
 # --- Learning ---
-alpha_CUE 		= 0.00050
-alpha_LTP  		= 0.01
-alpha_LTD  		= 0.0075
-alpha_LTP_ctx 	= 0.00005
+a = 2
+alpha_CUE 		= 0.005/a#0.0005
+alpha_LTP  		= 0.01/a
+alpha_LTD  		= 0.0075/a
+alpha_LTP_ctx 	= alpha_LTP**2#0.00005
 
 # --- Sigmoid ---
 Vmin = 0
@@ -45,13 +51,13 @@ GPI_rest   = -10.0
 THL_rest   = -40.0
 
 # Noise level (%)
-a = 10.
-Cortex_N   =   0.01 *a
-Striatum_N =   0.001 *a
-STN_N      =   0.001 *a
-GPi_N      =   0.03 *a
-GPe_N      =   0.03 *a
-Thalamus_N =   0.001 *a#noise
+a = 1#2
+Cortex_N   =   0.1 / a
+Striatum_N =   0.01 / a
+STN_N      =   0.01 / a
+GPi_N      =   0.3 / a
+GPe_N      =   0.3 / a
+Thalamus_N =   0.01 / a
 
 # --- Cues & Rewards ---
 V_cue   = 7
@@ -98,10 +104,10 @@ gains = { "CTX.cog -> STR.cog" : +1.0,
           "CTX.cog -> CTX.cog" : +0.5,
           "CTX.ass -> CTX.ass" : +0.5,
 
-          "CTX.ass -> CTX.cog" : +0.01,
-          "CTX.ass -> CTX.mot" : +0.025,
-          "CTX.cog -> CTX.ass" : +0.05,
-          "CTX.mot -> CTX.ass" : +0.02,
+          "CTX.ass -> CTX.cog" : +0.01,#+0.01,
+          "CTX.ass -> CTX.mot" : +0.01,#25,
+          "CTX.cog -> CTX.ass" : +0.01,#+0.05,
+          "CTX.mot -> CTX.ass" : +0.01,#+0.01,
 
  }
 
@@ -112,3 +118,10 @@ dtype = [ ("CTX", [("mot", float, 4), ("cog", float, 4), ("ass", float, 16)]),
           ("THL", [("mot", float, 4), ("cog", float, 4)]),
           ("STN", [("mot", float, 4), ("cog", float, 4)])]
 
+dtype2 = [ ("W", [("CTXmot", float, 4), ("CTXcog", float, 4), ("STR", float, 4)]),
+          ("P", float, 1),
+          ("R", float, 1),
+          ("Values", float, 4),
+          ("RT", [("mot", float, 1), ("cog", float, 1)]),
+          ("Cues", [("mot", float, 2), ("cog", float, 2)]),
+          ("Choice", [("ch", float, 1), ("mot", float, 1), ("cog", float, 1)])]

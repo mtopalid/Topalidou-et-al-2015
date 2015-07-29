@@ -20,10 +20,10 @@ if __name__ == "__main__":
 
 	cues_pres = input('\nDo you want to present cues?\nChoose 1 for True or 0 for False\n')
 	reset(protocol = 'Guthrie')
-	# Make GPi lesion
-	# connections["GPI.cog -> THL.cog"].active = False
-	# connections["GPI.mot -> THL.mot"].active = False
-	histor, time = trial(hist = True, debugging = True, protocol = 'Guthrie', cues_pres = cues_pres, wholeFig = True)
+	global cues_cog, cues_mot
+	cues_cog, cues_mot = trials_cues(protocol = 'Guthrie')
+	result = results(n_trials = 1)
+	histor, time = trial(result = result, hist = True, debugging = True, protocol = 'Guthrie', cues_pres = cues_pres, wholeFig = True)
 	if 1: display_ctx(histor, 3.0)
 	if 0: display_ctx(histor, 3.0, "single-trial-NoBG.pdf")
-	if 1: display_all(histor, 3.0)#, "single-trial-all.pdf")
+	#if 1: display_all(histor, 3.0)#, "single-trial-all.pdf")
