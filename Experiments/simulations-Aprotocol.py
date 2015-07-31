@@ -20,21 +20,25 @@ if __name__ == "__main__":
 	from learning import *
 	from testing import *
 	from parameters import *
+	from task_a import Task_A
 
-	folder = '../Results/AtestRand'
+	folder = '../Results/A'
 	if not os.path.exists(folder):
 		os.makedirs(folder)
 
 	for i in range(simulations):
 		print 'Simulation: ', i + 1
-		reset(protocol = 'Guthrie')
-		global cues_cog, cues_mot
-		cues_cog, cues_mot = trials_cues(protocol = 'Guthrie', ntrials = n_trials)
+		reset()
 
-		result = learning_trials(protocol = 'Guthrie', trials = n_trials, debugging = False, trained = False, save = True, debug_simulation = True, learn = True)
+		task = Task_A(n=n_trials)
+		learning_trials(task, trials = n_trials, debugging = False, debug_simulation = True, learn = True)
+		print "Mean performance of 30 last trials	: %.1f %%\n" %(np.array(task.records["best"][-30:]).mean()*100)
+		debug_learning(task.records["Wcog"][-1], task.records["Wmot"][-1], task.records["Wstr"][-1], task.records["CueValues"][-1])
 
-		file = folder + '/All-Results'  + "%03d" % (i+1) + '.npy'
-		np.save(file,result)
+		file = folder + '/Cues'  + "%03d" % (i+1) + '.npy'
+		np.save(file,task.trials)
+		file = folder + '/Records'  + "%03d" % (i+1) + '.npy'
+		np.save(file,task.records)
 		print
 
 

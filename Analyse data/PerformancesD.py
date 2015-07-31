@@ -14,8 +14,6 @@ from parameters import *
 def fitFunc(t, a, b, c):
     return a*np.exp(-b*t) + c
 
-suptitle += 'Protocol: D'
-title = ''
 folder = '../Results/D'
 folderf = folder + '/Testing_fam'
 folderUf = folder + '/Testing_unfam'
@@ -26,18 +24,18 @@ PUf = np.zeros((simulations, n_testing_trials))
 PfnG = np.zeros((simulations, n_testing_trials))
 PUfnG = np.zeros((simulations, n_testing_trials))
 for i in range(simulations):
-	file = folderf + '/All-Results' + "%03d" % (i+1) + '.npy'
+	file = folderf + '/Records' + "%03d" % (i+1) + '.npy'
 	temp = np.load(file)
-	Pf[i,:] = temp["P"]
-	file = folderUf + '/All-Results' + "%03d" % (i+1) + '.npy'
+	Pf[i,:] = temp["best"]
+	file = folderUf + '/Records' + "%03d" % (i+1) + '.npy'
 	temp = np.load(file)
-	PUf[i,:] = temp["P"]
-	file = folderfnG + '/All-Results' + "%03d" % (i+1) + '.npy'
+	PUf[i,:] = temp["best"]
+	file = folderfnG + '/Records' + "%03d" % (i+1) + '.npy'
 	temp = np.load(file)
-	PfnG[i,:] = temp["P"]
-	file = folderUfnG + '/All-Results' + "%03d" % (i+1) + '.npy'
+	PfnG[i,:] = temp["best"]
+	file = folderUfnG + '/Records' + "%03d" % (i+1) + '.npy'
 	temp = np.load(file)
-	PUfnG[i,:] = temp["P"]
+	PUfnG[i,:] = temp["best"]
 file = folder+ '/MeanPerformanceF.npy'
 np.save(file, Pf.mean(axis=0))
 file = folder+ '/MeanPerformanceUf.npy'
@@ -79,9 +77,6 @@ axes.plot(np.arange(n), PUfnG.mean(axis = 0),
 plt.legend(loc='lower right', frameon=False, fontsize=16)
 plt.xticks(fontsize=22)
 plt.yticks(fontsize=22)
-temp_title = 'Mean Performances'
-#plt.title(temp_title, fontsize=12)
-#plt.title(suptitle, loc='left', fontsize=12)
 
 plt.xlabel("Number of trials", fontsize=28)
 plt.ylabel("Mean success rate", fontsize=28)
@@ -91,7 +86,7 @@ plt.ylim(0,1.05)
 plt.tight_layout()
 plt.savefig(folder + "/Performances.pdf", transparent = True)
 
-plt.figure(figsize=(16,5), dpi=72, facecolor="w")
+plt.figure(figsize=(16,5), dpi=72, facecolor="white")
 axes = plt.subplot(111)
 axes.spines['right'].set_color('none')
 axes.spines['top'].set_color('none')
@@ -102,7 +97,8 @@ axes.spines['bottom'].set_position(('data',0))
 axes.yaxis.set_ticks_position('left')
 axes.yaxis.set_label_coords(-0.1, 0.5)
 axes.xaxis.set_label_coords(0.5, -0.15)
-
+axes.patch.set_facecolor('b')
+axes.patch.set_alpha(0.1)
 n = len(Pf[0])
 
 axes.plot(np.arange(n), Pf.mean(axis = 0),
@@ -111,16 +107,11 @@ axes.plot(np.arange(n), PfnG.mean(axis = 0),
 		  lw=1.5, c='0.5', linestyle="-", label="Without GPi", linewidth = 2.0)
 
 
-color = "b"
-plt.fill_between([0,n], [-0.1,-0.1], [1.1, 1.1],
-                     color=color, alpha=.1, lw=0, zorder=-15)
-
 plt.legend(loc='lower right', frameon=False, fontsize=20)
 plt.xticks(fontsize=22)
 plt.yticks(fontsize=22)
 temp_title = 'Habitual Condition'#Mean Performances in
 plt.title(temp_title, fontsize=28)
-#plt.title(suptitle, loc='left', fontsize=12)
 
 plt.xlabel("Number of trials", fontsize=28)
 plt.ylabel("Mean success rate", fontsize=28)
@@ -128,9 +119,9 @@ plt.ylabel("Mean success rate", fontsize=28)
 plt.xlim(0,n)
 plt.ylim(0,1.05)
 plt.tight_layout()
-plt.savefig(folder + "/Performances-HC.pdf", transparent = True)
+plt.savefig(folder + "/Performances-HC.pdf")#, transparent = True)
 
-plt.figure(figsize=(16,5), dpi=72, facecolor="w")
+plt.figure(figsize=(16,5), dpi=72, facecolor="white")
 axes = plt.subplot(111)
 axes.spines['right'].set_color('none')
 axes.spines['top'].set_color('none')
@@ -141,18 +132,14 @@ axes.spines['bottom'].set_position(('data',0))
 axes.yaxis.set_ticks_position('left')
 axes.yaxis.set_label_coords(-0.1, 0.5)
 axes.xaxis.set_label_coords(0.5, -0.15)
-
+axes.patch.set_facecolor('b')
+axes.patch.set_alpha(0.1)
 n = len(PUf[0])
 
 axes.plot(np.arange(n), PUf.mean(axis = 0),
 		  lw=1.5, c='0.0', linestyle="--", label="With GPi", linewidth = 2.0)
 axes.plot(np.arange(n), PUfnG.mean(axis = 0),
 		  lw=1.5, c='0.0', linestyle="-", label="Without GPi", linewidth = 2.0)
-
-
-color = "b"
-plt.fill_between([0,n], [-0.1,-0.1], [1.1, 1.1],
-                     color=color, alpha=.1, lw=0, zorder=-15)
 
 plt.legend(loc='lower right', frameon=False, fontsize=20)
 plt.xticks(fontsize=22)
@@ -167,7 +154,8 @@ plt.ylabel("Mean success rate", fontsize=28)
 plt.xlim(0,n)
 plt.ylim(0,1.05)
 plt.tight_layout()
-plt.savefig(folder + "/Performances-NC.pdf", transparent = True)
+plt.savefig(folder + "/Performances-NC.pdf")#, transparent = True)
+
 
 
 fig = plt.figure(figsize=(9,6), dpi=72, facecolor="white")
@@ -262,18 +250,19 @@ RTUf = np.zeros((simulations, n_testing_trials))
 RTfnG = np.zeros((simulations, n_testing_trials))
 RTUfnG = np.zeros((simulations, n_testing_trials))
 for i in range(simulations):
-	file = folderf + '/All-Results' + "%03d" % (i+1) + '.npy'
+	f = '/Records' + "%03d" % (i+1) + '.npy'
+	file = folderf + f
 	temp = np.load(file)
-	RTf[i,:] = temp["RT"]["mot"]
-	file = folderUf + '/All-Results' + "%03d" % (i+1) + '.npy'
+	RTf[i,:] = temp["RTmot"]
+	file = folderUf + f
 	temp = np.load(file)
-	RTUf[i,:] = temp["RT"]["mot"]
-	file = folderfnG + '/All-Results' + "%03d" % (i+1) + '.npy'
+	RTUf[i,:] = temp["RTmot"]
+	file = folderfnG + f
 	temp = np.load(file)
-	RTfnG[i,:] = temp["RT"]["mot"]
-	file = folderUfnG + '/All-Results' + "%03d" % (i+1) + '.npy'
+	RTfnG[i,:] = temp["RTmot"]
+	file = folderUfnG + f
 	temp = np.load(file)
-	RTUfnG[i,:] = temp["RT"]["mot"]
+	RTUfnG[i,:] = temp["RTmot"]
 file = folder+ '/MeanRTF.npy'
 np.save(file, RTf.mean(axis=0))
 file = folder+ '/MeanRTUf.npy'
@@ -309,11 +298,6 @@ p1 = plt.bar(indices, means, width=width,  yerr=stds,
 plt.xticks(indices+width/2., ('HC', 'NC', 'HC', 'NC') , fontsize=18)
 plt.yticks(fontsize=18)
 
-if 0:
-	temp_title = 'Mean Reaction time (ms)'
-	plt.title(temp_title, fontsize=12)
-	plt.title(suptitle, loc='left', fontsize=12)
-	plt.title(title, loc='right', fontsize=12)
 
 plt.ylabel("Mean Reaction time (ms)", fontsize=22)
 plt.xlim(0,4.25)

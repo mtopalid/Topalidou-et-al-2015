@@ -20,16 +20,12 @@ RTboxplot 		= True
 RTdifference	= True
 RTcog_mot		= True
 
-
-suptitle += 'Protocol: D'
-#reverse = input('\nDo you want to have an reverse of Probabilities during the simulation or stop rewards?\nChoose 2 for Stopping Reward, 1 for reverse of Probabilities or 0 for No change\n')
 folder = '../Results/D/Learning'
-title = ''
 P = np.zeros((simulations, n_learning_trials))
 for i in range(simulations):
-	file = folder + '/All-Results' + "%03d" % (i+1) + '.npy'
+	file = folder + '/Records' + "%03d" % (i+1) + '.npy'
 	temp = np.load(file)
-	P[i,:] = temp["P"]
+	P[i,:] = temp["best"]
 file = folder+ '/MeanPerformance.npy'
 np.save(file, P.mean(axis=0))
 
@@ -58,12 +54,6 @@ plt.fill_between(X, Pmean+Pstd,
 
 plt.ylabel("Proportion of optimum trials")
 plt.xlabel("Trial number")
-if 0:
-	temp_title = 'Mean Performances'
-	plt.title(temp_title, fontsize=12)
-	plt.title(suptitle, loc='left', fontsize=12)
-	plt.title(title, loc='right', fontsize=12)
-
 file = folder + "/Perfomances.png"
 fig.savefig(file)
 
@@ -105,10 +95,10 @@ plt.savefig(folder + "/Pmean.pdf", transparent = True)
 RTcog = np.zeros((simulations, n_learning_trials))
 RTmot = np.zeros((simulations, n_learning_trials))
 for i in range(simulations):
-	file = folder + '/All-Results' + "%03d" % (i+1) + '.npy'
+	file = folder + '/Records' + "%03d" % (i+1) + '.npy'
 	temp = np.load(file)
-	RTcog[i,:] = temp["RT"]["cog"]
-	RTmot[i,:] = temp["RT"]["mot"]
+	RTcog[i,:] = temp["RTcog"]
+	RTmot[i,:] = temp["RTmot"]
 file = folder+ '/RTmean-cog.npy'
 np.save(file, RTcog.mean(axis=0))
 file = folder+ '/RTmean-mot.npy'
@@ -153,11 +143,6 @@ if RTcog_mot:
 
 	plt.ylabel("Reaction Time (ms)")
 	plt.xlabel("Trial number")
-	if 0:
-		temp_title = 'Mean Response Time'
-		plt.title(temp_title, fontsize=12)
-		plt.title(suptitle, loc='left', fontsize=12)
-		plt.title(title, loc='right', fontsize=12)
 	file = folder + "/RT.png"
 	fig.savefig(file)
 

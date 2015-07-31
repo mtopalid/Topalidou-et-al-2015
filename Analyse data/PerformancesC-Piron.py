@@ -24,19 +24,15 @@ RTcog_mot		= True
 suptitle += 'Protocol: C'
 
 folder = '../Results/C-Piron'
-reverse = 1
-reverse_all = 1
 reverse_trial = input('After how many trials is the reverse?\n')
+print
 folder += '/' + str(reverse_trial)
-title = 'reverse probabilities of\n'
-title += 'all ' if reverse_all else 'middle '
-title += 'cues after %s trials' %str(reverse_trial)
 
 P = np.zeros((simulations, n_reverse_trials_Piron))
 for i in range(simulations):
-	file = folder + '/All-Results' + "%03d" % (i+1) + '.npy'
+	file = folder + '/Records' + "%03d" % (i+1) + '.npy'
 	temp = np.load(file)
-	P[i,:] = temp["P"]
+	P[i,:] = temp["best"]
 file = folder+ '/Performances.npy'
 np.save(file, P)
 file = folder+ '/MeanPerformance.npy'
@@ -58,11 +54,9 @@ ax.xaxis.set_label_coords(0.5, -0.08)
 #X[-1] = X[-1] - 1
 #X = tuple(X)
 X = np.arange(len(P[0]))
-print P.shape
 print P.mean(axis=0)[:30].mean(), P.mean(axis=0)[-30:].mean()
 Pmean = np.take(P.mean(axis=0),X)
 Pstd  = np.take(P.std(axis = 0),X)
-print Pmean.shape
 plt.plot(X, Pmean, c='b', lw=1.5, zorder=30)
 plt.plot(X, Pmean+Pstd, c='.5',lw=.5, zorder=20)
 plt.plot(X, Pmean-Pstd, c='.5',lw=.5, zorder=20)
@@ -119,10 +113,10 @@ plt.savefig(folder + "/Pmean.pdf", transparent = True)
 RTcog = np.zeros((simulations, n_reverse_trials_Piron))
 RTmot = np.zeros((simulations, n_reverse_trials_Piron))
 for i in range(simulations):
-	file = folder + '/All-Results' + "%03d" % (i+1) + '.npy'
+	file = folder + '/Records' + "%03d" % (i+1) + '.npy'
 	temp = np.load(file)
-	RTcog[i,:] = temp["RT"]["cog"]
-	RTmot[i,:] = temp["RT"]["mot"]
+	RTcog[i,:] = temp["RTcog"]
+	RTmot[i,:] = temp["RTmot"]
 file = folder+ '/RTmean-cog.npy'
 np.save(file, RTcog.mean(axis=0))
 file = folder+ '/RTmean-mot.npy'
@@ -144,8 +138,6 @@ if RTcog_mot:
 	ax.yaxis.set_label_coords(-0.06, 0.5)
 	ax.xaxis.set_label_coords(0.5, -0.08)
 
-	print RTcog.mean(axis=0)[-30:].mean()
-	print RTmot.mean(axis=0)[-30:].mean()
 	#X = 1+np.arange(len(RTmean[0]))
 	RTmean_cog = np.take(RTcog.mean(axis=0),X)
 	RTstd_cog = np.take(RTcog.std(axis=0),X)
@@ -189,8 +181,6 @@ if RTdifference:
 	ax.yaxis.set_label_coords(-0.06, 0.5)
 	ax.xaxis.set_label_coords(0.5, -0.08)
 
-	print RTcog.mean(axis=0)[-30:].mean()
-	print RTmot.mean(axis=0)[-30:].mean()
 	RTdiff = RTmot - RTcog
 	RTmean_diff = np.take(RTdiff.mean(axis=0),X)
 	RTstd_diff = np.take(RTdiff.std(axis=0),X)

@@ -15,12 +15,14 @@ if __name__ == "__main__":
 	from model import *
 	from display import *
 	from learning import *
+	from task_b import Task_B
 
-	reset(protocol = 'Piron')
-	global learning_cues_cog, testing_cues_cog_fam, testing_cues_cog_unfam, learning_cues_mot, testing_cues_mot_fam, testing_cues_mot_unfam
-	learning_cues_cog, testing_cues_cog_fam, testing_cues_cog_unfam, learning_cues_mot, testing_cues_mot_fam, testing_cues_mot_unfam = trials_cues(protocol = 'Piron', ltrials = n_learning_trials, ttrials = n_testing_trials)
-
-	P = learning_trials(trials = n_learning_trials, protocol = 'Piron', less_trained_trials = 5, Piron_learning = True)
+	reset()
+	taskl = Task_B(n=n_learning_trials)
+	taskl = taskl[:n_learning_trials]
+	learning_trials(taskl, trials = n_learning_trials)
+	print
+	print "Mean performance of learning trials: %.1f %%\n" %(np.array(taskl.records["best"]).mean()*100)
 
  	if 0:
 		P = learning_trials(trials = n_testing_trials, protocol = 'Piron', trained = True)
@@ -32,10 +34,22 @@ if __name__ == "__main__":
 		CUE["value"][2:]  = 0.5
 
  	if 1:
+
+		task = Task_B(n=n_testing_trials)
+		task_f 	= task[:n_testing_trials]
+		task_uf	= task[n_testing_trials:]
 		connections["GPI.cog -> THL.cog"].active = False
 		connections["GPI.mot -> THL.mot"].active = False
-		P = learning_trials(trials = n_testing_trials, protocol = 'Piron', trained = True)
-		P = learning_trials(trials = n_testing_trials, protocol = 'Piron', trained = True, familiar = False)
+		learning_trials(task_f, trials = n_testing_trials)
+		learning_trials(task_uf, trials = n_testing_trials)
+		print
+		print "Mean performance of learning trials: %.1f %%\n" %(np.array(taskl.records["best"]).mean()*100)
+		print "Mean performance of Familiar trials: %.1f %%" %(np.array(task_f.records["best"]).mean()*100)
+		print "Mean performance of Unfamiliar trials: %.1f %%" %(np.array(task_uf.records["best"]).mean()*100)
+	if 0:
+		print
+		print "Mean performance of Familiar trials: %.1f %%" %(np.array(task[:n_testing_trials].records["best"]).mean()*100)
+		print "Mean performance of Unfamiliar trials: %.1f %%" %(np.array(task[n_testing_trials:].records["best"]).mean()*100)
 	if 0: display_all(hist, 3.0)#, "single-trial-all.pdf")
 	if 0: display_ctx(hist, 3.0)
 	if 0: display_all(hist, 3.0)#, "single-trial-all.pdf")

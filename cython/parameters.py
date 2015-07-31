@@ -10,15 +10,15 @@
 # Population size
 n = 4
 # Protocol A
-n_trials = 240#240
+n_trials = 480#36#
 # Protocol C
 n_reverse_trials = 720#4800#
 n_reverse_trials_Piron = 960#720#240#1200#
 # Protocol B, D
-n_learning_trials = 960
-n_testing_trials  = 120
+n_learning_trials = 1500#240#
+n_testing_trials  = 240
 
-simulations = 250
+simulations = 2#250
 threshold  = 40
 
 # --- Time ---
@@ -117,11 +117,3 @@ dtype = [ ("CTX", [("mot", float, 4), ("cog", float, 4), ("ass", float, 16)]),
           ("GPI", [("mot", float, 4), ("cog", float, 4)]),
           ("THL", [("mot", float, 4), ("cog", float, 4)]),
           ("STN", [("mot", float, 4), ("cog", float, 4)])]
-
-dtype2 = [ ("W", [("CTXmot", float, 4), ("CTXcog", float, 4), ("STR", float, 4)]),
-          ("P", float, 1),
-          ("R", float, 1),
-          ("Values", float, 4),
-          ("RT", [("mot", float, 1), ("cog", float, 1)]),
-          ("Cues", [("mot", float, 2), ("cog", float, 2)]),
-          ("Choice", [("ch", float, 1), ("mot", float, 1), ("cog", float, 1)])]

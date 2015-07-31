@@ -18,36 +18,32 @@ if __name__ == "__main__":
 	import os
 	from model import *
 	from learning import *
-	from testing import *
 	from parameters import *
+	from task_cp import Task_C
 
 	folder = '../Results/C-Piron'
 	if not os.path.exists(folder):
 		os.makedirs(folder)
 
-	reverse = 1
-	reverse_all = 1
-	reverse_trial = input('\nAfter how many trials will be the reverse?\n')
+	reverse_trial = input('After how many trials will be the reverse?\n')
+	print reverse_trial
+	print
 	folder += '/' + str(reverse_trial)
 	if not os.path.exists(folder):
 		os.makedirs(folder)
 
 
 	for i in range(simulations):
-		print 'Simulation: ', i + 1
-		reset(protocol = 'Piron', ntrials = n_reverse_trials)
-		global learning_cues_cog, learning_cues_mot
-		learning_cues_cog, t, t, learning_cues_mot, t, t = trials_cues(protocol = 'Piron', ltrials = n_reverse_trials_Piron)
+		print 'Experiment: ', i + 1
+		reset()
 
-		result = learning_trials(inversable = reverse, reverse_all = reverse_all, reverse_trial = reverse_trial, trials = n_reverse_trials_Piron, protocol = 'Piron', debugging = False, less_trained_trials = 5, Piron_learning = True, save = True, debug_simulation = True)
+		task = Task_C(n=n_reverse_trials_Piron, r = reverse_trial)
+		learning_trials(task, trials = n_reverse_trials_Piron, debugging = False, debug_simulation = True)
+		print "Mean performance of 30 last trials	: %.1f %%\n" %(np.array(task.records["best"][-30:]).mean()*100)
+		debug_learning(task.records["Wcog"][-1], task.records["Wmot"][-1], task.records["Wstr"][-1], task.records["CueValues"][-1])
 
-		debug(RT = result["RT"]["mot"][-1], P = result["P"][-1])
-		debug_learning(result["W"]["CTXcog"][-1], result["W"]["CTXmot"][-1], result["W"]["STR"][-1], result["Values"][-1])
-
-		file = folder + '/All-Results'  + "%03d" % (i+1) + '.npy'
-		np.save(file,result)
+		file = folder + '/Cues'  + "%03d" % (i+1) + '.npy'
+		np.save(file,task.trials)
+		file = folder + '/Records'  + "%03d" % (i+1) + '.npy'
+		np.save(file,task.records)
 		print
-
-
-
-

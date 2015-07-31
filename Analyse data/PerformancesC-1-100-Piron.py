@@ -60,7 +60,8 @@ ax.xaxis.set_label_coords(0.5, -0.08)
 Num_trials = np.zeros(len(P))
 
 for i in range(len(P)):
-	for j in range(i+2,len(P[1])-30):
+	r = int(reverse[i])
+	for j in range(r+1,len(P[1])-30):
 		if P[i,j:j+30].mean()>0.9:
 			Num_trials[i] = j-i-1
 			break

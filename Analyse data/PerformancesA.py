@@ -27,9 +27,9 @@ folder = '../Results/A'
 title = ''
 P = np.zeros((simulations, n_trials))
 for i in range(simulations):
-	file = folder + '/All-Results' + "%03d" % (i+1) + '.npy'
+	file = folder + '/Records' + "%03d" % (i+1) + '.npy'
 	temp = np.load(file)
-	P[i,:] = temp["P"]
+	P[i,:] = temp["best"]
 file = folder+ '/MeanPerformance.npy'
 np.save(file, P.mean(axis=0))
 
@@ -46,7 +46,7 @@ ax.xaxis.set_tick_params(direction="in")
 ax.yaxis.set_label_coords(-0.04, 0.5)
 ax.xaxis.set_label_coords(0.5, -0.08)
 X = 1 + np.arange(len(P[0]))
-print P.mean(axis=0)[:30].mean(), P.mean(axis=0)[-30:].mean()
+print P.mean(axis=0)[:1].mean(), P.mean(axis=0)[-30:].mean()
 Pmean = P.mean(axis=0)
 Pstd  = P.std(axis = 0)
 plt.plot(X, Pmean, c='b', lw=1.5, zorder=30)
@@ -105,10 +105,10 @@ plt.savefig(folder + "/Pmean.pdf", transparent = True)
 RTcog = np.zeros((simulations, n_trials))
 RTmot = np.zeros((simulations, n_trials))
 for i in range(simulations):
-	file = folder + '/All-Results' + "%03d" % (i+1) + '.npy'
+	file = folder + '/Records' + "%03d" % (i+1) + '.npy'
 	temp = np.load(file)
-	RTcog[i,:] = temp["RT"]["cog"]
-	RTmot[i,:] = temp["RT"]["mot"]
+	RTcog[i,:] = temp["RTcog"]
+	RTmot[i,:] = temp["RTmot"]
 file = folder+ '/RTmean-cog.npy'
 np.save(file, RTcog.mean(axis=0))
 file = folder+ '/RTmean-mot.npy'

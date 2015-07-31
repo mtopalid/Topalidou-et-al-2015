@@ -14,8 +14,6 @@ from parameters import *
 def fitFunc(t, a, b, c):
     return a*np.exp(-b*t) + c
 
-suptitle += 'Protocol: B'
-title = ''
 folder = '../Results/B'
 folderf = folder + '/Testing_fam'
 folderUf = folder + '/Testing_unfam'
@@ -26,18 +24,18 @@ PUf = np.zeros((simulations, n_testing_trials))
 PfnG = np.zeros((simulations, n_testing_trials))
 PUfnG = np.zeros((simulations, n_testing_trials))
 for i in range(simulations):
-	file = folderf + '/All-Results' + "%03d" % (i+1) + '.npy'
+	file = folderf + '/Records' + "%03d" % (i+1) + '.npy'
 	temp = np.load(file)
-	Pf[i,:] = temp["P"]
-	file = folderUf + '/All-Results' + "%03d" % (i+1) + '.npy'
+	Pf[i,:] = temp["best"]
+	file = folderUf + '/Records' + "%03d" % (i+1) + '.npy'
 	temp = np.load(file)
-	PUf[i,:] = temp["P"]
-	file = folderfnG + '/All-Results' + "%03d" % (i+1) + '.npy'
+	PUf[i,:] = temp["best"]
+	file = folderfnG + '/Records' + "%03d" % (i+1) + '.npy'
 	temp = np.load(file)
-	PfnG[i,:] = temp["P"]
-	file = folderUfnG + '/All-Results' + "%03d" % (i+1) + '.npy'
+	PfnG[i,:] = temp["best"]
+	file = folderUfnG + '/Records' + "%03d" % (i+1) + '.npy'
 	temp = np.load(file)
-	PUfnG[i,:] = temp["P"]
+	PUfnG[i,:] = temp["best"]
 file = folder+ '/MeanPerformanceF.npy'
 np.save(file, Pf.mean(axis=0))
 file = folder+ '/MeanPerformanceUf.npy'
@@ -79,9 +77,6 @@ axes.plot(np.arange(n), PUfnG.mean(axis = 0),
 plt.legend(loc='lower right', frameon=False, fontsize=16)
 plt.xticks(fontsize=22)
 plt.yticks(fontsize=22)
-temp_title = 'Mean Performances'
-#plt.title(temp_title, fontsize=12)
-#plt.title(suptitle, loc='left', fontsize=12)
 
 plt.xlabel("Number of trials", fontsize=28)
 plt.ylabel("Mean success rate", fontsize=28)
@@ -117,7 +112,6 @@ plt.xticks(fontsize=22)
 plt.yticks(fontsize=22)
 temp_title = 'Habitual Condition'#Mean Performances in
 plt.title(temp_title, fontsize=28)
-#plt.title(suptitle, loc='left', fontsize=12)
 
 plt.xlabel("Number of trials", fontsize=28)
 plt.ylabel("Mean success rate", fontsize=28)
@@ -152,7 +146,6 @@ plt.xticks(fontsize=22)
 plt.yticks(fontsize=22)
 temp_title = 'Novel Condition'#Mean Performances in
 plt.title(temp_title, fontsize=28)
-#plt.title(suptitle, loc='left', fontsize=12)
 
 plt.xlabel("Number of trials", fontsize=28)
 plt.ylabel("Mean success rate", fontsize=28)
@@ -256,18 +249,19 @@ RTUf = np.zeros((simulations, n_testing_trials))
 RTfnG = np.zeros((simulations, n_testing_trials))
 RTUfnG = np.zeros((simulations, n_testing_trials))
 for i in range(simulations):
-	file = folderf + '/All-Results' + "%03d" % (i+1) + '.npy'
+	f = '/Records' + "%03d" % (i+1) + '.npy'
+	file = folderf + f
 	temp = np.load(file)
-	RTf[i,:] = temp["RT"]["mot"]
-	file = folderUf + '/All-Results' + "%03d" % (i+1) + '.npy'
+	RTf[i,:] = temp["RTmot"]
+	file = folderUf + f
 	temp = np.load(file)
-	RTUf[i,:] = temp["RT"]["mot"]
-	file = folderfnG + '/All-Results' + "%03d" % (i+1) + '.npy'
+	RTUf[i,:] = temp["RTmot"]
+	file = folderfnG + f
 	temp = np.load(file)
-	RTfnG[i,:] = temp["RT"]["mot"]
-	file = folderUfnG + '/All-Results' + "%03d" % (i+1) + '.npy'
+	RTfnG[i,:] = temp["RTmot"]
+	file = folderUfnG + f
 	temp = np.load(file)
-	RTUfnG[i,:] = temp["RT"]["mot"]
+	RTUfnG[i,:] = temp["RTmot"]
 file = folder+ '/MeanRTF.npy'
 np.save(file, RTf.mean(axis=0))
 file = folder+ '/MeanRTUf.npy'
@@ -303,11 +297,6 @@ p1 = plt.bar(indices, means, width=width,  yerr=stds,
 plt.xticks(indices+width/2., ('HC', 'NC', 'HC', 'NC') , fontsize=18)
 plt.yticks(fontsize=18)
 
-if 0:
-	temp_title = 'Mean Reaction time (ms)'
-	plt.title(temp_title, fontsize=12)
-	plt.title(suptitle, loc='left', fontsize=12)
-	plt.title(title, loc='right', fontsize=12)
 
 plt.ylabel("Mean Reaction time (ms)", fontsize=22)
 plt.xlim(0,4.25)
