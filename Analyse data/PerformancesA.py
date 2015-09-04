@@ -23,7 +23,7 @@ RTcog_mot		= True
 
 suptitle += 'Protocol: A'
 #reverse = input('\nDo you want to have an reverse of Probabilities during the simulation or stop rewards?\nChoose 2 for Stopping Reward, 1 for reverse of Probabilities or 0 for No change\n')
-folder = '../Results/A'
+folder = '../Results/A-noExtraConn3perc'
 title = ''
 P = np.zeros((simulations, n_trials))
 for i in range(simulations):
@@ -46,7 +46,10 @@ ax.xaxis.set_tick_params(direction="in")
 ax.yaxis.set_label_coords(-0.04, 0.5)
 ax.xaxis.set_label_coords(0.5, -0.08)
 X = 1 + np.arange(len(P[0]))
-print P.mean(axis=0)[:1].mean(), P.mean(axis=0)[-30:].mean()
+print "First trial:	", P.mean(axis=0)[:1].mean()
+print "First 5 trials:	", P.mean(axis=0)[:5].mean()
+print "First 30 trials:	", P.mean(axis=0)[:30].mean()
+print "Last 30 trials:	", P.mean(axis=0)[-30:].mean()
 Pmean = P.mean(axis=0)
 Pstd  = P.std(axis = 0)
 plt.plot(X, Pmean, c='b', lw=1.5, zorder=30)
@@ -58,12 +61,6 @@ plt.fill_between(X, Pmean+Pstd,
 
 plt.ylabel("Proportion of optimum trials")
 plt.xlabel("Trial number")
-if 0:
-	temp_title = 'Mean Performances'
-	plt.title(temp_title, fontsize=12)
-	plt.title(suptitle, loc='left', fontsize=12)
-	plt.title(title, loc='right', fontsize=12)
-
 file = folder + "/Perfomances.png"
 fig.savefig(file)
 

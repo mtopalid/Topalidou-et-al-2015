@@ -169,7 +169,8 @@ cdef class Group:
             # Update membrane potential
             unit.U += dt/self._tau*(-unit.U + unit.Isyn + unit.Iext - self._rest )
             # Update firing rate
-            unit.V = self._activation.call(unit.U + noise)
+            # unit.V = self._activation.call(unit.U + noise)
+            unit.V = self._activation.call(unit.U *(1 + noise))
             # Store firing rate activity
             self._history[self._history_index,i] = unit.V
 

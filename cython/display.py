@@ -9,13 +9,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Record type for display
-htype = [ ("CTX", [("mot", float, 4), ("cog", float, 4), ("ass", float, 16)]),
-          ("STR", [("mot", float, 4), ("cog", float, 4), ("ass", float, 16)]),
-          ("GPE", [("mot", float, 4), ("cog", float, 4)]),
-          ("GPI", [("mot", float, 4), ("cog", float, 4)]),
-          ("THL", [("mot", float, 4), ("cog", float, 4)]),
-          ("STN", [("mot", float, 4), ("cog", float, 4)])]
 
 
 # Cortex activity display
@@ -49,6 +42,7 @@ def display_ctx(history, duration=3.0, filename=None):
 
     if filename is not None:
         plt.savefig(filename)
+
     plt.show()
 
 

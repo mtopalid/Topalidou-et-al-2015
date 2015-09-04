@@ -21,8 +21,8 @@ if __name__ == "__main__":
 
 	reset()
 
-	task = Task_C(n=n_reverse_trials, r = reverse_trial)
-	learning_trials(task, trials = n_reverse_trials)
+	task = Task_C(n=n_reverse_trials_Piron, r = reverse_trial)
+	learning_trials(task, trials = n_reverse_trials_Piron)
 
 
 	print 'Mean performance of the 25 last trials: ', np.array(task.records["best"]).mean()

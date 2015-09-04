@@ -24,7 +24,7 @@ def learning(task, trial_n = 0, learn = True, debugging = True):
 def learning_trials(task, trials = n_trials, learn = True, debugging = True, debug_simulation = False):
 	if debug_simulation:
 		steps = trials/10
-		print 'Starting   ',
+		print '  Starting   ',
 
 	for i in range(trials):
 
