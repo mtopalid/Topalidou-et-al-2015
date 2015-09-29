@@ -46,7 +46,7 @@ def weights(shape, s=0.005, initial=0.5):
 W1 = (2 * np.eye(4) - np.ones((4, 4))).ravel()
 W2 = (2 * np.eye(16) - np.ones((16, 16))).ravel()
 
-# Connectivity 
+# Connectivity
 connections = {
     "CTX.cog -> STR.cog": OneToOne(CTX.cog.V, STR.cog.Isyn, weights(4)),  # plastic (RL)
     "CTX.mot -> STR.mot": OneToOne(CTX.mot.V, STR.mot.Isyn, 0.5 * np.ones(4)),
@@ -208,6 +208,11 @@ def process(task, n=2, learn=True, trial=0, debugging=True, RT=0):
         W[choice] += + dw * (Wmax - W[choice]) * (W[choice] - Wmin)
         connections["CTX.cog -> STR.cog"].weights = W
 
+        dw = error * lrate * STR.mot.V[mot_choice]
+        W = connections["CTX.mot -> STR.mot"].weights
+        W[mot_choice] += + dw * (Wmax - W[mot_choice]) * (W[mot_choice] - Wmin)
+        connections["CTX.mot -> STR.mot"].weights = W
+
         # Hebbian cortical learning
         dw = alpha_LTP_ctx * CTX.cog.V[choice]
         W = connections["CTX.cog -> CTX.ass"].weights
@@ -220,14 +225,15 @@ def process(task, n=2, learn=True, trial=0, debugging=True, RT=0):
         connections["CTX.mot -> CTX.ass"].weights = W
 
 
-def debug_learning(Wcog, Wmot, Wstr, cues_value):
+def debug_learning(Wcog, Wmot, Wstrc, Wstrm, cues_value):
     print "  Cues Values			: ", cues_value
     print "  Cortical Weights Cognitive	: ", Wcog
     print "  Cortical Weights Motor	: ", Wmot
-    print "  Striatal Weights		: ", Wstr
+    print "  Striatal Weights Cognitive	: ", Wstrc
+    print "  Striatal Weights Motor	: ", Wstrm
 
 
-def debug_total(P, RT=None, CV=None, Wcog=None, Wmot=None, Wstr=None):
+def debug_total(P, RT=None, CV=None, Wcog=None, Wmot=None, Wstrc=None, Wstrm=None):
     print "Mean Performance		: ", (P.mean(axis=1)).mean(axis=0) * 100, '%'
     if RT is not None:
         print "Mean Reaction Time	:", (RT.mean(axis=1)).mean(axis=0) * 100, '%'
@@ -235,7 +241,8 @@ def debug_total(P, RT=None, CV=None, Wcog=None, Wmot=None, Wstr=None):
         print "Mean Cues Values		:" + str(CV.mean(axis=0))
         print 'Mean Cortical Weights Cog	: ' + str(Wcog[:, -1].mean(axis=0))
         print 'Mean Cortical Weights Mot	: ' + str(Wmot[:, -1].mean(axis=0))
-        print 'Mean Striatal Weights		: ' + str(Wstr[:, -1].mean(axis=0))
+        print 'Mean Striatal Weights Cog	: ' + str(Wstrc[:, -1].mean(axis=0))
+        print 'Mean Striatal Weights Mot	: ' + str(Wstrm[:, -1].mean(axis=0))
 
 # def debug1ch(cgchoice=None, c1=None, m1=None, P=None, RT=None):
 #     if cgchoice is not None:
@@ -252,4 +259,3 @@ def debug_total(P, RT=None, CV=None, Wcog=None, Wmot=None, Wstr=None):
 #
 #     if RT is not None:
 #         print "Mean Response time		: %.3f ms" % (np.array(RT).mean())
-

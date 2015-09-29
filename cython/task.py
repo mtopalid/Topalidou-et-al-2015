@@ -55,7 +55,8 @@ class Task(object):
                                     ("RTcog", float, 1),
                                     ("RTmot", float, 1),
                                     ("CueValues", float, 4),
-                                    ("Wstr", float, 4),
+                                    ("Wstrc", float, 4),
+                                    ("Wstrm", float, 4),
                                     ("Wcog", float, 4),
                                     ("Wmot", float, 4),
                                     ("reward", float, 1)])

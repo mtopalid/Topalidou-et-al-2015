@@ -12,31 +12,35 @@ from trial import *
 from parameters import *
 import sys
 
-def learning(task, trial_n = 0, learn = True, debugging = True):
 
-	time = trial(task, trial_n = trial_n, learn = learn, debugging = debugging)
+def learning(task, trial_n=0, learn=True, debugging=True):
+    trial(task, trial_n=trial_n, learn=learn, debugging=debugging)
 
-	if debugging and learn:
-		debug_learning(connections["CTX.cog -> CTX.ass"].weights, connections["CTX.mot -> CTX.ass"].weights, connections["CTX.cog -> STR.cog"].weights, CUE["value"])
+    if debugging and learn:
+        debug_learning(connections["CTX.cog -> CTX.ass"].weights, connections["CTX.mot -> CTX.ass"].weights,
+                       connections["CTX.cog -> STR.cog"].weights, CUE["value"])
 
-	return
+    return
 
-def learning_trials(task, trials = n_trials, learn = True, debugging = True, debug_simulation = False):
-	if debug_simulation:
-		steps = trials/10
-		print '  Starting   ',
 
-	for i in range(trials):
+def learning_trials(task, trials=n_trials, learn=True, debugging=True, debugging_learning=True, debug_simulation=False):
+    if debug_simulation:
+        steps = trials / 10
+        print '  Starting   ',
 
-		learning(task, trial_n = i, learn = learn, debugging = debugging)
+    for i in range(trials):
 
-		if debug_simulation:
-			if i%steps == 0:
-				print '\b.',
-				sys.stdout.flush()
-	if debug_simulation:
-		print '   Done!'
-	if debugging:
-		debug_learning(task.records["Wcog"][-1], task.records["Wmot"][-1], task.records["Wstr"][-1], task.records["CueValues"][-1])
+        learning(task, trial_n=i, learn=learn, debugging=debugging)
 
-	return
+        if debug_simulation:
+            if i % steps == 0:
+                print '\b.',
+                sys.stdout.flush()
+    if debug_simulation:
+        print '   Done!'
+    if debugging_learning:
+        debug_learning(task.records["Wcog"][-1], task.records["Wmot"][-1], task.records["Wstrc"][-1], task.records[
+            "Wstrm"][-1],
+                       task.records["CueValues"][-1])
+
+    return

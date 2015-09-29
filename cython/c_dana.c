@@ -765,6 +765,7 @@ struct __pyx_obj_6c_dana_Sigmoid;
 struct __pyx_obj_6c_dana_Group;
 struct __pyx_obj_6c_dana_Structure;
 struct __pyx_obj_6c_dana_AssociativeStructure;
+struct __pyx_obj_6c_dana_ArmStructure;
 struct __pyx_obj_6c_dana_Connection;
 struct __pyx_obj_6c_dana_OneToOne;
 struct __pyx_obj_6c_dana_OneToAll;
@@ -773,6 +774,15 @@ struct __pyx_obj_6c_dana_AssToMot;
 struct __pyx_obj_6c_dana_AssToCog;
 struct __pyx_obj_6c_dana_MotToAss;
 struct __pyx_obj_6c_dana_CogToAss;
+struct __pyx_obj_6c_dana_MotToPPC;
+struct __pyx_obj_6c_dana_ARMtoPPC;
+struct __pyx_obj_6c_dana_PFCtoSMA;
+struct __pyx_obj_6c_dana_ARMtoSMA;
+struct __pyx_obj_6c_dana_SMAtoARM;
+struct __pyx_obj_6c_dana_PPCtoPFC;
+struct __pyx_obj_6c_dana_PPCtoSTR;
+struct __pyx_obj_6c_dana_PFCtoSTR;
+struct __pyx_obj_6c_dana_STRpfcToBG;
 struct __pyx_array_obj;
 struct __pyx_MemviewEnum_obj;
 struct __pyx_memoryview_obj;
@@ -927,7 +937,7 @@ struct __pyx_obj_6c_dana_Group {
 };
 
 
-/* "c_dana.pyx":208
+/* "c_dana.pyx":214
  * 
  * # --------------------------------------------------------------- Structure ---
  * cdef class Structure:             # <<<<<<<<<<<<<<
@@ -938,10 +948,12 @@ struct __pyx_obj_6c_dana_Structure {
   PyObject_HEAD
   struct __pyx_obj_6c_dana_Group *_mot;
   struct __pyx_obj_6c_dana_Group *_cog;
+  struct __pyx_obj_6c_dana_Group *_pfcth1;
+  struct __pyx_obj_6c_dana_Group *_pfcth2;
 };
 
 
-/* "c_dana.pyx":239
+/* "c_dana.pyx":263
  * 
  * # ---------------------------------------------------- AssociativeStructure ---
  * cdef class AssociativeStructure(Structure):             # <<<<<<<<<<<<<<
@@ -954,7 +966,21 @@ struct __pyx_obj_6c_dana_AssociativeStructure {
 };
 
 
-/* "c_dana.pyx":262
+/* "c_dana.pyx":285
+ * 
+ * # --------------------------------------------------------------- ArmStructure ---
+ * cdef class ArmStructure:             # <<<<<<<<<<<<<<
+ *     cdef Group _theta1
+ *     cdef Group _theta2
+ */
+struct __pyx_obj_6c_dana_ArmStructure {
+  PyObject_HEAD
+  struct __pyx_obj_6c_dana_Group *_theta1;
+  struct __pyx_obj_6c_dana_Group *_theta2;
+};
+
+
+/* "c_dana.pyx":317
  * 
  * # ------------------------------------------------------------- Connections ---
  * cdef class Connection:             # <<<<<<<<<<<<<<
@@ -968,10 +994,13 @@ struct __pyx_obj_6c_dana_Connection {
   __Pyx_memviewslice _target;
   __Pyx_memviewslice _weights;
   double _gain;
+  int _n;
+  int _narm;
+  int _npfc;
 };
 
 
-/* "c_dana.pyx":314
+/* "c_dana.pyx":396
  * 
  * # --- OneToOne---
  * cdef class OneToOne(Connection):             # <<<<<<<<<<<<<<
@@ -983,7 +1012,7 @@ struct __pyx_obj_6c_dana_OneToOne {
 };
 
 
-/* "c_dana.pyx":324
+/* "c_dana.pyx":406
  * 
  * # --- OneToAll ---
  * cdef class OneToAll(Connection):             # <<<<<<<<<<<<<<
@@ -995,7 +1024,7 @@ struct __pyx_obj_6c_dana_OneToAll {
 };
 
 
-/* "c_dana.pyx":335
+/* "c_dana.pyx":431
  * 
  * # --- AllToAll ---
  * cdef class AllToAll(Connection):             # <<<<<<<<<<<<<<
@@ -1007,7 +1036,7 @@ struct __pyx_obj_6c_dana_AllToAll {
 };
 
 
-/* "c_dana.pyx":350
+/* "c_dana.pyx":446
  * 
  * # --- AssToMot ---
  * cdef class AssToMot(Connection):             # <<<<<<<<<<<<<<
@@ -1019,7 +1048,7 @@ struct __pyx_obj_6c_dana_AssToMot {
 };
 
 
-/* "c_dana.pyx":362
+/* "c_dana.pyx":458
  * 
  * # --- AssToCog ---
  * cdef class AssToCog(Connection):             # <<<<<<<<<<<<<<
@@ -1031,7 +1060,7 @@ struct __pyx_obj_6c_dana_AssToCog {
 };
 
 
-/* "c_dana.pyx":375
+/* "c_dana.pyx":471
  * 
  * # --- MotToAss ---
  * cdef class MotToAss(Connection):             # <<<<<<<<<<<<<<
@@ -1043,7 +1072,7 @@ struct __pyx_obj_6c_dana_MotToAss {
 };
 
 
-/* "c_dana.pyx":387
+/* "c_dana.pyx":483
  * 
  * # --- CogToAss ---
  * cdef class CogToAss(Connection):             # <<<<<<<<<<<<<<
@@ -1051,6 +1080,114 @@ struct __pyx_obj_6c_dana_MotToAss {
  *         cdef int i,j
  */
 struct __pyx_obj_6c_dana_CogToAss {
+  struct __pyx_obj_6c_dana_Connection __pyx_base;
+};
+
+
+/* "c_dana.pyx":495
+ * 
+ * # --- MotToPPC ---
+ * cdef class MotToPPC(Connection):             # <<<<<<<<<<<<<<
+ *     def propagate(self):
+ *         cdef int i,j
+ */
+struct __pyx_obj_6c_dana_MotToPPC {
+  struct __pyx_obj_6c_dana_Connection __pyx_base;
+};
+
+
+/* "c_dana.pyx":507
+ * 
+ * # --- ARMtoPPC ---
+ * cdef class ARMtoPPC(Connection):             # <<<<<<<<<<<<<<
+ *     def propagate(self):
+ *         cdef int i,j
+ */
+struct __pyx_obj_6c_dana_ARMtoPPC {
+  struct __pyx_obj_6c_dana_Connection __pyx_base;
+};
+
+
+/* "c_dana.pyx":519
+ * 
+ * # --- PFCtoSMA ---
+ * cdef class PFCtoSMA(Connection):             # <<<<<<<<<<<<<<
+ *     def propagate(self):
+ *         cdef int i,j
+ */
+struct __pyx_obj_6c_dana_PFCtoSMA {
+  struct __pyx_obj_6c_dana_Connection __pyx_base;
+};
+
+
+/* "c_dana.pyx":532
+ * 
+ * # --- ARMtoSMA ---
+ * cdef class ARMtoSMA(Connection):             # <<<<<<<<<<<<<<
+ *     def propagate(self):
+ *         cdef int i,j
+ */
+struct __pyx_obj_6c_dana_ARMtoSMA {
+  struct __pyx_obj_6c_dana_Connection __pyx_base;
+};
+
+
+/* "c_dana.pyx":544
+ * 
+ * # --- SMAtoARM ---
+ * cdef class SMAtoARM(Connection):             # <<<<<<<<<<<<<<
+ *     def propagate(self):
+ *         cdef int i,j,k
+ */
+struct __pyx_obj_6c_dana_SMAtoARM {
+  struct __pyx_obj_6c_dana_Connection __pyx_base;
+};
+
+
+/* "c_dana.pyx":560
+ * 
+ * # --- PPCtoPFC ---
+ * cdef class PPCtoPFC(Connection):             # <<<<<<<<<<<<<<
+ *     def propagate(self):
+ *         cdef int i,j,k
+ */
+struct __pyx_obj_6c_dana_PPCtoPFC {
+  struct __pyx_obj_6c_dana_Connection __pyx_base;
+};
+
+
+/* "c_dana.pyx":576
+ * 
+ * # --- PPCtoSTR ---
+ * cdef class PPCtoSTR(Connection):             # <<<<<<<<<<<<<<
+ *     def propagate(self):
+ *         cdef int i,k
+ */
+struct __pyx_obj_6c_dana_PPCtoSTR {
+  struct __pyx_obj_6c_dana_Connection __pyx_base;
+};
+
+
+/* "c_dana.pyx":587
+ * 
+ * # --- PFCtoSTR ---
+ * cdef class PFCtoSTR(Connection):             # <<<<<<<<<<<<<<
+ *     def propagate(self):
+ *         cdef int i,k
+ */
+struct __pyx_obj_6c_dana_PFCtoSTR {
+  struct __pyx_obj_6c_dana_Connection __pyx_base;
+};
+
+
+/* "c_dana.pyx":598
+ * 
+ * # --- STRpfcToBG ---
+ * cdef class STRpfcToBG(Connection):             # <<<<<<<<<<<<<<
+ *     def propagate(self):
+ *         cdef int i,j,k
+ */
+struct __pyx_obj_6c_dana_STRpfcToBG {
   struct __pyx_obj_6c_dana_Connection __pyx_base;
 };
 
@@ -1776,6 +1913,7 @@ static PyTypeObject *__pyx_ptype_6c_dana_Sigmoid = 0;
 static PyTypeObject *__pyx_ptype_6c_dana_Group = 0;
 static PyTypeObject *__pyx_ptype_6c_dana_Structure = 0;
 static PyTypeObject *__pyx_ptype_6c_dana_AssociativeStructure = 0;
+static PyTypeObject *__pyx_ptype_6c_dana_ArmStructure = 0;
 static PyTypeObject *__pyx_ptype_6c_dana_Connection = 0;
 static PyTypeObject *__pyx_ptype_6c_dana_OneToOne = 0;
 static PyTypeObject *__pyx_ptype_6c_dana_OneToAll = 0;
@@ -1784,6 +1922,15 @@ static PyTypeObject *__pyx_ptype_6c_dana_AssToMot = 0;
 static PyTypeObject *__pyx_ptype_6c_dana_AssToCog = 0;
 static PyTypeObject *__pyx_ptype_6c_dana_MotToAss = 0;
 static PyTypeObject *__pyx_ptype_6c_dana_CogToAss = 0;
+static PyTypeObject *__pyx_ptype_6c_dana_MotToPPC = 0;
+static PyTypeObject *__pyx_ptype_6c_dana_ARMtoPPC = 0;
+static PyTypeObject *__pyx_ptype_6c_dana_PFCtoSMA = 0;
+static PyTypeObject *__pyx_ptype_6c_dana_ARMtoSMA = 0;
+static PyTypeObject *__pyx_ptype_6c_dana_SMAtoARM = 0;
+static PyTypeObject *__pyx_ptype_6c_dana_PPCtoPFC = 0;
+static PyTypeObject *__pyx_ptype_6c_dana_PPCtoSTR = 0;
+static PyTypeObject *__pyx_ptype_6c_dana_PFCtoSTR = 0;
+static PyTypeObject *__pyx_ptype_6c_dana_STRpfcToBG = 0;
 static PyTypeObject *__pyx_array_type = 0;
 static PyTypeObject *__pyx_MemviewEnum_type = 0;
 static PyTypeObject *__pyx_memoryview_type = 0;
@@ -1874,17 +2021,22 @@ static int __pyx_pf_6c_dana_5Group_3tau_2__set__(struct __pyx_obj_6c_dana_Group 
 static PyObject *__pyx_pf_6c_dana_5Group_4rest___get__(struct __pyx_obj_6c_dana_Group *__pyx_v_self); /* proto */
 static int __pyx_pf_6c_dana_5Group_4rest_2__set__(struct __pyx_obj_6c_dana_Group *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
 static PyObject *__pyx_pf_6c_dana_5Group_1V___get__(struct __pyx_obj_6c_dana_Group *__pyx_v_self); /* proto */
+static int __pyx_pf_6c_dana_5Group_1V_2__set__(struct __pyx_obj_6c_dana_Group *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
 static PyObject *__pyx_pf_6c_dana_5Group_1U___get__(struct __pyx_obj_6c_dana_Group *__pyx_v_self); /* proto */
+static int __pyx_pf_6c_dana_5Group_1U_2__set__(struct __pyx_obj_6c_dana_Group *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
 static PyObject *__pyx_pf_6c_dana_5Group_4Isyn___get__(struct __pyx_obj_6c_dana_Group *__pyx_v_self); /* proto */
+static int __pyx_pf_6c_dana_5Group_4Isyn_2__set__(struct __pyx_obj_6c_dana_Group *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
 static PyObject *__pyx_pf_6c_dana_5Group_4Iext___get__(struct __pyx_obj_6c_dana_Group *__pyx_v_self); /* proto */
 static int __pyx_pf_6c_dana_5Group_4Iext_2__set__(struct __pyx_obj_6c_dana_Group *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
 static PyObject *__pyx_pf_6c_dana_5Group_2evaluate(struct __pyx_obj_6c_dana_Group *__pyx_v_self, double __pyx_v_dt); /* proto */
 static PyObject *__pyx_pf_6c_dana_5Group_4reset(struct __pyx_obj_6c_dana_Group *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_6c_dana_5Group_6__getitem__(struct __pyx_obj_6c_dana_Group *__pyx_v_self, PyObject *__pyx_v_key); /* proto */
 static int __pyx_pf_6c_dana_5Group_8__setitem__(struct __pyx_obj_6c_dana_Group *__pyx_v_self, PyObject *__pyx_v_key, PyObject *__pyx_v_value); /* proto */
-static int __pyx_pf_6c_dana_9Structure___init__(struct __pyx_obj_6c_dana_Structure *__pyx_v_self, PyObject *__pyx_v_tau, PyObject *__pyx_v_rest, PyObject *__pyx_v_noise, PyObject *__pyx_v_activation); /* proto */
+static int __pyx_pf_6c_dana_9Structure___init__(struct __pyx_obj_6c_dana_Structure *__pyx_v_self, PyObject *__pyx_v_tau, PyObject *__pyx_v_rest, PyObject *__pyx_v_noise, PyObject *__pyx_v_activation, PyObject *__pyx_v_n, PyObject *__pyx_v_n_pfc); /* proto */
 static PyObject *__pyx_pf_6c_dana_9Structure_3mot___get__(struct __pyx_obj_6c_dana_Structure *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_6c_dana_9Structure_3cog___get__(struct __pyx_obj_6c_dana_Structure *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_6c_dana_9Structure_6pfcth1___get__(struct __pyx_obj_6c_dana_Structure *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_6c_dana_9Structure_6pfcth2___get__(struct __pyx_obj_6c_dana_Structure *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_6c_dana_9Structure_2evaluate(struct __pyx_obj_6c_dana_Structure *__pyx_v_self, double __pyx_v_dt); /* proto */
 static PyObject *__pyx_pf_6c_dana_9Structure_4reset(struct __pyx_obj_6c_dana_Structure *__pyx_v_self); /* proto */
 static int __pyx_pf_6c_dana_20AssociativeStructure___init__(struct __pyx_obj_6c_dana_AssociativeStructure *__pyx_v_self, PyObject *__pyx_v_tau, PyObject *__pyx_v_rest, PyObject *__pyx_v_noise, PyObject *__pyx_v_activation); /* proto */
@@ -1894,10 +2046,21 @@ static PyObject *__pyx_pf_6c_dana_20AssociativeStructure_3ass___get__(struct __p
 static PyObject *__pyx_pf_6c_dana_20AssociativeStructure_4_ass___get__(struct __pyx_obj_6c_dana_AssociativeStructure *__pyx_v_self); /* proto */
 static int __pyx_pf_6c_dana_20AssociativeStructure_4_ass_2__set__(struct __pyx_obj_6c_dana_AssociativeStructure *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
 static int __pyx_pf_6c_dana_20AssociativeStructure_4_ass_4__del__(struct __pyx_obj_6c_dana_AssociativeStructure *__pyx_v_self); /* proto */
-static int __pyx_pf_6c_dana_10Connection___init__(struct __pyx_obj_6c_dana_Connection *__pyx_v_self, PyObject *__pyx_v_source, PyObject *__pyx_v_target, PyObject *__pyx_v_weights, PyObject *__pyx_v_gain); /* proto */
+static int __pyx_pf_6c_dana_12ArmStructure___init__(struct __pyx_obj_6c_dana_ArmStructure *__pyx_v_self, PyObject *__pyx_v_tau, PyObject *__pyx_v_rest, PyObject *__pyx_v_noise, PyObject *__pyx_v_activation, PyObject *__pyx_v_n); /* proto */
+static PyObject *__pyx_pf_6c_dana_12ArmStructure_6theta1___get__(struct __pyx_obj_6c_dana_ArmStructure *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_6c_dana_12ArmStructure_6theta2___get__(struct __pyx_obj_6c_dana_ArmStructure *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_6c_dana_12ArmStructure_2evaluate(struct __pyx_obj_6c_dana_ArmStructure *__pyx_v_self, double __pyx_v_dt); /* proto */
+static PyObject *__pyx_pf_6c_dana_12ArmStructure_4reset(struct __pyx_obj_6c_dana_ArmStructure *__pyx_v_self); /* proto */
+static int __pyx_pf_6c_dana_10Connection___init__(struct __pyx_obj_6c_dana_Connection *__pyx_v_self, PyObject *__pyx_v_source, PyObject *__pyx_v_target, PyObject *__pyx_v_weights, PyObject *__pyx_v_gain, PyObject *__pyx_v_n, PyObject *__pyx_v_narm, PyObject *__pyx_v_npfc); /* proto */
 static PyObject *__pyx_pf_6c_dana_10Connection_2flush(struct __pyx_obj_6c_dana_Connection *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_6c_dana_10Connection_4gain___get__(struct __pyx_obj_6c_dana_Connection *__pyx_v_self); /* proto */
 static int __pyx_pf_6c_dana_10Connection_4gain_2__set__(struct __pyx_obj_6c_dana_Connection *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
+static PyObject *__pyx_pf_6c_dana_10Connection_1n___get__(struct __pyx_obj_6c_dana_Connection *__pyx_v_self); /* proto */
+static int __pyx_pf_6c_dana_10Connection_1n_2__set__(struct __pyx_obj_6c_dana_Connection *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
+static PyObject *__pyx_pf_6c_dana_10Connection_4narm___get__(struct __pyx_obj_6c_dana_Connection *__pyx_v_self); /* proto */
+static int __pyx_pf_6c_dana_10Connection_4narm_2__set__(struct __pyx_obj_6c_dana_Connection *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
+static PyObject *__pyx_pf_6c_dana_10Connection_4npfc___get__(struct __pyx_obj_6c_dana_Connection *__pyx_v_self); /* proto */
+static int __pyx_pf_6c_dana_10Connection_4npfc_2__set__(struct __pyx_obj_6c_dana_Connection *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
 static PyObject *__pyx_pf_6c_dana_10Connection_6active___get__(struct __pyx_obj_6c_dana_Connection *__pyx_v_self); /* proto */
 static int __pyx_pf_6c_dana_10Connection_6active_2__set__(struct __pyx_obj_6c_dana_Connection *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
 static PyObject *__pyx_pf_6c_dana_10Connection_6source___get__(struct __pyx_obj_6c_dana_Connection *__pyx_v_self); /* proto */
@@ -1911,6 +2074,15 @@ static PyObject *__pyx_pf_6c_dana_8AssToMot_propagate(struct __pyx_obj_6c_dana_A
 static PyObject *__pyx_pf_6c_dana_8AssToCog_propagate(struct __pyx_obj_6c_dana_AssToCog *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_6c_dana_8MotToAss_propagate(struct __pyx_obj_6c_dana_MotToAss *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_6c_dana_8CogToAss_propagate(struct __pyx_obj_6c_dana_CogToAss *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_6c_dana_8MotToPPC_propagate(struct __pyx_obj_6c_dana_MotToPPC *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_6c_dana_8ARMtoPPC_propagate(struct __pyx_obj_6c_dana_ARMtoPPC *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_6c_dana_8PFCtoSMA_propagate(struct __pyx_obj_6c_dana_PFCtoSMA *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_6c_dana_8ARMtoSMA_propagate(struct __pyx_obj_6c_dana_ARMtoSMA *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_6c_dana_8SMAtoARM_propagate(struct __pyx_obj_6c_dana_SMAtoARM *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_6c_dana_8PPCtoPFC_propagate(struct __pyx_obj_6c_dana_PPCtoPFC *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_6c_dana_8PPCtoSTR_propagate(struct __pyx_obj_6c_dana_PPCtoSTR *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_6c_dana_8PFCtoSTR_propagate(struct __pyx_obj_6c_dana_PFCtoSTR *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_6c_dana_10STRpfcToBG_propagate(struct __pyx_obj_6c_dana_STRpfcToBG *__pyx_v_self); /* proto */
 static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info, int __pyx_v_flags); /* proto */
 static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info); /* proto */
 static int __pyx_array_MemoryView_5array___cinit__(struct __pyx_array_obj *__pyx_v_self, PyObject *__pyx_v_shape, Py_ssize_t __pyx_v_itemsize, PyObject *__pyx_v_format, PyObject *__pyx_v_mode, int __pyx_v_allocate_buffer); /* proto */
@@ -1953,6 +2125,7 @@ static PyObject *__pyx_tp_new_6c_dana_Sigmoid(PyTypeObject *t, PyObject *a, PyOb
 static PyObject *__pyx_tp_new_6c_dana_Group(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_tp_new_6c_dana_Structure(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_tp_new_6c_dana_AssociativeStructure(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static PyObject *__pyx_tp_new_6c_dana_ArmStructure(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_tp_new_6c_dana_Connection(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_tp_new_6c_dana_OneToOne(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_tp_new_6c_dana_OneToAll(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
@@ -1961,6 +2134,15 @@ static PyObject *__pyx_tp_new_6c_dana_AssToMot(PyTypeObject *t, PyObject *a, PyO
 static PyObject *__pyx_tp_new_6c_dana_AssToCog(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_tp_new_6c_dana_MotToAss(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_tp_new_6c_dana_CogToAss(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static PyObject *__pyx_tp_new_6c_dana_MotToPPC(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static PyObject *__pyx_tp_new_6c_dana_ARMtoPPC(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static PyObject *__pyx_tp_new_6c_dana_PFCtoSMA(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static PyObject *__pyx_tp_new_6c_dana_ARMtoSMA(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static PyObject *__pyx_tp_new_6c_dana_SMAtoARM(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static PyObject *__pyx_tp_new_6c_dana_PPCtoPFC(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static PyObject *__pyx_tp_new_6c_dana_PPCtoSTR(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static PyObject *__pyx_tp_new_6c_dana_PFCtoSTR(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static PyObject *__pyx_tp_new_6c_dana_STRpfcToBG(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_tp_new_array(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_tp_new_Enum(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_tp_new_memoryview(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
@@ -1981,6 +2163,7 @@ static char __pyx_k_g[] = "g";
 static char __pyx_k_h[] = "h";
 static char __pyx_k_i[] = "i";
 static char __pyx_k_l[] = "l";
+static char __pyx_k_n[] = "n";
 static char __pyx_k_q[] = "q";
 static char __pyx_k_Vc[] = "Vc";
 static char __pyx_k_Vh[] = "Vh";
@@ -2003,7 +2186,9 @@ static char __pyx_k_init[] = "__init__";
 static char __pyx_k_main[] = "__main__";
 static char __pyx_k_mode[] = "mode";
 static char __pyx_k_name[] = "name";
+static char __pyx_k_narm[] = "narm";
 static char __pyx_k_ndim[] = "ndim";
+static char __pyx_k_npfc[] = "npfc";
 static char __pyx_k_pack[] = "pack";
 static char __pyx_k_rest[] = "rest";
 static char __pyx_k_size[] = "size";
@@ -2014,6 +2199,7 @@ static char __pyx_k_class[] = "__class__";
 static char __pyx_k_dtype[] = "dtype";
 static char __pyx_k_error[] = "error";
 static char __pyx_k_flags[] = "flags";
+static char __pyx_k_n_pfc[] = "n_pfc";
 static char __pyx_k_noise[] = "noise";
 static char __pyx_k_numpy[] = "numpy";
 static char __pyx_k_range[] = "range";
@@ -2157,13 +2343,17 @@ static PyObject *__pyx_n_s_max;
 static PyObject *__pyx_n_s_memview;
 static PyObject *__pyx_n_s_min;
 static PyObject *__pyx_n_s_mode;
+static PyObject *__pyx_n_s_n;
+static PyObject *__pyx_n_s_n_pfc;
 static PyObject *__pyx_n_s_name;
 static PyObject *__pyx_n_s_name_2;
+static PyObject *__pyx_n_s_narm;
 static PyObject *__pyx_kp_u_ndarray_is_not_C_contiguous;
 static PyObject *__pyx_kp_u_ndarray_is_not_Fortran_contiguou;
 static PyObject *__pyx_n_s_ndim;
 static PyObject *__pyx_n_s_noise;
 static PyObject *__pyx_n_s_np;
+static PyObject *__pyx_n_s_npfc;
 static PyObject *__pyx_n_s_numpy;
 static PyObject *__pyx_n_s_obj;
 static PyObject *__pyx_n_s_pack;
@@ -2202,21 +2392,23 @@ static PyObject *__pyx_float_20_0;
 static PyObject *__pyx_int_0;
 static PyObject *__pyx_int_1;
 static PyObject *__pyx_int_4;
+static PyObject *__pyx_int_9;
 static PyObject *__pyx_int_16;
-static PyObject *__pyx_int_10000;
+static PyObject *__pyx_int_17;
+static PyObject *__pyx_int_1000000;
 static PyObject *__pyx_int_neg_1;
 static PyObject *__pyx_k_;
 static PyObject *__pyx_k__2;
+static PyObject *__pyx_k__3;
 static PyObject *__pyx_k__5;
-static PyObject *__pyx_tuple__3;
 static PyObject *__pyx_tuple__4;
 static PyObject *__pyx_tuple__6;
 static PyObject *__pyx_tuple__7;
 static PyObject *__pyx_tuple__8;
 static PyObject *__pyx_tuple__9;
+static PyObject *__pyx_slice__19;
 static PyObject *__pyx_slice__20;
 static PyObject *__pyx_slice__21;
-static PyObject *__pyx_slice__22;
 static PyObject *__pyx_tuple__10;
 static PyObject *__pyx_tuple__11;
 static PyObject *__pyx_tuple__12;
@@ -2226,13 +2418,12 @@ static PyObject *__pyx_tuple__15;
 static PyObject *__pyx_tuple__16;
 static PyObject *__pyx_tuple__17;
 static PyObject *__pyx_tuple__18;
-static PyObject *__pyx_tuple__19;
+static PyObject *__pyx_tuple__22;
 static PyObject *__pyx_tuple__23;
 static PyObject *__pyx_tuple__24;
 static PyObject *__pyx_tuple__25;
 static PyObject *__pyx_tuple__26;
 static PyObject *__pyx_tuple__27;
-static PyObject *__pyx_tuple__28;
 
 /* "c_dana.pyx":22
  * # ---------------------------------------------------------------- Function ---
@@ -3598,7 +3789,7 @@ static int __pyx_pf_6c_dana_5Group___init__(struct __pyx_obj_6c_dana_Group *__py
  *         self._delta = 0
  *         self._activation = activation             # <<<<<<<<<<<<<<
  *         self._history_index = 0
- *         self._history = np.zeros((10000, len(self._units)))
+ *         self._history = np.zeros((1000000, len(self._units)))
  */
   if (!(likely(((__pyx_v_activation) == Py_None) || likely(__Pyx_TypeTest(__pyx_v_activation, __pyx_ptype_6c_dana_Function))))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 107; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_t_3 = __pyx_v_activation;
@@ -3613,7 +3804,7 @@ static int __pyx_pf_6c_dana_5Group___init__(struct __pyx_obj_6c_dana_Group *__py
  *         self._delta = 0
  *         self._activation = activation
  *         self._history_index = 0             # <<<<<<<<<<<<<<
- *         self._history = np.zeros((10000, len(self._units)))
+ *         self._history = np.zeros((1000000, len(self._units)))
  * 
  */
   __pyx_v_self->_history_index = 0;
@@ -3621,7 +3812,7 @@ static int __pyx_pf_6c_dana_5Group___init__(struct __pyx_obj_6c_dana_Group *__py
   /* "c_dana.pyx":109
  *         self._activation = activation
  *         self._history_index = 0
- *         self._history = np.zeros((10000, len(self._units)))             # <<<<<<<<<<<<<<
+ *         self._history = np.zeros((1000000, len(self._units)))             # <<<<<<<<<<<<<<
  * 
  *     property history:
  */
@@ -3639,9 +3830,9 @@ static int __pyx_pf_6c_dana_5Group___init__(struct __pyx_obj_6c_dana_Group *__py
   __Pyx_GOTREF(__pyx_t_4);
   __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 109; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_7);
-  __Pyx_INCREF(__pyx_int_10000);
-  PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_int_10000);
-  __Pyx_GIVEREF(__pyx_int_10000);
+  __Pyx_INCREF(__pyx_int_1000000);
+  PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_int_1000000);
+  __Pyx_GIVEREF(__pyx_int_1000000);
   PyTuple_SET_ITEM(__pyx_t_7, 1, __pyx_t_4);
   __Pyx_GIVEREF(__pyx_t_4);
   __pyx_t_4 = 0;
@@ -4120,7 +4311,7 @@ static int __pyx_pf_6c_dana_5Group_4rest_2__set__(struct __pyx_obj_6c_dana_Group
  *         """ Firing rate """
  *         def __get__(self):             # <<<<<<<<<<<<<<
  *             return np.asarray(self._units)["V"]
- * 
+ *         def __set__(self, value):
  */
 
 /* Python wrapper */
@@ -4153,8 +4344,8 @@ static PyObject *__pyx_pf_6c_dana_5Group_1V___get__(struct __pyx_obj_6c_dana_Gro
  *         """ Firing rate """
  *         def __get__(self):
  *             return np.asarray(self._units)["V"]             # <<<<<<<<<<<<<<
- * 
- *     property U:
+ *         def __set__(self, value):
+ *             np.asarray(self._units)["V"] = value
  */
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 138; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
@@ -4203,7 +4394,7 @@ static PyObject *__pyx_pf_6c_dana_5Group_1V___get__(struct __pyx_obj_6c_dana_Gro
  *         """ Firing rate """
  *         def __get__(self):             # <<<<<<<<<<<<<<
  *             return np.asarray(self._units)["V"]
- * 
+ *         def __set__(self, value):
  */
 
   /* function exit code */
@@ -4221,12 +4412,114 @@ static PyObject *__pyx_pf_6c_dana_5Group_1V___get__(struct __pyx_obj_6c_dana_Gro
   return __pyx_r;
 }
 
-/* "c_dana.pyx":142
+/* "c_dana.pyx":139
+ *         def __get__(self):
+ *             return np.asarray(self._units)["V"]
+ *         def __set__(self, value):             # <<<<<<<<<<<<<<
+ *             np.asarray(self._units)["V"] = value
+ * 
+ */
+
+/* Python wrapper */
+static int __pyx_pw_6c_dana_5Group_1V_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
+static int __pyx_pw_6c_dana_5Group_1V_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__set__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_6c_dana_5Group_1V_2__set__(((struct __pyx_obj_6c_dana_Group *)__pyx_v_self), ((PyObject *)__pyx_v_value));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static int __pyx_pf_6c_dana_5Group_1V_2__set__(struct __pyx_obj_6c_dana_Group *__pyx_v_self, PyObject *__pyx_v_value) {
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  PyObject *__pyx_t_4 = NULL;
+  PyObject *__pyx_t_5 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__set__", 0);
+
+  /* "c_dana.pyx":140
+ *             return np.asarray(self._units)["V"]
+ *         def __set__(self, value):
+ *             np.asarray(self._units)["V"] = value             # <<<<<<<<<<<<<<
+ * 
+ *     property U:
+ */
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 140; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_asarray); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 140; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  if (unlikely(!__pyx_v_self->_units.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 140; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+  __pyx_t_2 = __pyx_memoryview_fromslice(__pyx_v_self->_units, 1, (PyObject *(*)(char *)) __pyx_memview_get_nn_struct___pyx_t_6c_dana_ctype, (int (*)(char *, PyObject *)) __pyx_memview_set_nn_struct___pyx_t_6c_dana_ctype, 0);; if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 140; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_4 = NULL;
+  if (CYTHON_COMPILING_IN_CPYTHON && unlikely(PyMethod_Check(__pyx_t_3))) {
+    __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_3);
+    if (likely(__pyx_t_4)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
+      __Pyx_INCREF(__pyx_t_4);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_3, function);
+    }
+  }
+  if (!__pyx_t_4) {
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 140; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_GOTREF(__pyx_t_1);
+  } else {
+    __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 140; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_GOTREF(__pyx_t_5);
+    PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_4); __Pyx_GIVEREF(__pyx_t_4); __pyx_t_4 = NULL;
+    PyTuple_SET_ITEM(__pyx_t_5, 0+1, __pyx_t_2);
+    __Pyx_GIVEREF(__pyx_t_2);
+    __pyx_t_2 = 0;
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 140; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  }
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  if (unlikely(PyObject_SetItem(__pyx_t_1, __pyx_n_s_V, __pyx_v_value) < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 140; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "c_dana.pyx":139
+ *         def __get__(self):
+ *             return np.asarray(self._units)["V"]
+ *         def __set__(self, value):             # <<<<<<<<<<<<<<
+ *             np.asarray(self._units)["V"] = value
+ * 
+ */
+
+  /* function exit code */
+  __pyx_r = 0;
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_AddTraceback("c_dana.Group.V.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = -1;
+  __pyx_L0:;
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "c_dana.pyx":144
  *     property U:
  *         """ Membrane potential """
  *         def __get__(self):             # <<<<<<<<<<<<<<
  *             return np.asarray(self._units)["U"]
- * 
+ *         def __set__(self, value):
  */
 
 /* Python wrapper */
@@ -4255,21 +4548,21 @@ static PyObject *__pyx_pf_6c_dana_5Group_1U___get__(struct __pyx_obj_6c_dana_Gro
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
 
-  /* "c_dana.pyx":143
+  /* "c_dana.pyx":145
  *         """ Membrane potential """
  *         def __get__(self):
  *             return np.asarray(self._units)["U"]             # <<<<<<<<<<<<<<
- * 
- *     property Isyn:
+ *         def __set__(self, value):
+ *             np.asarray(self._units)["U"] = value
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 143; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 145; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_asarray); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 143; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_asarray); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 145; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (unlikely(!__pyx_v_self->_units.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 143; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
-  __pyx_t_2 = __pyx_memoryview_fromslice(__pyx_v_self->_units, 1, (PyObject *(*)(char *)) __pyx_memview_get_nn_struct___pyx_t_6c_dana_ctype, (int (*)(char *, PyObject *)) __pyx_memview_set_nn_struct___pyx_t_6c_dana_ctype, 0);; if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 143; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (unlikely(!__pyx_v_self->_units.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 145; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+  __pyx_t_2 = __pyx_memoryview_fromslice(__pyx_v_self->_units, 1, (PyObject *(*)(char *)) __pyx_memview_get_nn_struct___pyx_t_6c_dana_ctype, (int (*)(char *, PyObject *)) __pyx_memview_set_nn_struct___pyx_t_6c_dana_ctype, 0);; if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 145; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_4 = NULL;
   if (CYTHON_COMPILING_IN_CPYTHON && unlikely(PyMethod_Check(__pyx_t_3))) {
@@ -4282,34 +4575,34 @@ static PyObject *__pyx_pf_6c_dana_5Group_1U___get__(struct __pyx_obj_6c_dana_Gro
     }
   }
   if (!__pyx_t_4) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 143; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 145; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_GOTREF(__pyx_t_1);
   } else {
-    __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 143; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 145; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_5);
     PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_4); __Pyx_GIVEREF(__pyx_t_4); __pyx_t_4 = NULL;
     PyTuple_SET_ITEM(__pyx_t_5, 0+1, __pyx_t_2);
     __Pyx_GIVEREF(__pyx_t_2);
     __pyx_t_2 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 143; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 145; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   }
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = PyObject_GetItem(__pyx_t_1, __pyx_n_s_U); if (unlikely(__pyx_t_3 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 143; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+  __pyx_t_3 = PyObject_GetItem(__pyx_t_1, __pyx_n_s_U); if (unlikely(__pyx_t_3 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 145; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_r = __pyx_t_3;
   __pyx_t_3 = 0;
   goto __pyx_L0;
 
-  /* "c_dana.pyx":142
+  /* "c_dana.pyx":144
  *     property U:
  *         """ Membrane potential """
  *         def __get__(self):             # <<<<<<<<<<<<<<
  *             return np.asarray(self._units)["U"]
- * 
+ *         def __set__(self, value):
  */
 
   /* function exit code */
@@ -4327,12 +4620,114 @@ static PyObject *__pyx_pf_6c_dana_5Group_1U___get__(struct __pyx_obj_6c_dana_Gro
   return __pyx_r;
 }
 
-/* "c_dana.pyx":147
+/* "c_dana.pyx":146
+ *         def __get__(self):
+ *             return np.asarray(self._units)["U"]
+ *         def __set__(self, value):             # <<<<<<<<<<<<<<
+ *             np.asarray(self._units)["U"] = value
+ * 
+ */
+
+/* Python wrapper */
+static int __pyx_pw_6c_dana_5Group_1U_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
+static int __pyx_pw_6c_dana_5Group_1U_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__set__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_6c_dana_5Group_1U_2__set__(((struct __pyx_obj_6c_dana_Group *)__pyx_v_self), ((PyObject *)__pyx_v_value));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static int __pyx_pf_6c_dana_5Group_1U_2__set__(struct __pyx_obj_6c_dana_Group *__pyx_v_self, PyObject *__pyx_v_value) {
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  PyObject *__pyx_t_4 = NULL;
+  PyObject *__pyx_t_5 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__set__", 0);
+
+  /* "c_dana.pyx":147
+ *             return np.asarray(self._units)["U"]
+ *         def __set__(self, value):
+ *             np.asarray(self._units)["U"] = value             # <<<<<<<<<<<<<<
+ * 
+ *     property Isyn:
+ */
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 147; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_asarray); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 147; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  if (unlikely(!__pyx_v_self->_units.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 147; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+  __pyx_t_2 = __pyx_memoryview_fromslice(__pyx_v_self->_units, 1, (PyObject *(*)(char *)) __pyx_memview_get_nn_struct___pyx_t_6c_dana_ctype, (int (*)(char *, PyObject *)) __pyx_memview_set_nn_struct___pyx_t_6c_dana_ctype, 0);; if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 147; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_4 = NULL;
+  if (CYTHON_COMPILING_IN_CPYTHON && unlikely(PyMethod_Check(__pyx_t_3))) {
+    __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_3);
+    if (likely(__pyx_t_4)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
+      __Pyx_INCREF(__pyx_t_4);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_3, function);
+    }
+  }
+  if (!__pyx_t_4) {
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 147; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_GOTREF(__pyx_t_1);
+  } else {
+    __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 147; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_GOTREF(__pyx_t_5);
+    PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_4); __Pyx_GIVEREF(__pyx_t_4); __pyx_t_4 = NULL;
+    PyTuple_SET_ITEM(__pyx_t_5, 0+1, __pyx_t_2);
+    __Pyx_GIVEREF(__pyx_t_2);
+    __pyx_t_2 = 0;
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 147; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  }
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  if (unlikely(PyObject_SetItem(__pyx_t_1, __pyx_n_s_U, __pyx_v_value) < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 147; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "c_dana.pyx":146
+ *         def __get__(self):
+ *             return np.asarray(self._units)["U"]
+ *         def __set__(self, value):             # <<<<<<<<<<<<<<
+ *             np.asarray(self._units)["U"] = value
+ * 
+ */
+
+  /* function exit code */
+  __pyx_r = 0;
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_AddTraceback("c_dana.Group.U.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = -1;
+  __pyx_L0:;
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "c_dana.pyx":151
  *     property Isyn:
  *         """ Input current from external synapses """
  *         def __get__(self):             # <<<<<<<<<<<<<<
  *             return np.asarray(self._units)["Isyn"]
- * 
+ *         def __set__(self, value):
  */
 
 /* Python wrapper */
@@ -4361,21 +4756,21 @@ static PyObject *__pyx_pf_6c_dana_5Group_4Isyn___get__(struct __pyx_obj_6c_dana_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
 
-  /* "c_dana.pyx":148
+  /* "c_dana.pyx":152
  *         """ Input current from external synapses """
  *         def __get__(self):
  *             return np.asarray(self._units)["Isyn"]             # <<<<<<<<<<<<<<
- * 
- *     property Iext:
+ *         def __set__(self, value):
+ *             np.asarray(self._units)["Isyn"] = value
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 148; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 152; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_asarray); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 148; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_asarray); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 152; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (unlikely(!__pyx_v_self->_units.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 148; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
-  __pyx_t_2 = __pyx_memoryview_fromslice(__pyx_v_self->_units, 1, (PyObject *(*)(char *)) __pyx_memview_get_nn_struct___pyx_t_6c_dana_ctype, (int (*)(char *, PyObject *)) __pyx_memview_set_nn_struct___pyx_t_6c_dana_ctype, 0);; if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 148; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (unlikely(!__pyx_v_self->_units.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 152; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+  __pyx_t_2 = __pyx_memoryview_fromslice(__pyx_v_self->_units, 1, (PyObject *(*)(char *)) __pyx_memview_get_nn_struct___pyx_t_6c_dana_ctype, (int (*)(char *, PyObject *)) __pyx_memview_set_nn_struct___pyx_t_6c_dana_ctype, 0);; if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 152; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_4 = NULL;
   if (CYTHON_COMPILING_IN_CPYTHON && unlikely(PyMethod_Check(__pyx_t_3))) {
@@ -4388,34 +4783,34 @@ static PyObject *__pyx_pf_6c_dana_5Group_4Isyn___get__(struct __pyx_obj_6c_dana_
     }
   }
   if (!__pyx_t_4) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 148; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 152; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_GOTREF(__pyx_t_1);
   } else {
-    __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 148; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 152; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_5);
     PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_4); __Pyx_GIVEREF(__pyx_t_4); __pyx_t_4 = NULL;
     PyTuple_SET_ITEM(__pyx_t_5, 0+1, __pyx_t_2);
     __Pyx_GIVEREF(__pyx_t_2);
     __pyx_t_2 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 148; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 152; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   }
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = PyObject_GetItem(__pyx_t_1, __pyx_n_s_Isyn); if (unlikely(__pyx_t_3 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 148; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+  __pyx_t_3 = PyObject_GetItem(__pyx_t_1, __pyx_n_s_Isyn); if (unlikely(__pyx_t_3 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 152; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_r = __pyx_t_3;
   __pyx_t_3 = 0;
   goto __pyx_L0;
 
-  /* "c_dana.pyx":147
+  /* "c_dana.pyx":151
  *     property Isyn:
  *         """ Input current from external synapses """
  *         def __get__(self):             # <<<<<<<<<<<<<<
  *             return np.asarray(self._units)["Isyn"]
- * 
+ *         def __set__(self, value):
  */
 
   /* function exit code */
@@ -4433,7 +4828,109 @@ static PyObject *__pyx_pf_6c_dana_5Group_4Isyn___get__(struct __pyx_obj_6c_dana_
   return __pyx_r;
 }
 
-/* "c_dana.pyx":152
+/* "c_dana.pyx":153
+ *         def __get__(self):
+ *             return np.asarray(self._units)["Isyn"]
+ *         def __set__(self, value):             # <<<<<<<<<<<<<<
+ *             np.asarray(self._units)["Isyn"] = value
+ * 
+ */
+
+/* Python wrapper */
+static int __pyx_pw_6c_dana_5Group_4Isyn_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
+static int __pyx_pw_6c_dana_5Group_4Isyn_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__set__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_6c_dana_5Group_4Isyn_2__set__(((struct __pyx_obj_6c_dana_Group *)__pyx_v_self), ((PyObject *)__pyx_v_value));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static int __pyx_pf_6c_dana_5Group_4Isyn_2__set__(struct __pyx_obj_6c_dana_Group *__pyx_v_self, PyObject *__pyx_v_value) {
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  PyObject *__pyx_t_4 = NULL;
+  PyObject *__pyx_t_5 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__set__", 0);
+
+  /* "c_dana.pyx":154
+ *             return np.asarray(self._units)["Isyn"]
+ *         def __set__(self, value):
+ *             np.asarray(self._units)["Isyn"] = value             # <<<<<<<<<<<<<<
+ * 
+ *     property Iext:
+ */
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 154; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_asarray); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 154; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  if (unlikely(!__pyx_v_self->_units.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 154; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+  __pyx_t_2 = __pyx_memoryview_fromslice(__pyx_v_self->_units, 1, (PyObject *(*)(char *)) __pyx_memview_get_nn_struct___pyx_t_6c_dana_ctype, (int (*)(char *, PyObject *)) __pyx_memview_set_nn_struct___pyx_t_6c_dana_ctype, 0);; if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 154; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_4 = NULL;
+  if (CYTHON_COMPILING_IN_CPYTHON && unlikely(PyMethod_Check(__pyx_t_3))) {
+    __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_3);
+    if (likely(__pyx_t_4)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
+      __Pyx_INCREF(__pyx_t_4);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_3, function);
+    }
+  }
+  if (!__pyx_t_4) {
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 154; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_GOTREF(__pyx_t_1);
+  } else {
+    __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 154; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_GOTREF(__pyx_t_5);
+    PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_4); __Pyx_GIVEREF(__pyx_t_4); __pyx_t_4 = NULL;
+    PyTuple_SET_ITEM(__pyx_t_5, 0+1, __pyx_t_2);
+    __Pyx_GIVEREF(__pyx_t_2);
+    __pyx_t_2 = 0;
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 154; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  }
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  if (unlikely(PyObject_SetItem(__pyx_t_1, __pyx_n_s_Isyn, __pyx_v_value) < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 154; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "c_dana.pyx":153
+ *         def __get__(self):
+ *             return np.asarray(self._units)["Isyn"]
+ *         def __set__(self, value):             # <<<<<<<<<<<<<<
+ *             np.asarray(self._units)["Isyn"] = value
+ * 
+ */
+
+  /* function exit code */
+  __pyx_r = 0;
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_AddTraceback("c_dana.Group.Isyn.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = -1;
+  __pyx_L0:;
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "c_dana.pyx":158
  *     property Iext:
  *         """ Input current from external sources """
  *         def __get__(self):             # <<<<<<<<<<<<<<
@@ -4467,7 +4964,7 @@ static PyObject *__pyx_pf_6c_dana_5Group_4Iext___get__(struct __pyx_obj_6c_dana_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
 
-  /* "c_dana.pyx":153
+  /* "c_dana.pyx":159
  *         """ Input current from external sources """
  *         def __get__(self):
  *             return np.asarray(self._units)["Iext"]             # <<<<<<<<<<<<<<
@@ -4475,13 +4972,13 @@ static PyObject *__pyx_pf_6c_dana_5Group_4Iext___get__(struct __pyx_obj_6c_dana_
  *             np.asarray(self._units)["Iext"] = value
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 153; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 159; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_asarray); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 153; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_asarray); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 159; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (unlikely(!__pyx_v_self->_units.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 153; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
-  __pyx_t_2 = __pyx_memoryview_fromslice(__pyx_v_self->_units, 1, (PyObject *(*)(char *)) __pyx_memview_get_nn_struct___pyx_t_6c_dana_ctype, (int (*)(char *, PyObject *)) __pyx_memview_set_nn_struct___pyx_t_6c_dana_ctype, 0);; if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 153; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (unlikely(!__pyx_v_self->_units.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 159; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+  __pyx_t_2 = __pyx_memoryview_fromslice(__pyx_v_self->_units, 1, (PyObject *(*)(char *)) __pyx_memview_get_nn_struct___pyx_t_6c_dana_ctype, (int (*)(char *, PyObject *)) __pyx_memview_set_nn_struct___pyx_t_6c_dana_ctype, 0);; if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 159; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_4 = NULL;
   if (CYTHON_COMPILING_IN_CPYTHON && unlikely(PyMethod_Check(__pyx_t_3))) {
@@ -4494,29 +4991,29 @@ static PyObject *__pyx_pf_6c_dana_5Group_4Iext___get__(struct __pyx_obj_6c_dana_
     }
   }
   if (!__pyx_t_4) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 153; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 159; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_GOTREF(__pyx_t_1);
   } else {
-    __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 153; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 159; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_5);
     PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_4); __Pyx_GIVEREF(__pyx_t_4); __pyx_t_4 = NULL;
     PyTuple_SET_ITEM(__pyx_t_5, 0+1, __pyx_t_2);
     __Pyx_GIVEREF(__pyx_t_2);
     __pyx_t_2 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 153; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 159; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   }
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = PyObject_GetItem(__pyx_t_1, __pyx_n_s_Iext); if (unlikely(__pyx_t_3 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 153; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+  __pyx_t_3 = PyObject_GetItem(__pyx_t_1, __pyx_n_s_Iext); if (unlikely(__pyx_t_3 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 159; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_r = __pyx_t_3;
   __pyx_t_3 = 0;
   goto __pyx_L0;
 
-  /* "c_dana.pyx":152
+  /* "c_dana.pyx":158
  *     property Iext:
  *         """ Input current from external sources """
  *         def __get__(self):             # <<<<<<<<<<<<<<
@@ -4539,7 +5036,7 @@ static PyObject *__pyx_pf_6c_dana_5Group_4Iext___get__(struct __pyx_obj_6c_dana_
   return __pyx_r;
 }
 
-/* "c_dana.pyx":154
+/* "c_dana.pyx":160
  *         def __get__(self):
  *             return np.asarray(self._units)["Iext"]
  *         def __set__(self, value):             # <<<<<<<<<<<<<<
@@ -4573,20 +5070,20 @@ static int __pyx_pf_6c_dana_5Group_4Iext_2__set__(struct __pyx_obj_6c_dana_Group
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__set__", 0);
 
-  /* "c_dana.pyx":155
+  /* "c_dana.pyx":161
  *             return np.asarray(self._units)["Iext"]
  *         def __set__(self, value):
  *             np.asarray(self._units)["Iext"] = value             # <<<<<<<<<<<<<<
  * 
  *     def evaluate(self, double dt):
  */
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 155; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 161; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_asarray); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 155; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_asarray); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 161; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (unlikely(!__pyx_v_self->_units.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 155; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
-  __pyx_t_2 = __pyx_memoryview_fromslice(__pyx_v_self->_units, 1, (PyObject *(*)(char *)) __pyx_memview_get_nn_struct___pyx_t_6c_dana_ctype, (int (*)(char *, PyObject *)) __pyx_memview_set_nn_struct___pyx_t_6c_dana_ctype, 0);; if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 155; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (unlikely(!__pyx_v_self->_units.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 161; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+  __pyx_t_2 = __pyx_memoryview_fromslice(__pyx_v_self->_units, 1, (PyObject *(*)(char *)) __pyx_memview_get_nn_struct___pyx_t_6c_dana_ctype, (int (*)(char *, PyObject *)) __pyx_memview_set_nn_struct___pyx_t_6c_dana_ctype, 0);; if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 161; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_4 = NULL;
   if (CYTHON_COMPILING_IN_CPYTHON && unlikely(PyMethod_Check(__pyx_t_3))) {
@@ -4599,25 +5096,25 @@ static int __pyx_pf_6c_dana_5Group_4Iext_2__set__(struct __pyx_obj_6c_dana_Group
     }
   }
   if (!__pyx_t_4) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 155; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 161; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_GOTREF(__pyx_t_1);
   } else {
-    __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 155; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 161; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_5);
     PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_4); __Pyx_GIVEREF(__pyx_t_4); __pyx_t_4 = NULL;
     PyTuple_SET_ITEM(__pyx_t_5, 0+1, __pyx_t_2);
     __Pyx_GIVEREF(__pyx_t_2);
     __pyx_t_2 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 155; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 161; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   }
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (unlikely(PyObject_SetItem(__pyx_t_1, __pyx_n_s_Iext, __pyx_v_value) < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 155; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (unlikely(PyObject_SetItem(__pyx_t_1, __pyx_n_s_Iext, __pyx_v_value) < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 161; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "c_dana.pyx":154
+  /* "c_dana.pyx":160
  *         def __get__(self):
  *             return np.asarray(self._units)["Iext"]
  *         def __set__(self, value):             # <<<<<<<<<<<<<<
@@ -4641,7 +5138,7 @@ static int __pyx_pf_6c_dana_5Group_4Iext_2__set__(struct __pyx_obj_6c_dana_Group
   return __pyx_r;
 }
 
-/* "c_dana.pyx":157
+/* "c_dana.pyx":163
  *             np.asarray(self._units)["Iext"] = value
  * 
  *     def evaluate(self, double dt):             # <<<<<<<<<<<<<<
@@ -4661,7 +5158,7 @@ static PyObject *__pyx_pw_6c_dana_5Group_3evaluate(PyObject *__pyx_v_self, PyObj
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("evaluate (wrapper)", 0);
   assert(__pyx_arg_dt); {
-    __pyx_v_dt = __pyx_PyFloat_AsDouble(__pyx_arg_dt); if (unlikely((__pyx_v_dt == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 157; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+    __pyx_v_dt = __pyx_PyFloat_AsDouble(__pyx_arg_dt); if (unlikely((__pyx_v_dt == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 163; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -4702,7 +5199,7 @@ static PyObject *__pyx_pf_6c_dana_5Group_2evaluate(struct __pyx_obj_6c_dana_Grou
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("evaluate", 0);
 
-  /* "c_dana.pyx":163
+  /* "c_dana.pyx":169
  *         cdef noise
  *         cdef ctype * unit
  *         cdef double max1=0, max2=0             # <<<<<<<<<<<<<<
@@ -4712,29 +5209,29 @@ static PyObject *__pyx_pf_6c_dana_5Group_2evaluate(struct __pyx_obj_6c_dana_Grou
   __pyx_v_max1 = 0.0;
   __pyx_v_max2 = 0.0;
 
-  /* "c_dana.pyx":165
+  /* "c_dana.pyx":171
  *         cdef double max1=0, max2=0
  * 
  *         for i in range(len(self._units)):             # <<<<<<<<<<<<<<
  *             unit = & self._units[i]
  *             # Compute white noise
  */
-  if (unlikely(!__pyx_v_self->_units.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 165; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
-  __pyx_t_1 = __pyx_memoryview_fromslice(__pyx_v_self->_units, 1, (PyObject *(*)(char *)) __pyx_memview_get_nn_struct___pyx_t_6c_dana_ctype, (int (*)(char *, PyObject *)) __pyx_memview_set_nn_struct___pyx_t_6c_dana_ctype, 0);; if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 165; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (unlikely(!__pyx_v_self->_units.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 171; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+  __pyx_t_1 = __pyx_memoryview_fromslice(__pyx_v_self->_units, 1, (PyObject *(*)(char *)) __pyx_memview_get_nn_struct___pyx_t_6c_dana_ctype, (int (*)(char *, PyObject *)) __pyx_memview_set_nn_struct___pyx_t_6c_dana_ctype, 0);; if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 171; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyObject_Length(__pyx_t_1); if (unlikely(__pyx_t_2 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 165; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PyObject_Length(__pyx_t_1); if (unlikely(__pyx_t_2 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 171; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "c_dana.pyx":166
+    /* "c_dana.pyx":172
  * 
  *         for i in range(len(self._units)):
  *             unit = & self._units[i]             # <<<<<<<<<<<<<<
  *             # Compute white noise
  *             noise = self._noise*(rand()/float(RAND_MAX)) - self._noise/2.0
  */
-    if (unlikely(!__pyx_v_self->_units.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 166; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+    if (unlikely(!__pyx_v_self->_units.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 172; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
     __pyx_t_4 = __pyx_v_i;
     __pyx_t_5 = -1;
     if (__pyx_t_4 < 0) {
@@ -4743,11 +5240,11 @@ static PyObject *__pyx_pf_6c_dana_5Group_2evaluate(struct __pyx_obj_6c_dana_Grou
     } else if (unlikely(__pyx_t_4 >= __pyx_v_self->_units.shape[0])) __pyx_t_5 = 0;
     if (unlikely(__pyx_t_5 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_5);
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 166; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 172; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
     __pyx_v_unit = (&(*((struct __pyx_t_6c_dana_ctype *) ( /* dim=0 */ (__pyx_v_self->_units.data + __pyx_t_4 * __pyx_v_self->_units.strides[0]) ))));
 
-    /* "c_dana.pyx":168
+    /* "c_dana.pyx":174
  *             unit = & self._units[i]
  *             # Compute white noise
  *             noise = self._noise*(rand()/float(RAND_MAX)) - self._noise/2.0             # <<<<<<<<<<<<<<
@@ -4763,14 +5260,14 @@ static PyObject *__pyx_pf_6c_dana_5Group_2evaluate(struct __pyx_obj_6c_dana_Grou
       #ifdef WITH_THREAD
       PyGILState_Release(__pyx_gilstate_save);
       #endif
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 168; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 174; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
-    __pyx_t_1 = PyFloat_FromDouble(((__pyx_v_self->_noise * (__pyx_t_5 / ((double)RAND_MAX))) - (__pyx_v_self->_noise / 2.0))); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 168; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = PyFloat_FromDouble(((__pyx_v_self->_noise * (__pyx_t_5 / ((double)RAND_MAX))) - (__pyx_v_self->_noise / 2.0))); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 174; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_XDECREF_SET(__pyx_v_noise, __pyx_t_1);
     __pyx_t_1 = 0;
 
-    /* "c_dana.pyx":170
+    /* "c_dana.pyx":176
  *             noise = self._noise*(rand()/float(RAND_MAX)) - self._noise/2.0
  *             # Update membrane potential
  *             unit.U += dt/self._tau*(-unit.U + unit.Isyn + unit.Iext - self._rest )             # <<<<<<<<<<<<<<
@@ -4785,31 +5282,31 @@ static PyObject *__pyx_pf_6c_dana_5Group_2evaluate(struct __pyx_obj_6c_dana_Grou
       #ifdef WITH_THREAD
       PyGILState_Release(__pyx_gilstate_save);
       #endif
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 170; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 176; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
     __pyx_v_unit->U = (__pyx_v_unit->U + ((__pyx_v_dt / __pyx_v_self->_tau) * ((((-__pyx_v_unit->U) + __pyx_v_unit->Isyn) + __pyx_v_unit->Iext) - __pyx_v_self->_rest)));
 
-    /* "c_dana.pyx":173
+    /* "c_dana.pyx":179
  *             # Update firing rate
  *             # unit.V = self._activation.call(unit.U + noise)
  *             unit.V = self._activation.call(unit.U *(1 + noise))             # <<<<<<<<<<<<<<
  *             # Store firing rate activity
  *             self._history[self._history_index,i] = unit.V
  */
-    __pyx_t_1 = PyFloat_FromDouble(__pyx_v_unit->U); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 173; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = PyFloat_FromDouble(__pyx_v_unit->U); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 179; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_6 = PyNumber_Add(__pyx_int_1, __pyx_v_noise); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 173; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_6 = PyNumber_Add(__pyx_int_1, __pyx_v_noise); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 179; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_7 = PyNumber_Multiply(__pyx_t_1, __pyx_t_6); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 173; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_7 = PyNumber_Multiply(__pyx_t_1, __pyx_t_6); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 179; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_7);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    __pyx_t_8 = __pyx_PyFloat_AsDouble(__pyx_t_7); if (unlikely((__pyx_t_8 == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 173; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_8 = __pyx_PyFloat_AsDouble(__pyx_t_7); if (unlikely((__pyx_t_8 == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 179; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-    __pyx_t_9 = ((struct __pyx_vtabstruct_6c_dana_Function *)__pyx_v_self->_activation->__pyx_vtab)->call(__pyx_v_self->_activation, __pyx_t_8); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 173; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_9 = ((struct __pyx_vtabstruct_6c_dana_Function *)__pyx_v_self->_activation->__pyx_vtab)->call(__pyx_v_self->_activation, __pyx_t_8); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 179; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_v_unit->V = __pyx_t_9;
 
-    /* "c_dana.pyx":175
+    /* "c_dana.pyx":181
  *             unit.V = self._activation.call(unit.U *(1 + noise))
  *             # Store firing rate activity
  *             self._history[self._history_index,i] = unit.V             # <<<<<<<<<<<<<<
@@ -4817,7 +5314,7 @@ static PyObject *__pyx_pf_6c_dana_5Group_2evaluate(struct __pyx_obj_6c_dana_Grou
  *             # Here we record the max activities to store their difference
  */
     __pyx_t_10 = __pyx_v_unit->V;
-    if (unlikely(!__pyx_v_self->_history.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 175; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+    if (unlikely(!__pyx_v_self->_history.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 181; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
     __pyx_t_5 = __pyx_v_self->_history_index;
     __pyx_t_11 = __pyx_v_i;
     __pyx_t_12 = -1;
@@ -4831,11 +5328,11 @@ static PyObject *__pyx_pf_6c_dana_5Group_2evaluate(struct __pyx_obj_6c_dana_Grou
     } else if (unlikely(__pyx_t_11 >= __pyx_v_self->_history.shape[1])) __pyx_t_12 = 1;
     if (unlikely(__pyx_t_12 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_12);
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 175; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 181; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
     *((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_self->_history.data + __pyx_t_5 * __pyx_v_self->_history.strides[0]) ) + __pyx_t_11 * __pyx_v_self->_history.strides[1]) )) = __pyx_t_10;
 
-    /* "c_dana.pyx":179
+    /* "c_dana.pyx":185
  *             # Here we record the max activities to store their difference
  *             # This is used later to decide if a motor decision has been made
  *             if unit.V > max1:   max1 = unit.V             # <<<<<<<<<<<<<<
@@ -4849,7 +5346,7 @@ static PyObject *__pyx_pf_6c_dana_5Group_2evaluate(struct __pyx_obj_6c_dana_Grou
       goto __pyx_L5;
     }
 
-    /* "c_dana.pyx":180
+    /* "c_dana.pyx":186
  *             # This is used later to decide if a motor decision has been made
  *             if unit.V > max1:   max1 = unit.V
  *             elif unit.V > max2: max2 = unit.V             # <<<<<<<<<<<<<<
@@ -4865,7 +5362,7 @@ static PyObject *__pyx_pf_6c_dana_5Group_2evaluate(struct __pyx_obj_6c_dana_Grou
     __pyx_L5:;
   }
 
-  /* "c_dana.pyx":182
+  /* "c_dana.pyx":188
  *             elif unit.V > max2: max2 = unit.V
  * 
  *         self._delta = max1 - max2             # <<<<<<<<<<<<<<
@@ -4874,7 +5371,7 @@ static PyObject *__pyx_pf_6c_dana_5Group_2evaluate(struct __pyx_obj_6c_dana_Grou
  */
   __pyx_v_self->_delta = (__pyx_v_max1 - __pyx_v_max2);
 
-  /* "c_dana.pyx":183
+  /* "c_dana.pyx":189
  * 
  *         self._delta = max1 - max2
  *         self._history_index +=1             # <<<<<<<<<<<<<<
@@ -4883,7 +5380,7 @@ static PyObject *__pyx_pf_6c_dana_5Group_2evaluate(struct __pyx_obj_6c_dana_Grou
  */
   __pyx_v_self->_history_index = (__pyx_v_self->_history_index + 1);
 
-  /* "c_dana.pyx":157
+  /* "c_dana.pyx":163
  *             np.asarray(self._units)["Iext"] = value
  * 
  *     def evaluate(self, double dt):             # <<<<<<<<<<<<<<
@@ -4907,7 +5404,7 @@ static PyObject *__pyx_pf_6c_dana_5Group_2evaluate(struct __pyx_obj_6c_dana_Grou
   return __pyx_r;
 }
 
-/* "c_dana.pyx":186
+/* "c_dana.pyx":192
  * 
  * 
  *     def reset(self):             # <<<<<<<<<<<<<<
@@ -4946,7 +5443,7 @@ static PyObject *__pyx_pf_6c_dana_5Group_4reset(struct __pyx_obj_6c_dana_Group *
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("reset", 0);
 
-  /* "c_dana.pyx":190
+  /* "c_dana.pyx":196
  * 
  *         cdef int i
  *         self._history_index = 0             # <<<<<<<<<<<<<<
@@ -4955,29 +5452,29 @@ static PyObject *__pyx_pf_6c_dana_5Group_4reset(struct __pyx_obj_6c_dana_Group *
  */
   __pyx_v_self->_history_index = 0;
 
-  /* "c_dana.pyx":191
+  /* "c_dana.pyx":197
  *         cdef int i
  *         self._history_index = 0
  *         for i in range(len(self._units)):             # <<<<<<<<<<<<<<
  *             self._units[i].V = 0
  *             self._units[i].U = 0
  */
-  if (unlikely(!__pyx_v_self->_units.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 191; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
-  __pyx_t_1 = __pyx_memoryview_fromslice(__pyx_v_self->_units, 1, (PyObject *(*)(char *)) __pyx_memview_get_nn_struct___pyx_t_6c_dana_ctype, (int (*)(char *, PyObject *)) __pyx_memview_set_nn_struct___pyx_t_6c_dana_ctype, 0);; if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 191; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (unlikely(!__pyx_v_self->_units.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 197; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+  __pyx_t_1 = __pyx_memoryview_fromslice(__pyx_v_self->_units, 1, (PyObject *(*)(char *)) __pyx_memview_get_nn_struct___pyx_t_6c_dana_ctype, (int (*)(char *, PyObject *)) __pyx_memview_set_nn_struct___pyx_t_6c_dana_ctype, 0);; if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 197; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyObject_Length(__pyx_t_1); if (unlikely(__pyx_t_2 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 191; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PyObject_Length(__pyx_t_1); if (unlikely(__pyx_t_2 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 197; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "c_dana.pyx":192
+    /* "c_dana.pyx":198
  *         self._history_index = 0
  *         for i in range(len(self._units)):
  *             self._units[i].V = 0             # <<<<<<<<<<<<<<
  *             self._units[i].U = 0
  *             self._units[i].Isyn = 0
  */
-    if (unlikely(!__pyx_v_self->_units.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 192; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+    if (unlikely(!__pyx_v_self->_units.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 198; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
     __pyx_t_4 = __pyx_v_i;
     __pyx_t_5 = -1;
     if (__pyx_t_4 < 0) {
@@ -4986,18 +5483,18 @@ static PyObject *__pyx_pf_6c_dana_5Group_4reset(struct __pyx_obj_6c_dana_Group *
     } else if (unlikely(__pyx_t_4 >= __pyx_v_self->_units.shape[0])) __pyx_t_5 = 0;
     if (unlikely(__pyx_t_5 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_5);
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 192; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 198; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
     (*((struct __pyx_t_6c_dana_ctype *) ( /* dim=0 */ (__pyx_v_self->_units.data + __pyx_t_4 * __pyx_v_self->_units.strides[0]) ))).V = 0.0;
 
-    /* "c_dana.pyx":193
+    /* "c_dana.pyx":199
  *         for i in range(len(self._units)):
  *             self._units[i].V = 0
  *             self._units[i].U = 0             # <<<<<<<<<<<<<<
  *             self._units[i].Isyn = 0
  *             self._units[i].Iext = 0
  */
-    if (unlikely(!__pyx_v_self->_units.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 193; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+    if (unlikely(!__pyx_v_self->_units.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 199; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
     __pyx_t_5 = __pyx_v_i;
     __pyx_t_6 = -1;
     if (__pyx_t_5 < 0) {
@@ -5006,18 +5503,18 @@ static PyObject *__pyx_pf_6c_dana_5Group_4reset(struct __pyx_obj_6c_dana_Group *
     } else if (unlikely(__pyx_t_5 >= __pyx_v_self->_units.shape[0])) __pyx_t_6 = 0;
     if (unlikely(__pyx_t_6 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_6);
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 193; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 199; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
     (*((struct __pyx_t_6c_dana_ctype *) ( /* dim=0 */ (__pyx_v_self->_units.data + __pyx_t_5 * __pyx_v_self->_units.strides[0]) ))).U = 0.0;
 
-    /* "c_dana.pyx":194
+    /* "c_dana.pyx":200
  *             self._units[i].V = 0
  *             self._units[i].U = 0
  *             self._units[i].Isyn = 0             # <<<<<<<<<<<<<<
  *             self._units[i].Iext = 0
  * 
  */
-    if (unlikely(!__pyx_v_self->_units.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 194; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+    if (unlikely(!__pyx_v_self->_units.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 200; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
     __pyx_t_6 = __pyx_v_i;
     __pyx_t_7 = -1;
     if (__pyx_t_6 < 0) {
@@ -5026,18 +5523,18 @@ static PyObject *__pyx_pf_6c_dana_5Group_4reset(struct __pyx_obj_6c_dana_Group *
     } else if (unlikely(__pyx_t_6 >= __pyx_v_self->_units.shape[0])) __pyx_t_7 = 0;
     if (unlikely(__pyx_t_7 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_7);
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 194; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 200; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
     (*((struct __pyx_t_6c_dana_ctype *) ( /* dim=0 */ (__pyx_v_self->_units.data + __pyx_t_6 * __pyx_v_self->_units.strides[0]) ))).Isyn = 0.0;
 
-    /* "c_dana.pyx":195
+    /* "c_dana.pyx":201
  *             self._units[i].U = 0
  *             self._units[i].Isyn = 0
  *             self._units[i].Iext = 0             # <<<<<<<<<<<<<<
  * 
  * 
  */
-    if (unlikely(!__pyx_v_self->_units.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 195; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+    if (unlikely(!__pyx_v_self->_units.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 201; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
     __pyx_t_7 = __pyx_v_i;
     __pyx_t_8 = -1;
     if (__pyx_t_7 < 0) {
@@ -5046,12 +5543,12 @@ static PyObject *__pyx_pf_6c_dana_5Group_4reset(struct __pyx_obj_6c_dana_Group *
     } else if (unlikely(__pyx_t_7 >= __pyx_v_self->_units.shape[0])) __pyx_t_8 = 0;
     if (unlikely(__pyx_t_8 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_8);
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 195; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 201; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
     (*((struct __pyx_t_6c_dana_ctype *) ( /* dim=0 */ (__pyx_v_self->_units.data + __pyx_t_7 * __pyx_v_self->_units.strides[0]) ))).Iext = 0.0;
   }
 
-  /* "c_dana.pyx":186
+  /* "c_dana.pyx":192
  * 
  * 
  *     def reset(self):             # <<<<<<<<<<<<<<
@@ -5072,7 +5569,7 @@ static PyObject *__pyx_pf_6c_dana_5Group_4reset(struct __pyx_obj_6c_dana_Group *
   return __pyx_r;
 }
 
-/* "c_dana.pyx":198
+/* "c_dana.pyx":204
  * 
  * 
  *     def __getitem__(self, key):             # <<<<<<<<<<<<<<
@@ -5106,7 +5603,7 @@ static PyObject *__pyx_pf_6c_dana_5Group_6__getitem__(struct __pyx_obj_6c_dana_G
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__getitem__", 0);
 
-  /* "c_dana.pyx":199
+  /* "c_dana.pyx":205
  * 
  *     def __getitem__(self, key):
  *         return np.asarray(self._units)[key]             # <<<<<<<<<<<<<<
@@ -5114,13 +5611,13 @@ static PyObject *__pyx_pf_6c_dana_5Group_6__getitem__(struct __pyx_obj_6c_dana_G
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 199; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 205; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_asarray); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 199; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_asarray); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 205; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (unlikely(!__pyx_v_self->_units.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 199; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
-  __pyx_t_2 = __pyx_memoryview_fromslice(__pyx_v_self->_units, 1, (PyObject *(*)(char *)) __pyx_memview_get_nn_struct___pyx_t_6c_dana_ctype, (int (*)(char *, PyObject *)) __pyx_memview_set_nn_struct___pyx_t_6c_dana_ctype, 0);; if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 199; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (unlikely(!__pyx_v_self->_units.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 205; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+  __pyx_t_2 = __pyx_memoryview_fromslice(__pyx_v_self->_units, 1, (PyObject *(*)(char *)) __pyx_memview_get_nn_struct___pyx_t_6c_dana_ctype, (int (*)(char *, PyObject *)) __pyx_memview_set_nn_struct___pyx_t_6c_dana_ctype, 0);; if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 205; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_4 = NULL;
   if (CYTHON_COMPILING_IN_CPYTHON && unlikely(PyMethod_Check(__pyx_t_3))) {
@@ -5133,29 +5630,29 @@ static PyObject *__pyx_pf_6c_dana_5Group_6__getitem__(struct __pyx_obj_6c_dana_G
     }
   }
   if (!__pyx_t_4) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 199; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 205; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_GOTREF(__pyx_t_1);
   } else {
-    __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 199; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 205; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_5);
     PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_4); __Pyx_GIVEREF(__pyx_t_4); __pyx_t_4 = NULL;
     PyTuple_SET_ITEM(__pyx_t_5, 0+1, __pyx_t_2);
     __Pyx_GIVEREF(__pyx_t_2);
     __pyx_t_2 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 199; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 205; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   }
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = PyObject_GetItem(__pyx_t_1, __pyx_v_key); if (unlikely(__pyx_t_3 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 199; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+  __pyx_t_3 = PyObject_GetItem(__pyx_t_1, __pyx_v_key); if (unlikely(__pyx_t_3 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 205; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_r = __pyx_t_3;
   __pyx_t_3 = 0;
   goto __pyx_L0;
 
-  /* "c_dana.pyx":198
+  /* "c_dana.pyx":204
  * 
  * 
  *     def __getitem__(self, key):             # <<<<<<<<<<<<<<
@@ -5178,7 +5675,7 @@ static PyObject *__pyx_pf_6c_dana_5Group_6__getitem__(struct __pyx_obj_6c_dana_G
   return __pyx_r;
 }
 
-/* "c_dana.pyx":202
+/* "c_dana.pyx":208
  * 
  * 
  *     def __setitem__(self, key, value):             # <<<<<<<<<<<<<<
@@ -5212,20 +5709,20 @@ static int __pyx_pf_6c_dana_5Group_8__setitem__(struct __pyx_obj_6c_dana_Group *
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__setitem__", 0);
 
-  /* "c_dana.pyx":203
+  /* "c_dana.pyx":209
  * 
  *     def __setitem__(self, key, value):
  *         np.asarray(self._units)[key] = value             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 203; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 209; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_asarray); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 203; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_asarray); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 209; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (unlikely(!__pyx_v_self->_units.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 203; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
-  __pyx_t_2 = __pyx_memoryview_fromslice(__pyx_v_self->_units, 1, (PyObject *(*)(char *)) __pyx_memview_get_nn_struct___pyx_t_6c_dana_ctype, (int (*)(char *, PyObject *)) __pyx_memview_set_nn_struct___pyx_t_6c_dana_ctype, 0);; if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 203; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (unlikely(!__pyx_v_self->_units.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 209; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+  __pyx_t_2 = __pyx_memoryview_fromslice(__pyx_v_self->_units, 1, (PyObject *(*)(char *)) __pyx_memview_get_nn_struct___pyx_t_6c_dana_ctype, (int (*)(char *, PyObject *)) __pyx_memview_set_nn_struct___pyx_t_6c_dana_ctype, 0);; if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 209; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_4 = NULL;
   if (CYTHON_COMPILING_IN_CPYTHON && unlikely(PyMethod_Check(__pyx_t_3))) {
@@ -5238,25 +5735,25 @@ static int __pyx_pf_6c_dana_5Group_8__setitem__(struct __pyx_obj_6c_dana_Group *
     }
   }
   if (!__pyx_t_4) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 203; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 209; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_GOTREF(__pyx_t_1);
   } else {
-    __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 203; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 209; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_5);
     PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_4); __Pyx_GIVEREF(__pyx_t_4); __pyx_t_4 = NULL;
     PyTuple_SET_ITEM(__pyx_t_5, 0+1, __pyx_t_2);
     __Pyx_GIVEREF(__pyx_t_2);
     __pyx_t_2 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 203; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 209; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   }
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (unlikely(PyObject_SetItem(__pyx_t_1, __pyx_v_key, __pyx_v_value) < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 203; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (unlikely(PyObject_SetItem(__pyx_t_1, __pyx_v_key, __pyx_v_value) < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 209; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "c_dana.pyx":202
+  /* "c_dana.pyx":208
  * 
  * 
  *     def __setitem__(self, key, value):             # <<<<<<<<<<<<<<
@@ -5280,11 +5777,11 @@ static int __pyx_pf_6c_dana_5Group_8__setitem__(struct __pyx_obj_6c_dana_Group *
   return __pyx_r;
 }
 
-/* "c_dana.pyx":212
- *     cdef Group _cog
+/* "c_dana.pyx":220
+ *     cdef Group _pfcth2
  * 
- *     def __init__(self, tau=0.01, rest=0, noise=0, activation=Identity()):             # <<<<<<<<<<<<<<
- *         self._mot = Group(np.zeros(4,dtype=dtype), tau=tau, rest=rest,
+ *     def __init__(self, tau=0.01, rest=0, noise=0, activation=Identity(), n=4, n_pfc=17):             # <<<<<<<<<<<<<<
+ *         self._mot = Group(np.zeros(n,dtype=dtype), tau=tau, rest=rest,
  *                            noise=noise, activation=activation)
  */
 
@@ -5295,6 +5792,8 @@ static int __pyx_pw_6c_dana_9Structure_1__init__(PyObject *__pyx_v_self, PyObjec
   PyObject *__pyx_v_rest = 0;
   PyObject *__pyx_v_noise = 0;
   PyObject *__pyx_v_activation = 0;
+  PyObject *__pyx_v_n = 0;
+  PyObject *__pyx_v_n_pfc = 0;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -5302,16 +5801,20 @@ static int __pyx_pw_6c_dana_9Structure_1__init__(PyObject *__pyx_v_self, PyObjec
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__init__ (wrapper)", 0);
   {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_tau,&__pyx_n_s_rest,&__pyx_n_s_noise,&__pyx_n_s_activation,0};
-    PyObject* values[4] = {0,0,0,0};
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_tau,&__pyx_n_s_rest,&__pyx_n_s_noise,&__pyx_n_s_activation,&__pyx_n_s_n,&__pyx_n_s_n_pfc,0};
+    PyObject* values[6] = {0,0,0,0,0,0};
     values[0] = ((PyObject *)__pyx_float_0_01);
     values[1] = ((PyObject *)__pyx_int_0);
     values[2] = ((PyObject *)__pyx_int_0);
     values[3] = __pyx_k__2;
+    values[4] = ((PyObject *)__pyx_int_4);
+    values[5] = ((PyObject *)__pyx_int_17);
     if (unlikely(__pyx_kwds)) {
       Py_ssize_t kw_args;
       const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
       switch (pos_args) {
+        case  6: values[5] = PyTuple_GET_ITEM(__pyx_args, 5);
+        case  5: values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
         case  4: values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
         case  3: values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
         case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
@@ -5341,12 +5844,24 @@ static int __pyx_pw_6c_dana_9Structure_1__init__(PyObject *__pyx_v_self, PyObjec
           PyObject* value = PyDict_GetItem(__pyx_kwds, __pyx_n_s_activation);
           if (value) { values[3] = value; kw_args--; }
         }
+        case  4:
+        if (kw_args > 0) {
+          PyObject* value = PyDict_GetItem(__pyx_kwds, __pyx_n_s_n);
+          if (value) { values[4] = value; kw_args--; }
+        }
+        case  5:
+        if (kw_args > 0) {
+          PyObject* value = PyDict_GetItem(__pyx_kwds, __pyx_n_s_n_pfc);
+          if (value) { values[5] = value; kw_args--; }
+        }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 212; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 220; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
+        case  6: values[5] = PyTuple_GET_ITEM(__pyx_args, 5);
+        case  5: values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
         case  4: values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
         case  3: values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
         case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
@@ -5359,156 +5874,301 @@ static int __pyx_pw_6c_dana_9Structure_1__init__(PyObject *__pyx_v_self, PyObjec
     __pyx_v_rest = values[1];
     __pyx_v_noise = values[2];
     __pyx_v_activation = values[3];
+    __pyx_v_n = values[4];
+    __pyx_v_n_pfc = values[5];
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__init__", 0, 0, 4, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 212; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __Pyx_RaiseArgtupleInvalid("__init__", 0, 0, 6, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 220; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
   __Pyx_AddTraceback("c_dana.Structure.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return -1;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_6c_dana_9Structure___init__(((struct __pyx_obj_6c_dana_Structure *)__pyx_v_self), __pyx_v_tau, __pyx_v_rest, __pyx_v_noise, __pyx_v_activation);
+  __pyx_r = __pyx_pf_6c_dana_9Structure___init__(((struct __pyx_obj_6c_dana_Structure *)__pyx_v_self), __pyx_v_tau, __pyx_v_rest, __pyx_v_noise, __pyx_v_activation, __pyx_v_n, __pyx_v_n_pfc);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static int __pyx_pf_6c_dana_9Structure___init__(struct __pyx_obj_6c_dana_Structure *__pyx_v_self, PyObject *__pyx_v_tau, PyObject *__pyx_v_rest, PyObject *__pyx_v_noise, PyObject *__pyx_v_activation) {
+static int __pyx_pf_6c_dana_9Structure___init__(struct __pyx_obj_6c_dana_Structure *__pyx_v_self, PyObject *__pyx_v_tau, PyObject *__pyx_v_rest, PyObject *__pyx_v_noise, PyObject *__pyx_v_activation, PyObject *__pyx_v_n, PyObject *__pyx_v_n_pfc) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   PyObject *__pyx_t_2 = NULL;
   PyObject *__pyx_t_3 = NULL;
+  PyObject *__pyx_t_4 = NULL;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__init__", 0);
 
-  /* "c_dana.pyx":213
+  /* "c_dana.pyx":221
  * 
- *     def __init__(self, tau=0.01, rest=0, noise=0, activation=Identity()):
- *         self._mot = Group(np.zeros(4,dtype=dtype), tau=tau, rest=rest,             # <<<<<<<<<<<<<<
+ *     def __init__(self, tau=0.01, rest=0, noise=0, activation=Identity(), n=4, n_pfc=17):
+ *         self._mot = Group(np.zeros(n,dtype=dtype), tau=tau, rest=rest,             # <<<<<<<<<<<<<<
  *                            noise=noise, activation=activation)
- *         self._cog = Group(np.zeros(4,dtype=dtype), tau=tau, rest=rest,
+ *         self._cog = Group(np.zeros(n,dtype=dtype), tau=tau, rest=rest,
  */
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 213; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 221; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 213; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 221; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 213; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 221; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_dtype); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 213; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_INCREF(__pyx_v_n);
+  PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_v_n);
+  __Pyx_GIVEREF(__pyx_v_n);
+  __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 221; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_3) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 213; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_tuple__3, __pyx_t_1); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 213; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_dtype); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 221; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_4);
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_dtype, __pyx_t_4) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 221; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 221; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 213; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_1);
-  PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_3);
-  __Pyx_GIVEREF(__pyx_t_3);
-  __pyx_t_3 = 0;
-  __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 213; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 221; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_tau, __pyx_v_tau) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 213; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_rest, __pyx_v_rest) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 213; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_4);
+  __Pyx_GIVEREF(__pyx_t_4);
+  __pyx_t_4 = 0;
+  __pyx_t_4 = PyDict_New(); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 221; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_4);
+  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_tau, __pyx_v_tau) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 221; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_rest, __pyx_v_rest) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 221; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "c_dana.pyx":214
- *     def __init__(self, tau=0.01, rest=0, noise=0, activation=Identity()):
- *         self._mot = Group(np.zeros(4,dtype=dtype), tau=tau, rest=rest,
+  /* "c_dana.pyx":222
+ *     def __init__(self, tau=0.01, rest=0, noise=0, activation=Identity(), n=4, n_pfc=17):
+ *         self._mot = Group(np.zeros(n,dtype=dtype), tau=tau, rest=rest,
  *                            noise=noise, activation=activation)             # <<<<<<<<<<<<<<
- *         self._cog = Group(np.zeros(4,dtype=dtype), tau=tau, rest=rest,
+ *         self._cog = Group(np.zeros(n,dtype=dtype), tau=tau, rest=rest,
  *                          noise=noise, activation=activation)
  */
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_noise, __pyx_v_noise) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 213; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_activation, __pyx_v_activation) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 213; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_noise, __pyx_v_noise) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 221; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_activation, __pyx_v_activation) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 221; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "c_dana.pyx":213
+  /* "c_dana.pyx":221
  * 
- *     def __init__(self, tau=0.01, rest=0, noise=0, activation=Identity()):
- *         self._mot = Group(np.zeros(4,dtype=dtype), tau=tau, rest=rest,             # <<<<<<<<<<<<<<
+ *     def __init__(self, tau=0.01, rest=0, noise=0, activation=Identity(), n=4, n_pfc=17):
+ *         self._mot = Group(np.zeros(n,dtype=dtype), tau=tau, rest=rest,             # <<<<<<<<<<<<<<
  *                            noise=noise, activation=activation)
- *         self._cog = Group(np.zeros(4,dtype=dtype), tau=tau, rest=rest,
+ *         self._cog = Group(np.zeros(n,dtype=dtype), tau=tau, rest=rest,
  */
-  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)((PyObject*)__pyx_ptype_6c_dana_Group)), __pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 213; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)((PyObject*)__pyx_ptype_6c_dana_Group)), __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 221; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_GIVEREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_GIVEREF(__pyx_t_1);
   __Pyx_GOTREF(__pyx_v_self->_mot);
   __Pyx_DECREF(((PyObject *)__pyx_v_self->_mot));
-  __pyx_v_self->_mot = ((struct __pyx_obj_6c_dana_Group *)__pyx_t_2);
-  __pyx_t_2 = 0;
+  __pyx_v_self->_mot = ((struct __pyx_obj_6c_dana_Group *)__pyx_t_1);
+  __pyx_t_1 = 0;
 
-  /* "c_dana.pyx":215
- *         self._mot = Group(np.zeros(4,dtype=dtype), tau=tau, rest=rest,
+  /* "c_dana.pyx":223
+ *         self._mot = Group(np.zeros(n,dtype=dtype), tau=tau, rest=rest,
  *                            noise=noise, activation=activation)
- *         self._cog = Group(np.zeros(4,dtype=dtype), tau=tau, rest=rest,             # <<<<<<<<<<<<<<
+ *         self._cog = Group(np.zeros(n,dtype=dtype), tau=tau, rest=rest,             # <<<<<<<<<<<<<<
  *                          noise=noise, activation=activation)
- * 
+ *         self._pfcth1 = Group(np.zeros(n_pfc,dtype=dtype), tau=tau, rest=rest,
  */
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_zeros); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyDict_New(); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_dtype); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 223; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_dtype, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 223; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_tuple__4, __pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 223; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_INCREF(__pyx_v_n);
+  PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_v_n);
+  __Pyx_GIVEREF(__pyx_v_n);
+  __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 223; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_dtype); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 223; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_dtype, __pyx_t_2) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 223; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 223; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 223; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_3);
+  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_2);
+  __pyx_t_2 = 0;
+  __pyx_t_2 = PyDict_New(); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 223; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_tau, __pyx_v_tau) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 223; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_rest, __pyx_v_rest) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 223; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+
+  /* "c_dana.pyx":224
+ *                            noise=noise, activation=activation)
+ *         self._cog = Group(np.zeros(n,dtype=dtype), tau=tau, rest=rest,
+ *                          noise=noise, activation=activation)             # <<<<<<<<<<<<<<
+ *         self._pfcth1 = Group(np.zeros(n_pfc,dtype=dtype), tau=tau, rest=rest,
+ *                          noise=noise, activation=activation)
+ */
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_noise, __pyx_v_noise) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 223; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_activation, __pyx_v_activation) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 223; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+
+  /* "c_dana.pyx":223
+ *         self._mot = Group(np.zeros(n,dtype=dtype), tau=tau, rest=rest,
+ *                            noise=noise, activation=activation)
+ *         self._cog = Group(np.zeros(n,dtype=dtype), tau=tau, rest=rest,             # <<<<<<<<<<<<<<
+ *                          noise=noise, activation=activation)
+ *         self._pfcth1 = Group(np.zeros(n_pfc,dtype=dtype), tau=tau, rest=rest,
+ */
+  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)((PyObject*)__pyx_ptype_6c_dana_Group)), __pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 223; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_2);
-  PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_1);
+  __Pyx_GOTREF(__pyx_v_self->_cog);
+  __Pyx_DECREF(((PyObject *)__pyx_v_self->_cog));
+  __pyx_v_self->_cog = ((struct __pyx_obj_6c_dana_Group *)__pyx_t_1);
   __pyx_t_1 = 0;
-  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_tau, __pyx_v_tau) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_rest, __pyx_v_rest) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "c_dana.pyx":216
- *                            noise=noise, activation=activation)
- *         self._cog = Group(np.zeros(4,dtype=dtype), tau=tau, rest=rest,
+  /* "c_dana.pyx":225
+ *         self._cog = Group(np.zeros(n,dtype=dtype), tau=tau, rest=rest,
+ *                          noise=noise, activation=activation)
+ *         self._pfcth1 = Group(np.zeros(n_pfc,dtype=dtype), tau=tau, rest=rest,             # <<<<<<<<<<<<<<
+ *                          noise=noise, activation=activation)
+ *         self._pfcth2 = Group(np.zeros(n_pfc,dtype=dtype), tau=tau, rest=rest,
+ */
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 225; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 225; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 225; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_INCREF(__pyx_v_n_pfc);
+  PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_v_n_pfc);
+  __Pyx_GIVEREF(__pyx_v_n_pfc);
+  __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 225; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_dtype); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 225; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_4);
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_dtype, __pyx_t_4) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 225; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 225; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 225; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_3);
+  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_4);
+  __Pyx_GIVEREF(__pyx_t_4);
+  __pyx_t_4 = 0;
+  __pyx_t_4 = PyDict_New(); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 225; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_4);
+  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_tau, __pyx_v_tau) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 225; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_rest, __pyx_v_rest) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 225; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+
+  /* "c_dana.pyx":226
+ *                          noise=noise, activation=activation)
+ *         self._pfcth1 = Group(np.zeros(n_pfc,dtype=dtype), tau=tau, rest=rest,
+ *                          noise=noise, activation=activation)             # <<<<<<<<<<<<<<
+ *         self._pfcth2 = Group(np.zeros(n_pfc,dtype=dtype), tau=tau, rest=rest,
+ *                          noise=noise, activation=activation)
+ */
+  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_noise, __pyx_v_noise) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 225; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_activation, __pyx_v_activation) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 225; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+
+  /* "c_dana.pyx":225
+ *         self._cog = Group(np.zeros(n,dtype=dtype), tau=tau, rest=rest,
+ *                          noise=noise, activation=activation)
+ *         self._pfcth1 = Group(np.zeros(n_pfc,dtype=dtype), tau=tau, rest=rest,             # <<<<<<<<<<<<<<
+ *                          noise=noise, activation=activation)
+ *         self._pfcth2 = Group(np.zeros(n_pfc,dtype=dtype), tau=tau, rest=rest,
+ */
+  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)((PyObject*)__pyx_ptype_6c_dana_Group)), __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 225; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_GIVEREF(__pyx_t_1);
+  __Pyx_GOTREF(__pyx_v_self->_pfcth1);
+  __Pyx_DECREF(((PyObject *)__pyx_v_self->_pfcth1));
+  __pyx_v_self->_pfcth1 = ((struct __pyx_obj_6c_dana_Group *)__pyx_t_1);
+  __pyx_t_1 = 0;
+
+  /* "c_dana.pyx":227
+ *         self._pfcth1 = Group(np.zeros(n_pfc,dtype=dtype), tau=tau, rest=rest,
+ *                          noise=noise, activation=activation)
+ *         self._pfcth2 = Group(np.zeros(n_pfc,dtype=dtype), tau=tau, rest=rest,             # <<<<<<<<<<<<<<
+ *                          noise=noise, activation=activation)
+ * 
+ */
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 227; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 227; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 227; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_INCREF(__pyx_v_n_pfc);
+  PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_v_n_pfc);
+  __Pyx_GIVEREF(__pyx_v_n_pfc);
+  __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 227; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_dtype); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 227; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_dtype, __pyx_t_2) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 227; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 227; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 227; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_3);
+  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_2);
+  __pyx_t_2 = 0;
+  __pyx_t_2 = PyDict_New(); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 227; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_tau, __pyx_v_tau) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 227; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_rest, __pyx_v_rest) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 227; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+
+  /* "c_dana.pyx":228
+ *                          noise=noise, activation=activation)
+ *         self._pfcth2 = Group(np.zeros(n_pfc,dtype=dtype), tau=tau, rest=rest,
  *                          noise=noise, activation=activation)             # <<<<<<<<<<<<<<
  * 
  *     property mot:
  */
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_noise, __pyx_v_noise) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_activation, __pyx_v_activation) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_noise, __pyx_v_noise) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 227; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_activation, __pyx_v_activation) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 227; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "c_dana.pyx":215
- *         self._mot = Group(np.zeros(4,dtype=dtype), tau=tau, rest=rest,
- *                            noise=noise, activation=activation)
- *         self._cog = Group(np.zeros(4,dtype=dtype), tau=tau, rest=rest,             # <<<<<<<<<<<<<<
+  /* "c_dana.pyx":227
+ *         self._pfcth1 = Group(np.zeros(n_pfc,dtype=dtype), tau=tau, rest=rest,
+ *                          noise=noise, activation=activation)
+ *         self._pfcth2 = Group(np.zeros(n_pfc,dtype=dtype), tau=tau, rest=rest,             # <<<<<<<<<<<<<<
  *                          noise=noise, activation=activation)
  * 
  */
-  __pyx_t_3 = __Pyx_PyObject_Call(((PyObject *)((PyObject*)__pyx_ptype_6c_dana_Group)), __pyx_t_2, __pyx_t_1); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)((PyObject*)__pyx_ptype_6c_dana_Group)), __pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 227; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_GIVEREF(__pyx_t_3);
-  __Pyx_GOTREF(__pyx_v_self->_cog);
-  __Pyx_DECREF(((PyObject *)__pyx_v_self->_cog));
-  __pyx_v_self->_cog = ((struct __pyx_obj_6c_dana_Group *)__pyx_t_3);
-  __pyx_t_3 = 0;
+  __Pyx_GIVEREF(__pyx_t_1);
+  __Pyx_GOTREF(__pyx_v_self->_pfcth2);
+  __Pyx_DECREF(((PyObject *)__pyx_v_self->_pfcth2));
+  __pyx_v_self->_pfcth2 = ((struct __pyx_obj_6c_dana_Group *)__pyx_t_1);
+  __pyx_t_1 = 0;
 
-  /* "c_dana.pyx":212
- *     cdef Group _cog
+  /* "c_dana.pyx":220
+ *     cdef Group _pfcth2
  * 
- *     def __init__(self, tau=0.01, rest=0, noise=0, activation=Identity()):             # <<<<<<<<<<<<<<
- *         self._mot = Group(np.zeros(4,dtype=dtype), tau=tau, rest=rest,
+ *     def __init__(self, tau=0.01, rest=0, noise=0, activation=Identity(), n=4, n_pfc=17):             # <<<<<<<<<<<<<<
+ *         self._mot = Group(np.zeros(n,dtype=dtype), tau=tau, rest=rest,
  *                            noise=noise, activation=activation)
  */
 
@@ -5519,6 +6179,7 @@ static int __pyx_pf_6c_dana_9Structure___init__(struct __pyx_obj_6c_dana_Structu
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
   __Pyx_AddTraceback("c_dana.Structure.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
@@ -5526,7 +6187,7 @@ static int __pyx_pf_6c_dana_9Structure___init__(struct __pyx_obj_6c_dana_Structu
   return __pyx_r;
 }
 
-/* "c_dana.pyx":220
+/* "c_dana.pyx":232
  *     property mot:
  *         """ The motor group """
  *         def __get__(self):             # <<<<<<<<<<<<<<
@@ -5552,7 +6213,7 @@ static PyObject *__pyx_pf_6c_dana_9Structure_3mot___get__(struct __pyx_obj_6c_da
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__get__", 0);
 
-  /* "c_dana.pyx":221
+  /* "c_dana.pyx":233
  *         """ The motor group """
  *         def __get__(self):
  *             return self._mot             # <<<<<<<<<<<<<<
@@ -5564,7 +6225,7 @@ static PyObject *__pyx_pf_6c_dana_9Structure_3mot___get__(struct __pyx_obj_6c_da
   __pyx_r = ((PyObject *)__pyx_v_self->_mot);
   goto __pyx_L0;
 
-  /* "c_dana.pyx":220
+  /* "c_dana.pyx":232
  *     property mot:
  *         """ The motor group """
  *         def __get__(self):             # <<<<<<<<<<<<<<
@@ -5579,7 +6240,7 @@ static PyObject *__pyx_pf_6c_dana_9Structure_3mot___get__(struct __pyx_obj_6c_da
   return __pyx_r;
 }
 
-/* "c_dana.pyx":225
+/* "c_dana.pyx":237
  *     property cog:
  *         """ The cognitive group """
  *         def __get__(self):             # <<<<<<<<<<<<<<
@@ -5605,19 +6266,19 @@ static PyObject *__pyx_pf_6c_dana_9Structure_3cog___get__(struct __pyx_obj_6c_da
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__get__", 0);
 
-  /* "c_dana.pyx":226
+  /* "c_dana.pyx":238
  *         """ The cognitive group """
  *         def __get__(self):
  *             return self._cog             # <<<<<<<<<<<<<<
  * 
- *     def evaluate(self, double dt):
+ *     property pfcth1:
  */
   __Pyx_XDECREF(__pyx_r);
   __Pyx_INCREF(((PyObject *)__pyx_v_self->_cog));
   __pyx_r = ((PyObject *)__pyx_v_self->_cog);
   goto __pyx_L0;
 
-  /* "c_dana.pyx":225
+  /* "c_dana.pyx":237
  *     property cog:
  *         """ The cognitive group """
  *         def __get__(self):             # <<<<<<<<<<<<<<
@@ -5632,8 +6293,114 @@ static PyObject *__pyx_pf_6c_dana_9Structure_3cog___get__(struct __pyx_obj_6c_da
   return __pyx_r;
 }
 
-/* "c_dana.pyx":228
- *             return self._cog
+/* "c_dana.pyx":242
+ *     property pfcth1:
+ *         """ The cognitive group """
+ *         def __get__(self):             # <<<<<<<<<<<<<<
+ *             return self._pfcth1
+ * 
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_6c_dana_9Structure_6pfcth1_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_6c_dana_9Structure_6pfcth1_1__get__(PyObject *__pyx_v_self) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_6c_dana_9Structure_6pfcth1___get__(((struct __pyx_obj_6c_dana_Structure *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_6c_dana_9Structure_6pfcth1___get__(struct __pyx_obj_6c_dana_Structure *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__get__", 0);
+
+  /* "c_dana.pyx":243
+ *         """ The cognitive group """
+ *         def __get__(self):
+ *             return self._pfcth1             # <<<<<<<<<<<<<<
+ * 
+ *     property pfcth2:
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_INCREF(((PyObject *)__pyx_v_self->_pfcth1));
+  __pyx_r = ((PyObject *)__pyx_v_self->_pfcth1);
+  goto __pyx_L0;
+
+  /* "c_dana.pyx":242
+ *     property pfcth1:
+ *         """ The cognitive group """
+ *         def __get__(self):             # <<<<<<<<<<<<<<
+ *             return self._pfcth1
+ * 
+ */
+
+  /* function exit code */
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "c_dana.pyx":247
+ *     property pfcth2:
+ *         """ The cognitive group """
+ *         def __get__(self):             # <<<<<<<<<<<<<<
+ *             return self._pfcth2
+ * 
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_6c_dana_9Structure_6pfcth2_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_6c_dana_9Structure_6pfcth2_1__get__(PyObject *__pyx_v_self) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_6c_dana_9Structure_6pfcth2___get__(((struct __pyx_obj_6c_dana_Structure *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_6c_dana_9Structure_6pfcth2___get__(struct __pyx_obj_6c_dana_Structure *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__get__", 0);
+
+  /* "c_dana.pyx":248
+ *         """ The cognitive group """
+ *         def __get__(self):
+ *             return self._pfcth2             # <<<<<<<<<<<<<<
+ * 
+ *     def evaluate(self, double dt):
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_INCREF(((PyObject *)__pyx_v_self->_pfcth2));
+  __pyx_r = ((PyObject *)__pyx_v_self->_pfcth2);
+  goto __pyx_L0;
+
+  /* "c_dana.pyx":247
+ *     property pfcth2:
+ *         """ The cognitive group """
+ *         def __get__(self):             # <<<<<<<<<<<<<<
+ *             return self._pfcth2
+ * 
+ */
+
+  /* function exit code */
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "c_dana.pyx":250
+ *             return self._pfcth2
  * 
  *     def evaluate(self, double dt):             # <<<<<<<<<<<<<<
  *         self._mot.evaluate(dt)
@@ -5651,7 +6418,7 @@ static PyObject *__pyx_pw_6c_dana_9Structure_3evaluate(PyObject *__pyx_v_self, P
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("evaluate (wrapper)", 0);
   assert(__pyx_arg_dt); {
-    __pyx_v_dt = __pyx_PyFloat_AsDouble(__pyx_arg_dt); if (unlikely((__pyx_v_dt == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 228; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+    __pyx_v_dt = __pyx_PyFloat_AsDouble(__pyx_arg_dt); if (unlikely((__pyx_v_dt == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 250; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -5679,16 +6446,16 @@ static PyObject *__pyx_pf_6c_dana_9Structure_2evaluate(struct __pyx_obj_6c_dana_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("evaluate", 0);
 
-  /* "c_dana.pyx":229
+  /* "c_dana.pyx":251
  * 
  *     def evaluate(self, double dt):
  *         self._mot.evaluate(dt)             # <<<<<<<<<<<<<<
  *         self._cog.evaluate(dt)
- * 
+ *         self._pfcth1.evaluate(dt)
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self->_mot), __pyx_n_s_evaluate); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 229; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self->_mot), __pyx_n_s_evaluate); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 251; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyFloat_FromDouble(__pyx_v_dt); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 229; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = PyFloat_FromDouble(__pyx_v_dt); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 251; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_4 = NULL;
   if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_2))) {
@@ -5701,33 +6468,33 @@ static PyObject *__pyx_pf_6c_dana_9Structure_2evaluate(struct __pyx_obj_6c_dana_
     }
   }
   if (!__pyx_t_4) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 229; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 251; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_GOTREF(__pyx_t_1);
   } else {
-    __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 229; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 251; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_5);
     PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_4); __Pyx_GIVEREF(__pyx_t_4); __pyx_t_4 = NULL;
     PyTuple_SET_ITEM(__pyx_t_5, 0+1, __pyx_t_3);
     __Pyx_GIVEREF(__pyx_t_3);
     __pyx_t_3 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 229; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 251; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   }
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "c_dana.pyx":230
+  /* "c_dana.pyx":252
  *     def evaluate(self, double dt):
  *         self._mot.evaluate(dt)
  *         self._cog.evaluate(dt)             # <<<<<<<<<<<<<<
- * 
- *     def reset(self):
+ *         self._pfcth1.evaluate(dt)
+ *         self._pfcth2.evaluate(dt)
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self->_cog), __pyx_n_s_evaluate); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 230; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self->_cog), __pyx_n_s_evaluate); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 252; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_5 = PyFloat_FromDouble(__pyx_v_dt); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 230; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_5 = PyFloat_FromDouble(__pyx_v_dt); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 252; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_5);
   __pyx_t_3 = NULL;
   if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_2))) {
@@ -5740,25 +6507,103 @@ static PyObject *__pyx_pf_6c_dana_9Structure_2evaluate(struct __pyx_obj_6c_dana_
     }
   }
   if (!__pyx_t_3) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_5); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 230; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_5); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 252; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_GOTREF(__pyx_t_1);
   } else {
-    __pyx_t_4 = PyTuple_New(1+1); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 230; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_4 = PyTuple_New(1+1); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 252; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_4);
     PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_3); __Pyx_GIVEREF(__pyx_t_3); __pyx_t_3 = NULL;
     PyTuple_SET_ITEM(__pyx_t_4, 0+1, __pyx_t_5);
     __Pyx_GIVEREF(__pyx_t_5);
     __pyx_t_5 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 230; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 252; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   }
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "c_dana.pyx":228
- *             return self._cog
+  /* "c_dana.pyx":253
+ *         self._mot.evaluate(dt)
+ *         self._cog.evaluate(dt)
+ *         self._pfcth1.evaluate(dt)             # <<<<<<<<<<<<<<
+ *         self._pfcth2.evaluate(dt)
+ * 
+ */
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self->_pfcth1), __pyx_n_s_evaluate); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 253; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_4 = PyFloat_FromDouble(__pyx_v_dt); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 253; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_5 = NULL;
+  if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_2))) {
+    __pyx_t_5 = PyMethod_GET_SELF(__pyx_t_2);
+    if (likely(__pyx_t_5)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_5);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_2, function);
+    }
+  }
+  if (!__pyx_t_5) {
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_4); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 253; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __Pyx_GOTREF(__pyx_t_1);
+  } else {
+    __pyx_t_3 = PyTuple_New(1+1); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 253; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_GOTREF(__pyx_t_3);
+    PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_5); __Pyx_GIVEREF(__pyx_t_5); __pyx_t_5 = NULL;
+    PyTuple_SET_ITEM(__pyx_t_3, 0+1, __pyx_t_4);
+    __Pyx_GIVEREF(__pyx_t_4);
+    __pyx_t_4 = 0;
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 253; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  }
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "c_dana.pyx":254
+ *         self._cog.evaluate(dt)
+ *         self._pfcth1.evaluate(dt)
+ *         self._pfcth2.evaluate(dt)             # <<<<<<<<<<<<<<
+ * 
+ *     def reset(self):
+ */
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self->_pfcth2), __pyx_n_s_evaluate); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 254; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = PyFloat_FromDouble(__pyx_v_dt); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 254; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_4 = NULL;
+  if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_2))) {
+    __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_2);
+    if (likely(__pyx_t_4)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_4);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_2, function);
+    }
+  }
+  if (!__pyx_t_4) {
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 254; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __Pyx_GOTREF(__pyx_t_1);
+  } else {
+    __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 254; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_GOTREF(__pyx_t_5);
+    PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_4); __Pyx_GIVEREF(__pyx_t_4); __pyx_t_4 = NULL;
+    PyTuple_SET_ITEM(__pyx_t_5, 0+1, __pyx_t_3);
+    __Pyx_GIVEREF(__pyx_t_3);
+    __pyx_t_3 = 0;
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 254; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  }
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "c_dana.pyx":250
+ *             return self._pfcth2
  * 
  *     def evaluate(self, double dt):             # <<<<<<<<<<<<<<
  *         self._mot.evaluate(dt)
@@ -5782,8 +6627,8 @@ static PyObject *__pyx_pf_6c_dana_9Structure_2evaluate(struct __pyx_obj_6c_dana_
   return __pyx_r;
 }
 
-/* "c_dana.pyx":232
- *         self._cog.evaluate(dt)
+/* "c_dana.pyx":256
+ *         self._pfcth2.evaluate(dt)
  * 
  *     def reset(self):             # <<<<<<<<<<<<<<
  *         self._mot.reset()
@@ -5814,14 +6659,14 @@ static PyObject *__pyx_pf_6c_dana_9Structure_4reset(struct __pyx_obj_6c_dana_Str
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("reset", 0);
 
-  /* "c_dana.pyx":233
+  /* "c_dana.pyx":257
  * 
  *     def reset(self):
  *         self._mot.reset()             # <<<<<<<<<<<<<<
  *         self._cog.reset()
- * 
+ *         self._pfcth1.reset()
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self->_mot), __pyx_n_s_reset); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 233; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self->_mot), __pyx_n_s_reset); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 257; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_3 = NULL;
   if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_2))) {
@@ -5834,23 +6679,23 @@ static PyObject *__pyx_pf_6c_dana_9Structure_4reset(struct __pyx_obj_6c_dana_Str
     }
   }
   if (__pyx_t_3) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 233; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 257; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   } else {
-    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 233; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 257; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "c_dana.pyx":234
+  /* "c_dana.pyx":258
  *     def reset(self):
  *         self._mot.reset()
  *         self._cog.reset()             # <<<<<<<<<<<<<<
- * 
- * 
+ *         self._pfcth1.reset()
+ *         self._pfcth2.reset()
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self->_cog), __pyx_n_s_reset); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 234; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self->_cog), __pyx_n_s_reset); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 258; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_3 = NULL;
   if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_2))) {
@@ -5863,17 +6708,75 @@ static PyObject *__pyx_pf_6c_dana_9Structure_4reset(struct __pyx_obj_6c_dana_Str
     }
   }
   if (__pyx_t_3) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 234; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 258; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   } else {
-    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 234; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 258; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "c_dana.pyx":232
- *         self._cog.evaluate(dt)
+  /* "c_dana.pyx":259
+ *         self._mot.reset()
+ *         self._cog.reset()
+ *         self._pfcth1.reset()             # <<<<<<<<<<<<<<
+ *         self._pfcth2.reset()
+ * 
+ */
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self->_pfcth1), __pyx_n_s_reset); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 259; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = NULL;
+  if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_2))) {
+    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
+    if (likely(__pyx_t_3)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_3);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_2, function);
+    }
+  }
+  if (__pyx_t_3) {
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 259; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  } else {
+    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 259; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  }
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "c_dana.pyx":260
+ *         self._cog.reset()
+ *         self._pfcth1.reset()
+ *         self._pfcth2.reset()             # <<<<<<<<<<<<<<
+ * 
+ * # ---------------------------------------------------- AssociativeStructure ---
+ */
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self->_pfcth2), __pyx_n_s_reset); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 260; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = NULL;
+  if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_2))) {
+    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
+    if (likely(__pyx_t_3)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_3);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_2, function);
+    }
+  }
+  if (__pyx_t_3) {
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 260; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  } else {
+    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 260; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  }
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "c_dana.pyx":256
+ *         self._pfcth2.evaluate(dt)
  * 
  *     def reset(self):             # <<<<<<<<<<<<<<
  *         self._mot.reset()
@@ -5895,7 +6798,7 @@ static PyObject *__pyx_pf_6c_dana_9Structure_4reset(struct __pyx_obj_6c_dana_Str
   return __pyx_r;
 }
 
-/* "c_dana.pyx":242
+/* "c_dana.pyx":266
  *     cdef public Group _ass
  * 
  *     def __init__(self, tau=0.01, rest=0, noise=0, activation=Identity()):             # <<<<<<<<<<<<<<
@@ -5922,7 +6825,7 @@ static int __pyx_pw_6c_dana_20AssociativeStructure_1__init__(PyObject *__pyx_v_s
     values[0] = ((PyObject *)__pyx_float_0_01);
     values[1] = ((PyObject *)__pyx_int_0);
     values[2] = ((PyObject *)__pyx_int_0);
-    values[3] = __pyx_k__5;
+    values[3] = __pyx_k__3;
     if (unlikely(__pyx_kwds)) {
       Py_ssize_t kw_args;
       const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
@@ -5958,7 +6861,7 @@ static int __pyx_pw_6c_dana_20AssociativeStructure_1__init__(PyObject *__pyx_v_s
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 242; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 266; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -5977,7 +6880,7 @@ static int __pyx_pw_6c_dana_20AssociativeStructure_1__init__(PyObject *__pyx_v_s
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__init__", 0, 0, 4, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 242; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __Pyx_RaiseArgtupleInvalid("__init__", 0, 0, 4, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 266; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
   __Pyx_AddTraceback("c_dana.AssociativeStructure.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -6003,14 +6906,14 @@ static int __pyx_pf_6c_dana_20AssociativeStructure___init__(struct __pyx_obj_6c_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__init__", 0);
 
-  /* "c_dana.pyx":243
+  /* "c_dana.pyx":267
  * 
  *     def __init__(self, tau=0.01, rest=0, noise=0, activation=Identity()):
  *         Structure.__init__(self, tau, rest, noise, activation)             # <<<<<<<<<<<<<<
  *         self._ass = Group(np.zeros(16,dtype=dtype), tau=tau, rest=rest,
  *                           noise=noise, activation=activation)
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)((PyObject*)__pyx_ptype_6c_dana_Structure)), __pyx_n_s_init); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 243; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)((PyObject*)__pyx_ptype_6c_dana_Structure)), __pyx_n_s_init); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 267; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_3 = NULL;
   __pyx_t_4 = 0;
@@ -6024,7 +6927,7 @@ static int __pyx_pf_6c_dana_20AssociativeStructure___init__(struct __pyx_obj_6c_
       __pyx_t_4 = 1;
     }
   }
-  __pyx_t_5 = PyTuple_New(5+__pyx_t_4); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 243; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_5 = PyTuple_New(5+__pyx_t_4); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 267; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_5);
   if (__pyx_t_3) {
     PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_3); __Pyx_GIVEREF(__pyx_t_3); __pyx_t_3 = NULL;
@@ -6044,62 +6947,62 @@ static int __pyx_pf_6c_dana_20AssociativeStructure___init__(struct __pyx_obj_6c_
   __Pyx_INCREF(__pyx_v_activation);
   PyTuple_SET_ITEM(__pyx_t_5, 4+__pyx_t_4, __pyx_v_activation);
   __Pyx_GIVEREF(__pyx_v_activation);
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 243; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 267; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "c_dana.pyx":244
+  /* "c_dana.pyx":268
  *     def __init__(self, tau=0.01, rest=0, noise=0, activation=Identity()):
  *         Structure.__init__(self, tau, rest, noise, activation)
  *         self._ass = Group(np.zeros(16,dtype=dtype), tau=tau, rest=rest,             # <<<<<<<<<<<<<<
  *                           noise=noise, activation=activation)
  * 
  */
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 244; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 268; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 244; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 268; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 244; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 268; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_5 = __Pyx_GetModuleGlobalName(__pyx_n_s_dtype); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 244; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_5 = __Pyx_GetModuleGlobalName(__pyx_n_s_dtype); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 268; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_5);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_5) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 244; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_5) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 268; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_tuple__6, __pyx_t_1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 244; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_tuple__4, __pyx_t_1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 268; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 244; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 268; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_5);
   __Pyx_GIVEREF(__pyx_t_5);
   __pyx_t_5 = 0;
-  __pyx_t_5 = PyDict_New(); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 244; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_5 = PyDict_New(); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 268; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_5);
-  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_tau, __pyx_v_tau) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 244; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_rest, __pyx_v_rest) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 244; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_tau, __pyx_v_tau) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 268; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_rest, __pyx_v_rest) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 268; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "c_dana.pyx":245
+  /* "c_dana.pyx":269
  *         Structure.__init__(self, tau, rest, noise, activation)
  *         self._ass = Group(np.zeros(16,dtype=dtype), tau=tau, rest=rest,
  *                           noise=noise, activation=activation)             # <<<<<<<<<<<<<<
  * 
  *     def evaluate(self, double dt):
  */
-  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_noise, __pyx_v_noise) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 244; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_activation, __pyx_v_activation) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 244; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_noise, __pyx_v_noise) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 268; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_activation, __pyx_v_activation) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 268; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "c_dana.pyx":244
+  /* "c_dana.pyx":268
  *     def __init__(self, tau=0.01, rest=0, noise=0, activation=Identity()):
  *         Structure.__init__(self, tau, rest, noise, activation)
  *         self._ass = Group(np.zeros(16,dtype=dtype), tau=tau, rest=rest,             # <<<<<<<<<<<<<<
  *                           noise=noise, activation=activation)
  * 
  */
-  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)((PyObject*)__pyx_ptype_6c_dana_Group)), __pyx_t_1, __pyx_t_5); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 244; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)((PyObject*)__pyx_ptype_6c_dana_Group)), __pyx_t_1, __pyx_t_5); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 268; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
@@ -6109,7 +7012,7 @@ static int __pyx_pf_6c_dana_20AssociativeStructure___init__(struct __pyx_obj_6c_
   __pyx_v_self->_ass = ((struct __pyx_obj_6c_dana_Group *)__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "c_dana.pyx":242
+  /* "c_dana.pyx":266
  *     cdef public Group _ass
  * 
  *     def __init__(self, tau=0.01, rest=0, noise=0, activation=Identity()):             # <<<<<<<<<<<<<<
@@ -6132,7 +7035,7 @@ static int __pyx_pf_6c_dana_20AssociativeStructure___init__(struct __pyx_obj_6c_
   return __pyx_r;
 }
 
-/* "c_dana.pyx":247
+/* "c_dana.pyx":271
  *                           noise=noise, activation=activation)
  * 
  *     def evaluate(self, double dt):             # <<<<<<<<<<<<<<
@@ -6151,7 +7054,7 @@ static PyObject *__pyx_pw_6c_dana_20AssociativeStructure_3evaluate(PyObject *__p
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("evaluate (wrapper)", 0);
   assert(__pyx_arg_dt); {
-    __pyx_v_dt = __pyx_PyFloat_AsDouble(__pyx_arg_dt); if (unlikely((__pyx_v_dt == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 247; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+    __pyx_v_dt = __pyx_PyFloat_AsDouble(__pyx_arg_dt); if (unlikely((__pyx_v_dt == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 271; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -6180,16 +7083,16 @@ static PyObject *__pyx_pf_6c_dana_20AssociativeStructure_2evaluate(struct __pyx_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("evaluate", 0);
 
-  /* "c_dana.pyx":248
+  /* "c_dana.pyx":272
  * 
  *     def evaluate(self, double dt):
  *         Structure.evaluate(self, dt)             # <<<<<<<<<<<<<<
  *         self._ass.evaluate(dt)
  * 
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)((PyObject*)__pyx_ptype_6c_dana_Structure)), __pyx_n_s_evaluate); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 248; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)((PyObject*)__pyx_ptype_6c_dana_Structure)), __pyx_n_s_evaluate); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 272; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyFloat_FromDouble(__pyx_v_dt); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 248; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = PyFloat_FromDouble(__pyx_v_dt); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 272; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_4 = NULL;
   __pyx_t_5 = 0;
@@ -6203,7 +7106,7 @@ static PyObject *__pyx_pf_6c_dana_20AssociativeStructure_2evaluate(struct __pyx_
       __pyx_t_5 = 1;
     }
   }
-  __pyx_t_6 = PyTuple_New(2+__pyx_t_5); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 248; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_6 = PyTuple_New(2+__pyx_t_5); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 272; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_6);
   if (__pyx_t_4) {
     PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_4); __Pyx_GIVEREF(__pyx_t_4); __pyx_t_4 = NULL;
@@ -6214,22 +7117,22 @@ static PyObject *__pyx_pf_6c_dana_20AssociativeStructure_2evaluate(struct __pyx_
   PyTuple_SET_ITEM(__pyx_t_6, 1+__pyx_t_5, __pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_3);
   __pyx_t_3 = 0;
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_6, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 248; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_6, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 272; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "c_dana.pyx":249
+  /* "c_dana.pyx":273
  *     def evaluate(self, double dt):
  *         Structure.evaluate(self, dt)
  *         self._ass.evaluate(dt)             # <<<<<<<<<<<<<<
  * 
  *     def reset(self):
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self->_ass), __pyx_n_s_evaluate); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 249; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self->_ass), __pyx_n_s_evaluate); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 273; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_6 = PyFloat_FromDouble(__pyx_v_dt); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 249; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_6 = PyFloat_FromDouble(__pyx_v_dt); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 273; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_6);
   __pyx_t_3 = NULL;
   if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_2))) {
@@ -6242,24 +7145,24 @@ static PyObject *__pyx_pf_6c_dana_20AssociativeStructure_2evaluate(struct __pyx_
     }
   }
   if (!__pyx_t_3) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_6); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 249; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_6); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 273; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_GOTREF(__pyx_t_1);
   } else {
-    __pyx_t_4 = PyTuple_New(1+1); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 249; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_4 = PyTuple_New(1+1); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 273; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_4);
     PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_3); __Pyx_GIVEREF(__pyx_t_3); __pyx_t_3 = NULL;
     PyTuple_SET_ITEM(__pyx_t_4, 0+1, __pyx_t_6);
     __Pyx_GIVEREF(__pyx_t_6);
     __pyx_t_6 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 249; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 273; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   }
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "c_dana.pyx":247
+  /* "c_dana.pyx":271
  *                           noise=noise, activation=activation)
  * 
  *     def evaluate(self, double dt):             # <<<<<<<<<<<<<<
@@ -6284,7 +7187,7 @@ static PyObject *__pyx_pf_6c_dana_20AssociativeStructure_2evaluate(struct __pyx_
   return __pyx_r;
 }
 
-/* "c_dana.pyx":251
+/* "c_dana.pyx":275
  *         self._ass.evaluate(dt)
  * 
  *     def reset(self):             # <<<<<<<<<<<<<<
@@ -6317,14 +7220,14 @@ static PyObject *__pyx_pf_6c_dana_20AssociativeStructure_4reset(struct __pyx_obj
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("reset", 0);
 
-  /* "c_dana.pyx":252
+  /* "c_dana.pyx":276
  * 
  *     def reset(self):
  *         Structure.reset(self)             # <<<<<<<<<<<<<<
  *         self._ass.reset()
  * 
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)((PyObject*)__pyx_ptype_6c_dana_Structure)), __pyx_n_s_reset); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 252; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)((PyObject*)__pyx_ptype_6c_dana_Structure)), __pyx_n_s_reset); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 276; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_3 = NULL;
   if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_2))) {
@@ -6337,30 +7240,30 @@ static PyObject *__pyx_pf_6c_dana_20AssociativeStructure_4reset(struct __pyx_obj
     }
   }
   if (!__pyx_t_3) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, ((PyObject *)__pyx_v_self)); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 252; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, ((PyObject *)__pyx_v_self)); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 276; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
   } else {
-    __pyx_t_4 = PyTuple_New(1+1); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 252; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_4 = PyTuple_New(1+1); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 276; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_4);
     PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_3); __Pyx_GIVEREF(__pyx_t_3); __pyx_t_3 = NULL;
     __Pyx_INCREF(((PyObject *)__pyx_v_self));
     PyTuple_SET_ITEM(__pyx_t_4, 0+1, ((PyObject *)__pyx_v_self));
     __Pyx_GIVEREF(((PyObject *)__pyx_v_self));
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 252; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 276; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   }
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "c_dana.pyx":253
+  /* "c_dana.pyx":277
  *     def reset(self):
  *         Structure.reset(self)
  *         self._ass.reset()             # <<<<<<<<<<<<<<
  * 
  *     property ass:
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self->_ass), __pyx_n_s_reset); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 253; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self->_ass), __pyx_n_s_reset); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 277; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_4 = NULL;
   if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_2))) {
@@ -6373,16 +7276,16 @@ static PyObject *__pyx_pf_6c_dana_20AssociativeStructure_4reset(struct __pyx_obj
     }
   }
   if (__pyx_t_4) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_4); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 253; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_4); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 277; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   } else {
-    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 253; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 277; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "c_dana.pyx":251
+  /* "c_dana.pyx":275
  *         self._ass.evaluate(dt)
  * 
  *     def reset(self):             # <<<<<<<<<<<<<<
@@ -6406,7 +7309,7 @@ static PyObject *__pyx_pf_6c_dana_20AssociativeStructure_4reset(struct __pyx_obj
   return __pyx_r;
 }
 
-/* "c_dana.pyx":257
+/* "c_dana.pyx":281
  *     property ass:
  *         """ The associative group """
  *         def __get__(self):             # <<<<<<<<<<<<<<
@@ -6432,19 +7335,19 @@ static PyObject *__pyx_pf_6c_dana_20AssociativeStructure_3ass___get__(struct __p
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__get__", 0);
 
-  /* "c_dana.pyx":258
+  /* "c_dana.pyx":282
  *         """ The associative group """
  *         def __get__(self):
  *             return self._ass             # <<<<<<<<<<<<<<
  * 
- * 
+ * # --------------------------------------------------------------- ArmStructure ---
  */
   __Pyx_XDECREF(__pyx_r);
   __Pyx_INCREF(((PyObject *)__pyx_v_self->_ass));
   __pyx_r = ((PyObject *)__pyx_v_self->_ass);
   goto __pyx_L0;
 
-  /* "c_dana.pyx":257
+  /* "c_dana.pyx":281
  *     property ass:
  *         """ The associative group """
  *         def __get__(self):             # <<<<<<<<<<<<<<
@@ -6459,7 +7362,7 @@ static PyObject *__pyx_pf_6c_dana_20AssociativeStructure_3ass___get__(struct __p
   return __pyx_r;
 }
 
-/* "c_dana.pyx":240
+/* "c_dana.pyx":264
  * # ---------------------------------------------------- AssociativeStructure ---
  * cdef class AssociativeStructure(Structure):
  *     cdef public Group _ass             # <<<<<<<<<<<<<<
@@ -6517,7 +7420,7 @@ static int __pyx_pf_6c_dana_20AssociativeStructure_4_ass_2__set__(struct __pyx_o
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__set__", 0);
-  if (!(likely(((__pyx_v_value) == Py_None) || likely(__Pyx_TypeTest(__pyx_v_value, __pyx_ptype_6c_dana_Group))))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 240; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (!(likely(((__pyx_v_value) == Py_None) || likely(__Pyx_TypeTest(__pyx_v_value, __pyx_ptype_6c_dana_Group))))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 264; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_t_1 = __pyx_v_value;
   __Pyx_INCREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_1);
@@ -6567,10 +7470,649 @@ static int __pyx_pf_6c_dana_20AssociativeStructure_4_ass_4__del__(struct __pyx_o
   return __pyx_r;
 }
 
-/* "c_dana.pyx":269
- *     cdef double    _gain
+/* "c_dana.pyx":289
+ *     cdef Group _theta2
  * 
- *     def __init__(self, source, target, weights, gain=1.0):             # <<<<<<<<<<<<<<
+ *     def __init__(self, tau=0.01, rest=0, noise=0, activation=Identity(), n = 17):             # <<<<<<<<<<<<<<
+ *         self._theta1 = Group(np.zeros(n,dtype=dtype), tau=tau, rest=rest,
+ *                            noise=noise, activation=activation)
+ */
+
+/* Python wrapper */
+static int __pyx_pw_6c_dana_12ArmStructure_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static int __pyx_pw_6c_dana_12ArmStructure_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+  PyObject *__pyx_v_tau = 0;
+  PyObject *__pyx_v_rest = 0;
+  PyObject *__pyx_v_noise = 0;
+  PyObject *__pyx_v_activation = 0;
+  PyObject *__pyx_v_n = 0;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__init__ (wrapper)", 0);
+  {
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_tau,&__pyx_n_s_rest,&__pyx_n_s_noise,&__pyx_n_s_activation,&__pyx_n_s_n,0};
+    PyObject* values[5] = {0,0,0,0,0};
+    values[0] = ((PyObject *)__pyx_float_0_01);
+    values[1] = ((PyObject *)__pyx_int_0);
+    values[2] = ((PyObject *)__pyx_int_0);
+    values[3] = __pyx_k__5;
+    values[4] = ((PyObject *)__pyx_int_17);
+    if (unlikely(__pyx_kwds)) {
+      Py_ssize_t kw_args;
+      const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
+      switch (pos_args) {
+        case  5: values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
+        case  4: values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
+        case  3: values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
+        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      kw_args = PyDict_Size(__pyx_kwds);
+      switch (pos_args) {
+        case  0:
+        if (kw_args > 0) {
+          PyObject* value = PyDict_GetItem(__pyx_kwds, __pyx_n_s_tau);
+          if (value) { values[0] = value; kw_args--; }
+        }
+        case  1:
+        if (kw_args > 0) {
+          PyObject* value = PyDict_GetItem(__pyx_kwds, __pyx_n_s_rest);
+          if (value) { values[1] = value; kw_args--; }
+        }
+        case  2:
+        if (kw_args > 0) {
+          PyObject* value = PyDict_GetItem(__pyx_kwds, __pyx_n_s_noise);
+          if (value) { values[2] = value; kw_args--; }
+        }
+        case  3:
+        if (kw_args > 0) {
+          PyObject* value = PyDict_GetItem(__pyx_kwds, __pyx_n_s_activation);
+          if (value) { values[3] = value; kw_args--; }
+        }
+        case  4:
+        if (kw_args > 0) {
+          PyObject* value = PyDict_GetItem(__pyx_kwds, __pyx_n_s_n);
+          if (value) { values[4] = value; kw_args--; }
+        }
+      }
+      if (unlikely(kw_args > 0)) {
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 289; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+      }
+    } else {
+      switch (PyTuple_GET_SIZE(__pyx_args)) {
+        case  5: values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
+        case  4: values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
+        case  3: values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
+        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+    }
+    __pyx_v_tau = values[0];
+    __pyx_v_rest = values[1];
+    __pyx_v_noise = values[2];
+    __pyx_v_activation = values[3];
+    __pyx_v_n = values[4];
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("__init__", 0, 0, 5, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 289; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("c_dana.ArmStructure.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return -1;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_6c_dana_12ArmStructure___init__(((struct __pyx_obj_6c_dana_ArmStructure *)__pyx_v_self), __pyx_v_tau, __pyx_v_rest, __pyx_v_noise, __pyx_v_activation, __pyx_v_n);
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static int __pyx_pf_6c_dana_12ArmStructure___init__(struct __pyx_obj_6c_dana_ArmStructure *__pyx_v_self, PyObject *__pyx_v_tau, PyObject *__pyx_v_rest, PyObject *__pyx_v_noise, PyObject *__pyx_v_activation, PyObject *__pyx_v_n) {
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  PyObject *__pyx_t_4 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__init__", 0);
+
+  /* "c_dana.pyx":290
+ * 
+ *     def __init__(self, tau=0.01, rest=0, noise=0, activation=Identity(), n = 17):
+ *         self._theta1 = Group(np.zeros(n,dtype=dtype), tau=tau, rest=rest,             # <<<<<<<<<<<<<<
+ *                            noise=noise, activation=activation)
+ *         self._theta2 = Group(np.zeros(n,dtype=dtype), tau=tau, rest=rest,
+ */
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 290; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 290; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 290; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_INCREF(__pyx_v_n);
+  PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_v_n);
+  __Pyx_GIVEREF(__pyx_v_n);
+  __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 290; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_dtype); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 290; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_4);
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_dtype, __pyx_t_4) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 290; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 290; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 290; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_3);
+  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_4);
+  __Pyx_GIVEREF(__pyx_t_4);
+  __pyx_t_4 = 0;
+  __pyx_t_4 = PyDict_New(); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 290; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_4);
+  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_tau, __pyx_v_tau) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 290; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_rest, __pyx_v_rest) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 290; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+
+  /* "c_dana.pyx":291
+ *     def __init__(self, tau=0.01, rest=0, noise=0, activation=Identity(), n = 17):
+ *         self._theta1 = Group(np.zeros(n,dtype=dtype), tau=tau, rest=rest,
+ *                            noise=noise, activation=activation)             # <<<<<<<<<<<<<<
+ *         self._theta2 = Group(np.zeros(n,dtype=dtype), tau=tau, rest=rest,
+ *                          noise=noise, activation=activation)
+ */
+  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_noise, __pyx_v_noise) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 290; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_activation, __pyx_v_activation) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 290; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+
+  /* "c_dana.pyx":290
+ * 
+ *     def __init__(self, tau=0.01, rest=0, noise=0, activation=Identity(), n = 17):
+ *         self._theta1 = Group(np.zeros(n,dtype=dtype), tau=tau, rest=rest,             # <<<<<<<<<<<<<<
+ *                            noise=noise, activation=activation)
+ *         self._theta2 = Group(np.zeros(n,dtype=dtype), tau=tau, rest=rest,
+ */
+  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)((PyObject*)__pyx_ptype_6c_dana_Group)), __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 290; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_GIVEREF(__pyx_t_1);
+  __Pyx_GOTREF(__pyx_v_self->_theta1);
+  __Pyx_DECREF(((PyObject *)__pyx_v_self->_theta1));
+  __pyx_v_self->_theta1 = ((struct __pyx_obj_6c_dana_Group *)__pyx_t_1);
+  __pyx_t_1 = 0;
+
+  /* "c_dana.pyx":292
+ *         self._theta1 = Group(np.zeros(n,dtype=dtype), tau=tau, rest=rest,
+ *                            noise=noise, activation=activation)
+ *         self._theta2 = Group(np.zeros(n,dtype=dtype), tau=tau, rest=rest,             # <<<<<<<<<<<<<<
+ *                          noise=noise, activation=activation)
+ * 
+ */
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 292; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 292; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 292; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_INCREF(__pyx_v_n);
+  PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_v_n);
+  __Pyx_GIVEREF(__pyx_v_n);
+  __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 292; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_dtype); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 292; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_dtype, __pyx_t_2) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 292; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 292; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 292; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_3);
+  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_2);
+  __pyx_t_2 = 0;
+  __pyx_t_2 = PyDict_New(); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 292; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_tau, __pyx_v_tau) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 292; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_rest, __pyx_v_rest) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 292; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+
+  /* "c_dana.pyx":293
+ *                            noise=noise, activation=activation)
+ *         self._theta2 = Group(np.zeros(n,dtype=dtype), tau=tau, rest=rest,
+ *                          noise=noise, activation=activation)             # <<<<<<<<<<<<<<
+ * 
+ *     property theta1:
+ */
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_noise, __pyx_v_noise) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 292; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_activation, __pyx_v_activation) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 292; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+
+  /* "c_dana.pyx":292
+ *         self._theta1 = Group(np.zeros(n,dtype=dtype), tau=tau, rest=rest,
+ *                            noise=noise, activation=activation)
+ *         self._theta2 = Group(np.zeros(n,dtype=dtype), tau=tau, rest=rest,             # <<<<<<<<<<<<<<
+ *                          noise=noise, activation=activation)
+ * 
+ */
+  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)((PyObject*)__pyx_ptype_6c_dana_Group)), __pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 292; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_GIVEREF(__pyx_t_1);
+  __Pyx_GOTREF(__pyx_v_self->_theta2);
+  __Pyx_DECREF(((PyObject *)__pyx_v_self->_theta2));
+  __pyx_v_self->_theta2 = ((struct __pyx_obj_6c_dana_Group *)__pyx_t_1);
+  __pyx_t_1 = 0;
+
+  /* "c_dana.pyx":289
+ *     cdef Group _theta2
+ * 
+ *     def __init__(self, tau=0.01, rest=0, noise=0, activation=Identity(), n = 17):             # <<<<<<<<<<<<<<
+ *         self._theta1 = Group(np.zeros(n,dtype=dtype), tau=tau, rest=rest,
+ *                            noise=noise, activation=activation)
+ */
+
+  /* function exit code */
+  __pyx_r = 0;
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_AddTraceback("c_dana.ArmStructure.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = -1;
+  __pyx_L0:;
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "c_dana.pyx":297
+ *     property theta1:
+ *         """ The motor group """
+ *         def __get__(self):             # <<<<<<<<<<<<<<
+ *             return self._theta1
+ * 
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_6c_dana_12ArmStructure_6theta1_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_6c_dana_12ArmStructure_6theta1_1__get__(PyObject *__pyx_v_self) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_6c_dana_12ArmStructure_6theta1___get__(((struct __pyx_obj_6c_dana_ArmStructure *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_6c_dana_12ArmStructure_6theta1___get__(struct __pyx_obj_6c_dana_ArmStructure *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__get__", 0);
+
+  /* "c_dana.pyx":298
+ *         """ The motor group """
+ *         def __get__(self):
+ *             return self._theta1             # <<<<<<<<<<<<<<
+ * 
+ *     property theta2:
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_INCREF(((PyObject *)__pyx_v_self->_theta1));
+  __pyx_r = ((PyObject *)__pyx_v_self->_theta1);
+  goto __pyx_L0;
+
+  /* "c_dana.pyx":297
+ *     property theta1:
+ *         """ The motor group """
+ *         def __get__(self):             # <<<<<<<<<<<<<<
+ *             return self._theta1
+ * 
+ */
+
+  /* function exit code */
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "c_dana.pyx":302
+ *     property theta2:
+ *         """ The cognitive group """
+ *         def __get__(self):             # <<<<<<<<<<<<<<
+ *             return self._theta2
+ * 
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_6c_dana_12ArmStructure_6theta2_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_6c_dana_12ArmStructure_6theta2_1__get__(PyObject *__pyx_v_self) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_6c_dana_12ArmStructure_6theta2___get__(((struct __pyx_obj_6c_dana_ArmStructure *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_6c_dana_12ArmStructure_6theta2___get__(struct __pyx_obj_6c_dana_ArmStructure *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__get__", 0);
+
+  /* "c_dana.pyx":303
+ *         """ The cognitive group """
+ *         def __get__(self):
+ *             return self._theta2             # <<<<<<<<<<<<<<
+ * 
+ *     def evaluate(self, double dt):
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_INCREF(((PyObject *)__pyx_v_self->_theta2));
+  __pyx_r = ((PyObject *)__pyx_v_self->_theta2);
+  goto __pyx_L0;
+
+  /* "c_dana.pyx":302
+ *     property theta2:
+ *         """ The cognitive group """
+ *         def __get__(self):             # <<<<<<<<<<<<<<
+ *             return self._theta2
+ * 
+ */
+
+  /* function exit code */
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "c_dana.pyx":305
+ *             return self._theta2
+ * 
+ *     def evaluate(self, double dt):             # <<<<<<<<<<<<<<
+ *         self._theta1.evaluate(dt)
+ *         self._theta2.evaluate(dt)
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_6c_dana_12ArmStructure_3evaluate(PyObject *__pyx_v_self, PyObject *__pyx_arg_dt); /*proto*/
+static PyObject *__pyx_pw_6c_dana_12ArmStructure_3evaluate(PyObject *__pyx_v_self, PyObject *__pyx_arg_dt) {
+  double __pyx_v_dt;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("evaluate (wrapper)", 0);
+  assert(__pyx_arg_dt); {
+    __pyx_v_dt = __pyx_PyFloat_AsDouble(__pyx_arg_dt); if (unlikely((__pyx_v_dt == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 305; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("c_dana.ArmStructure.evaluate", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_6c_dana_12ArmStructure_2evaluate(((struct __pyx_obj_6c_dana_ArmStructure *)__pyx_v_self), ((double)__pyx_v_dt));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_6c_dana_12ArmStructure_2evaluate(struct __pyx_obj_6c_dana_ArmStructure *__pyx_v_self, double __pyx_v_dt) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  PyObject *__pyx_t_4 = NULL;
+  PyObject *__pyx_t_5 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("evaluate", 0);
+
+  /* "c_dana.pyx":306
+ * 
+ *     def evaluate(self, double dt):
+ *         self._theta1.evaluate(dt)             # <<<<<<<<<<<<<<
+ *         self._theta2.evaluate(dt)
+ * 
+ */
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self->_theta1), __pyx_n_s_evaluate); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 306; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = PyFloat_FromDouble(__pyx_v_dt); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 306; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_4 = NULL;
+  if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_2))) {
+    __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_2);
+    if (likely(__pyx_t_4)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_4);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_2, function);
+    }
+  }
+  if (!__pyx_t_4) {
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 306; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __Pyx_GOTREF(__pyx_t_1);
+  } else {
+    __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 306; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_GOTREF(__pyx_t_5);
+    PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_4); __Pyx_GIVEREF(__pyx_t_4); __pyx_t_4 = NULL;
+    PyTuple_SET_ITEM(__pyx_t_5, 0+1, __pyx_t_3);
+    __Pyx_GIVEREF(__pyx_t_3);
+    __pyx_t_3 = 0;
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 306; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  }
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "c_dana.pyx":307
+ *     def evaluate(self, double dt):
+ *         self._theta1.evaluate(dt)
+ *         self._theta2.evaluate(dt)             # <<<<<<<<<<<<<<
+ * 
+ *     def reset(self):
+ */
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self->_theta2), __pyx_n_s_evaluate); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 307; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_5 = PyFloat_FromDouble(__pyx_v_dt); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 307; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_3 = NULL;
+  if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_2))) {
+    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
+    if (likely(__pyx_t_3)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_3);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_2, function);
+    }
+  }
+  if (!__pyx_t_3) {
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_5); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 307; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __Pyx_GOTREF(__pyx_t_1);
+  } else {
+    __pyx_t_4 = PyTuple_New(1+1); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 307; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_GOTREF(__pyx_t_4);
+    PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_3); __Pyx_GIVEREF(__pyx_t_3); __pyx_t_3 = NULL;
+    PyTuple_SET_ITEM(__pyx_t_4, 0+1, __pyx_t_5);
+    __Pyx_GIVEREF(__pyx_t_5);
+    __pyx_t_5 = 0;
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 307; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  }
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "c_dana.pyx":305
+ *             return self._theta2
+ * 
+ *     def evaluate(self, double dt):             # <<<<<<<<<<<<<<
+ *         self._theta1.evaluate(dt)
+ *         self._theta2.evaluate(dt)
+ */
+
+  /* function exit code */
+  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_AddTraceback("c_dana.ArmStructure.evaluate", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "c_dana.pyx":309
+ *         self._theta2.evaluate(dt)
+ * 
+ *     def reset(self):             # <<<<<<<<<<<<<<
+ *         self._theta1.reset()
+ *         self._theta2.reset()
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_6c_dana_12ArmStructure_5reset(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_6c_dana_12ArmStructure_5reset(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("reset (wrapper)", 0);
+  __pyx_r = __pyx_pf_6c_dana_12ArmStructure_4reset(((struct __pyx_obj_6c_dana_ArmStructure *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_6c_dana_12ArmStructure_4reset(struct __pyx_obj_6c_dana_ArmStructure *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("reset", 0);
+
+  /* "c_dana.pyx":310
+ * 
+ *     def reset(self):
+ *         self._theta1.reset()             # <<<<<<<<<<<<<<
+ *         self._theta2.reset()
+ * 
+ */
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self->_theta1), __pyx_n_s_reset); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 310; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = NULL;
+  if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_2))) {
+    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
+    if (likely(__pyx_t_3)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_3);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_2, function);
+    }
+  }
+  if (__pyx_t_3) {
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 310; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  } else {
+    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 310; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  }
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "c_dana.pyx":311
+ *     def reset(self):
+ *         self._theta1.reset()
+ *         self._theta2.reset()             # <<<<<<<<<<<<<<
+ * 
+ * 
+ */
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self->_theta2), __pyx_n_s_reset); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 311; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = NULL;
+  if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_2))) {
+    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
+    if (likely(__pyx_t_3)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_3);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_2, function);
+    }
+  }
+  if (__pyx_t_3) {
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 311; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  } else {
+    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 311; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  }
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "c_dana.pyx":309
+ *         self._theta2.evaluate(dt)
+ * 
+ *     def reset(self):             # <<<<<<<<<<<<<<
+ *         self._theta1.reset()
+ *         self._theta2.reset()
+ */
+
+  /* function exit code */
+  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_AddTraceback("c_dana.ArmStructure.reset", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "c_dana.pyx":327
+ *     cdef int       _npfc
+ * 
+ *     def __init__(self, source, target, weights, gain=1.0, n=4, narm=9, npfc=17):             # <<<<<<<<<<<<<<
  *         self._active = True
  *         self._gain = gain
  */
@@ -6582,6 +8124,9 @@ static int __pyx_pw_6c_dana_10Connection_1__init__(PyObject *__pyx_v_self, PyObj
   PyObject *__pyx_v_target = 0;
   PyObject *__pyx_v_weights = 0;
   PyObject *__pyx_v_gain = 0;
+  PyObject *__pyx_v_n = 0;
+  PyObject *__pyx_v_narm = 0;
+  PyObject *__pyx_v_npfc = 0;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -6589,13 +8134,19 @@ static int __pyx_pw_6c_dana_10Connection_1__init__(PyObject *__pyx_v_self, PyObj
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__init__ (wrapper)", 0);
   {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_source,&__pyx_n_s_target,&__pyx_n_s_weights,&__pyx_n_s_gain,0};
-    PyObject* values[4] = {0,0,0,0};
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_source,&__pyx_n_s_target,&__pyx_n_s_weights,&__pyx_n_s_gain,&__pyx_n_s_n,&__pyx_n_s_narm,&__pyx_n_s_npfc,0};
+    PyObject* values[7] = {0,0,0,0,0,0,0};
     values[3] = ((PyObject *)__pyx_float_1_0);
+    values[4] = ((PyObject *)__pyx_int_4);
+    values[5] = ((PyObject *)__pyx_int_9);
+    values[6] = ((PyObject *)__pyx_int_17);
     if (unlikely(__pyx_kwds)) {
       Py_ssize_t kw_args;
       const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
       switch (pos_args) {
+        case  7: values[6] = PyTuple_GET_ITEM(__pyx_args, 6);
+        case  6: values[5] = PyTuple_GET_ITEM(__pyx_args, 5);
+        case  5: values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
         case  4: values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
         case  3: values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
         case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
@@ -6611,24 +8162,42 @@ static int __pyx_pw_6c_dana_10Connection_1__init__(PyObject *__pyx_v_self, PyObj
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_target)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 0, 3, 4, 1); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 269; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("__init__", 0, 3, 7, 1); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 327; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_weights)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 0, 3, 4, 2); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 269; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("__init__", 0, 3, 7, 2); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 327; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  3:
         if (kw_args > 0) {
           PyObject* value = PyDict_GetItem(__pyx_kwds, __pyx_n_s_gain);
           if (value) { values[3] = value; kw_args--; }
         }
+        case  4:
+        if (kw_args > 0) {
+          PyObject* value = PyDict_GetItem(__pyx_kwds, __pyx_n_s_n);
+          if (value) { values[4] = value; kw_args--; }
+        }
+        case  5:
+        if (kw_args > 0) {
+          PyObject* value = PyDict_GetItem(__pyx_kwds, __pyx_n_s_narm);
+          if (value) { values[5] = value; kw_args--; }
+        }
+        case  6:
+        if (kw_args > 0) {
+          PyObject* value = PyDict_GetItem(__pyx_kwds, __pyx_n_s_npfc);
+          if (value) { values[6] = value; kw_args--; }
+        }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 269; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 327; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
+        case  7: values[6] = PyTuple_GET_ITEM(__pyx_args, 6);
+        case  6: values[5] = PyTuple_GET_ITEM(__pyx_args, 5);
+        case  5: values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
         case  4: values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
         case  3: values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
         values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
@@ -6641,54 +8210,58 @@ static int __pyx_pw_6c_dana_10Connection_1__init__(PyObject *__pyx_v_self, PyObj
     __pyx_v_target = values[1];
     __pyx_v_weights = values[2];
     __pyx_v_gain = values[3];
+    __pyx_v_n = values[4];
+    __pyx_v_narm = values[5];
+    __pyx_v_npfc = values[6];
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__init__", 0, 3, 4, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 269; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __Pyx_RaiseArgtupleInvalid("__init__", 0, 3, 7, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 327; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
   __Pyx_AddTraceback("c_dana.Connection.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return -1;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_6c_dana_10Connection___init__(((struct __pyx_obj_6c_dana_Connection *)__pyx_v_self), __pyx_v_source, __pyx_v_target, __pyx_v_weights, __pyx_v_gain);
+  __pyx_r = __pyx_pf_6c_dana_10Connection___init__(((struct __pyx_obj_6c_dana_Connection *)__pyx_v_self), __pyx_v_source, __pyx_v_target, __pyx_v_weights, __pyx_v_gain, __pyx_v_n, __pyx_v_narm, __pyx_v_npfc);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static int __pyx_pf_6c_dana_10Connection___init__(struct __pyx_obj_6c_dana_Connection *__pyx_v_self, PyObject *__pyx_v_source, PyObject *__pyx_v_target, PyObject *__pyx_v_weights, PyObject *__pyx_v_gain) {
+static int __pyx_pf_6c_dana_10Connection___init__(struct __pyx_obj_6c_dana_Connection *__pyx_v_self, PyObject *__pyx_v_source, PyObject *__pyx_v_target, PyObject *__pyx_v_weights, PyObject *__pyx_v_gain, PyObject *__pyx_v_n, PyObject *__pyx_v_narm, PyObject *__pyx_v_npfc) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   double __pyx_t_1;
   __Pyx_memviewslice __pyx_t_2 = { 0, 0, { 0 }, { 0 }, { 0 } };
   __Pyx_memviewslice __pyx_t_3 = { 0, 0, { 0 }, { 0 }, { 0 } };
   __Pyx_memviewslice __pyx_t_4 = { 0, 0, { 0 }, { 0 }, { 0 } };
+  int __pyx_t_5;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__init__", 0);
 
-  /* "c_dana.pyx":270
+  /* "c_dana.pyx":328
  * 
- *     def __init__(self, source, target, weights, gain=1.0):
+ *     def __init__(self, source, target, weights, gain=1.0, n=4, narm=9, npfc=17):
  *         self._active = True             # <<<<<<<<<<<<<<
  *         self._gain = gain
  *         self._source = source
  */
   __pyx_v_self->_active = 1;
 
-  /* "c_dana.pyx":271
- *     def __init__(self, source, target, weights, gain=1.0):
+  /* "c_dana.pyx":329
+ *     def __init__(self, source, target, weights, gain=1.0, n=4, narm=9, npfc=17):
  *         self._active = True
  *         self._gain = gain             # <<<<<<<<<<<<<<
  *         self._source = source
  *         self._target = target
  */
-  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_gain); if (unlikely((__pyx_t_1 == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 271; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_gain); if (unlikely((__pyx_t_1 == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 329; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_v_self->_gain = __pyx_t_1;
 
-  /* "c_dana.pyx":272
+  /* "c_dana.pyx":330
  *         self._active = True
  *         self._gain = gain
  *         self._source = source             # <<<<<<<<<<<<<<
@@ -6696,44 +8269,74 @@ static int __pyx_pf_6c_dana_10Connection___init__(struct __pyx_obj_6c_dana_Conne
  *         self._weights = weights
  */
   __pyx_t_2 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(__pyx_v_source);
-  if (unlikely(!__pyx_t_2.memview)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 272; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (unlikely(!__pyx_t_2.memview)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 330; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __PYX_XDEC_MEMVIEW(&__pyx_v_self->_source, 0);
   __pyx_v_self->_source = __pyx_t_2;
   __pyx_t_2.memview = NULL;
   __pyx_t_2.data = NULL;
 
-  /* "c_dana.pyx":273
+  /* "c_dana.pyx":331
  *         self._gain = gain
  *         self._source = source
  *         self._target = target             # <<<<<<<<<<<<<<
  *         self._weights = weights
- * 
+ *         self._n         = n
  */
   __pyx_t_3 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(__pyx_v_target);
-  if (unlikely(!__pyx_t_3.memview)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 273; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (unlikely(!__pyx_t_3.memview)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 331; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __PYX_XDEC_MEMVIEW(&__pyx_v_self->_target, 0);
   __pyx_v_self->_target = __pyx_t_3;
   __pyx_t_3.memview = NULL;
   __pyx_t_3.data = NULL;
 
-  /* "c_dana.pyx":274
+  /* "c_dana.pyx":332
  *         self._source = source
  *         self._target = target
  *         self._weights = weights             # <<<<<<<<<<<<<<
- * 
- *     def flush(self):
+ *         self._n         = n
+ *         self._narm      = narm
  */
   __pyx_t_4 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(__pyx_v_weights);
-  if (unlikely(!__pyx_t_4.memview)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 274; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (unlikely(!__pyx_t_4.memview)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 332; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __PYX_XDEC_MEMVIEW(&__pyx_v_self->_weights, 0);
   __pyx_v_self->_weights = __pyx_t_4;
   __pyx_t_4.memview = NULL;
   __pyx_t_4.data = NULL;
 
-  /* "c_dana.pyx":269
- *     cdef double    _gain
+  /* "c_dana.pyx":333
+ *         self._target = target
+ *         self._weights = weights
+ *         self._n         = n             # <<<<<<<<<<<<<<
+ *         self._narm      = narm
+ *         self._npfc      = npfc
+ */
+  __pyx_t_5 = __Pyx_PyInt_As_int(__pyx_v_n); if (unlikely((__pyx_t_5 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 333; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_v_self->_n = __pyx_t_5;
+
+  /* "c_dana.pyx":334
+ *         self._weights = weights
+ *         self._n         = n
+ *         self._narm      = narm             # <<<<<<<<<<<<<<
+ *         self._npfc      = npfc
  * 
- *     def __init__(self, source, target, weights, gain=1.0):             # <<<<<<<<<<<<<<
+ */
+  __pyx_t_5 = __Pyx_PyInt_As_int(__pyx_v_narm); if (unlikely((__pyx_t_5 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 334; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_v_self->_narm = __pyx_t_5;
+
+  /* "c_dana.pyx":335
+ *         self._n         = n
+ *         self._narm      = narm
+ *         self._npfc      = npfc             # <<<<<<<<<<<<<<
+ * 
+ *     def flush(self):
+ */
+  __pyx_t_5 = __Pyx_PyInt_As_int(__pyx_v_npfc); if (unlikely((__pyx_t_5 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 335; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_v_self->_npfc = __pyx_t_5;
+
+  /* "c_dana.pyx":327
+ *     cdef int       _npfc
+ * 
+ *     def __init__(self, source, target, weights, gain=1.0, n=4, narm=9, npfc=17):             # <<<<<<<<<<<<<<
  *         self._active = True
  *         self._gain = gain
  */
@@ -6752,8 +8355,8 @@ static int __pyx_pf_6c_dana_10Connection___init__(struct __pyx_obj_6c_dana_Conne
   return __pyx_r;
 }
 
-/* "c_dana.pyx":276
- *         self._weights = weights
+/* "c_dana.pyx":337
+ *         self._npfc      = npfc
  * 
  *     def flush(self):             # <<<<<<<<<<<<<<
  *         cdef int i
@@ -6786,26 +8389,26 @@ static PyObject *__pyx_pf_6c_dana_10Connection_2flush(struct __pyx_obj_6c_dana_C
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("flush", 0);
 
-  /* "c_dana.pyx":278
+  /* "c_dana.pyx":339
  *     def flush(self):
  *         cdef int i
  *         for i in range(self._target.shape[0]):             # <<<<<<<<<<<<<<
  *             self._target[i] = 0.0
  * 
  */
-  if (unlikely(!__pyx_v_self->_target.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 278; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+  if (unlikely(!__pyx_v_self->_target.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 339; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
   __pyx_t_1 = (__pyx_v_self->_target.shape[0]);
   for (__pyx_t_2 = 0; __pyx_t_2 < __pyx_t_1; __pyx_t_2+=1) {
     __pyx_v_i = __pyx_t_2;
 
-    /* "c_dana.pyx":279
+    /* "c_dana.pyx":340
  *         cdef int i
  *         for i in range(self._target.shape[0]):
  *             self._target[i] = 0.0             # <<<<<<<<<<<<<<
  * 
  *     property gain:
  */
-    if (unlikely(!__pyx_v_self->_target.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 279; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+    if (unlikely(!__pyx_v_self->_target.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 340; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
     __pyx_t_3 = __pyx_v_i;
     __pyx_t_4 = -1;
     if (__pyx_t_3 < 0) {
@@ -6814,13 +8417,13 @@ static PyObject *__pyx_pf_6c_dana_10Connection_2flush(struct __pyx_obj_6c_dana_C
     } else if (unlikely(__pyx_t_3 >= __pyx_v_self->_target.shape[0])) __pyx_t_4 = 0;
     if (unlikely(__pyx_t_4 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_4);
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 279; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 340; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
     *((double *) ( /* dim=0 */ (__pyx_v_self->_target.data + __pyx_t_3 * __pyx_v_self->_target.strides[0]) )) = 0.0;
   }
 
-  /* "c_dana.pyx":276
- *         self._weights = weights
+  /* "c_dana.pyx":337
+ *         self._npfc      = npfc
  * 
  *     def flush(self):             # <<<<<<<<<<<<<<
  *         cdef int i
@@ -6839,7 +8442,7 @@ static PyObject *__pyx_pf_6c_dana_10Connection_2flush(struct __pyx_obj_6c_dana_C
   return __pyx_r;
 }
 
-/* "c_dana.pyx":283
+/* "c_dana.pyx":344
  *     property gain:
  *         """Gain of the connection"""
  *         def __get__(self):             # <<<<<<<<<<<<<<
@@ -6869,7 +8472,7 @@ static PyObject *__pyx_pf_6c_dana_10Connection_4gain___get__(struct __pyx_obj_6c
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
 
-  /* "c_dana.pyx":284
+  /* "c_dana.pyx":345
  *         """Gain of the connection"""
  *         def __get__(self):
  *             return self._gain             # <<<<<<<<<<<<<<
@@ -6877,13 +8480,13 @@ static PyObject *__pyx_pf_6c_dana_10Connection_4gain___get__(struct __pyx_obj_6c
  *             self._gain = value
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->_gain); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 284; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->_gain); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 345; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "c_dana.pyx":283
+  /* "c_dana.pyx":344
  *     property gain:
  *         """Gain of the connection"""
  *         def __get__(self):             # <<<<<<<<<<<<<<
@@ -6902,7 +8505,7 @@ static PyObject *__pyx_pf_6c_dana_10Connection_4gain___get__(struct __pyx_obj_6c
   return __pyx_r;
 }
 
-/* "c_dana.pyx":285
+/* "c_dana.pyx":346
  *         def __get__(self):
  *             return self._gain
  *         def __set__(self, value):             # <<<<<<<<<<<<<<
@@ -6932,17 +8535,17 @@ static int __pyx_pf_6c_dana_10Connection_4gain_2__set__(struct __pyx_obj_6c_dana
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__set__", 0);
 
-  /* "c_dana.pyx":286
+  /* "c_dana.pyx":347
  *             return self._gain
  *         def __set__(self, value):
  *             self._gain = value             # <<<<<<<<<<<<<<
  * 
- *     property active:
+ *     property n:
  */
-  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_1 == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 286; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_1 == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 347; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_v_self->_gain = __pyx_t_1;
 
-  /* "c_dana.pyx":285
+  /* "c_dana.pyx":346
  *         def __get__(self):
  *             return self._gain
  *         def __set__(self, value):             # <<<<<<<<<<<<<<
@@ -6961,7 +8564,373 @@ static int __pyx_pf_6c_dana_10Connection_4gain_2__set__(struct __pyx_obj_6c_dana
   return __pyx_r;
 }
 
-/* "c_dana.pyx":290
+/* "c_dana.pyx":351
+ *     property n:
+ *         """Gain of the connection"""
+ *         def __get__(self):             # <<<<<<<<<<<<<<
+ *             return self._n
+ *         def __set__(self, value):
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_6c_dana_10Connection_1n_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_6c_dana_10Connection_1n_1__get__(PyObject *__pyx_v_self) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_6c_dana_10Connection_1n___get__(((struct __pyx_obj_6c_dana_Connection *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_6c_dana_10Connection_1n___get__(struct __pyx_obj_6c_dana_Connection *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__get__", 0);
+
+  /* "c_dana.pyx":352
+ *         """Gain of the connection"""
+ *         def __get__(self):
+ *             return self._n             # <<<<<<<<<<<<<<
+ *         def __set__(self, value):
+ *             self._n = value
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->_n); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 352; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* "c_dana.pyx":351
+ *     property n:
+ *         """Gain of the connection"""
+ *         def __get__(self):             # <<<<<<<<<<<<<<
+ *             return self._n
+ *         def __set__(self, value):
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("c_dana.Connection.n.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "c_dana.pyx":353
+ *         def __get__(self):
+ *             return self._n
+ *         def __set__(self, value):             # <<<<<<<<<<<<<<
+ *             self._n = value
+ * 
+ */
+
+/* Python wrapper */
+static int __pyx_pw_6c_dana_10Connection_1n_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
+static int __pyx_pw_6c_dana_10Connection_1n_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__set__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_6c_dana_10Connection_1n_2__set__(((struct __pyx_obj_6c_dana_Connection *)__pyx_v_self), ((PyObject *)__pyx_v_value));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static int __pyx_pf_6c_dana_10Connection_1n_2__set__(struct __pyx_obj_6c_dana_Connection *__pyx_v_self, PyObject *__pyx_v_value) {
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  int __pyx_t_1;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__set__", 0);
+
+  /* "c_dana.pyx":354
+ *             return self._n
+ *         def __set__(self, value):
+ *             self._n = value             # <<<<<<<<<<<<<<
+ * 
+ *     property narm:
+ */
+  __pyx_t_1 = __Pyx_PyInt_As_int(__pyx_v_value); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 354; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_v_self->_n = __pyx_t_1;
+
+  /* "c_dana.pyx":353
+ *         def __get__(self):
+ *             return self._n
+ *         def __set__(self, value):             # <<<<<<<<<<<<<<
+ *             self._n = value
+ * 
+ */
+
+  /* function exit code */
+  __pyx_r = 0;
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_AddTraceback("c_dana.Connection.n.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = -1;
+  __pyx_L0:;
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "c_dana.pyx":358
+ *     property narm:
+ *         """Gain of the connection"""
+ *         def __get__(self):             # <<<<<<<<<<<<<<
+ *             return self._narm
+ *         def __set__(self, value):
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_6c_dana_10Connection_4narm_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_6c_dana_10Connection_4narm_1__get__(PyObject *__pyx_v_self) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_6c_dana_10Connection_4narm___get__(((struct __pyx_obj_6c_dana_Connection *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_6c_dana_10Connection_4narm___get__(struct __pyx_obj_6c_dana_Connection *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__get__", 0);
+
+  /* "c_dana.pyx":359
+ *         """Gain of the connection"""
+ *         def __get__(self):
+ *             return self._narm             # <<<<<<<<<<<<<<
+ *         def __set__(self, value):
+ *             self._narm = value
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->_narm); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 359; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* "c_dana.pyx":358
+ *     property narm:
+ *         """Gain of the connection"""
+ *         def __get__(self):             # <<<<<<<<<<<<<<
+ *             return self._narm
+ *         def __set__(self, value):
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("c_dana.Connection.narm.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "c_dana.pyx":360
+ *         def __get__(self):
+ *             return self._narm
+ *         def __set__(self, value):             # <<<<<<<<<<<<<<
+ *             self._narm = value
+ * 
+ */
+
+/* Python wrapper */
+static int __pyx_pw_6c_dana_10Connection_4narm_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
+static int __pyx_pw_6c_dana_10Connection_4narm_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__set__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_6c_dana_10Connection_4narm_2__set__(((struct __pyx_obj_6c_dana_Connection *)__pyx_v_self), ((PyObject *)__pyx_v_value));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static int __pyx_pf_6c_dana_10Connection_4narm_2__set__(struct __pyx_obj_6c_dana_Connection *__pyx_v_self, PyObject *__pyx_v_value) {
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  int __pyx_t_1;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__set__", 0);
+
+  /* "c_dana.pyx":361
+ *             return self._narm
+ *         def __set__(self, value):
+ *             self._narm = value             # <<<<<<<<<<<<<<
+ * 
+ *     property npfc:
+ */
+  __pyx_t_1 = __Pyx_PyInt_As_int(__pyx_v_value); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 361; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_v_self->_narm = __pyx_t_1;
+
+  /* "c_dana.pyx":360
+ *         def __get__(self):
+ *             return self._narm
+ *         def __set__(self, value):             # <<<<<<<<<<<<<<
+ *             self._narm = value
+ * 
+ */
+
+  /* function exit code */
+  __pyx_r = 0;
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_AddTraceback("c_dana.Connection.narm.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = -1;
+  __pyx_L0:;
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "c_dana.pyx":365
+ *     property npfc:
+ *         """Gain of the connection"""
+ *         def __get__(self):             # <<<<<<<<<<<<<<
+ *             return self._npfc
+ *         def __set__(self, value):
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_6c_dana_10Connection_4npfc_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_6c_dana_10Connection_4npfc_1__get__(PyObject *__pyx_v_self) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_6c_dana_10Connection_4npfc___get__(((struct __pyx_obj_6c_dana_Connection *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_6c_dana_10Connection_4npfc___get__(struct __pyx_obj_6c_dana_Connection *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__get__", 0);
+
+  /* "c_dana.pyx":366
+ *         """Gain of the connection"""
+ *         def __get__(self):
+ *             return self._npfc             # <<<<<<<<<<<<<<
+ *         def __set__(self, value):
+ *             self._npfc = value
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->_npfc); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 366; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* "c_dana.pyx":365
+ *     property npfc:
+ *         """Gain of the connection"""
+ *         def __get__(self):             # <<<<<<<<<<<<<<
+ *             return self._npfc
+ *         def __set__(self, value):
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("c_dana.Connection.npfc.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "c_dana.pyx":367
+ *         def __get__(self):
+ *             return self._npfc
+ *         def __set__(self, value):             # <<<<<<<<<<<<<<
+ *             self._npfc = value
+ * 
+ */
+
+/* Python wrapper */
+static int __pyx_pw_6c_dana_10Connection_4npfc_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
+static int __pyx_pw_6c_dana_10Connection_4npfc_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__set__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_6c_dana_10Connection_4npfc_2__set__(((struct __pyx_obj_6c_dana_Connection *)__pyx_v_self), ((PyObject *)__pyx_v_value));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static int __pyx_pf_6c_dana_10Connection_4npfc_2__set__(struct __pyx_obj_6c_dana_Connection *__pyx_v_self, PyObject *__pyx_v_value) {
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  int __pyx_t_1;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__set__", 0);
+
+  /* "c_dana.pyx":368
+ *             return self._npfc
+ *         def __set__(self, value):
+ *             self._npfc = value             # <<<<<<<<<<<<<<
+ * 
+ *     property active:
+ */
+  __pyx_t_1 = __Pyx_PyInt_As_int(__pyx_v_value); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 368; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_v_self->_npfc = __pyx_t_1;
+
+  /* "c_dana.pyx":367
+ *         def __get__(self):
+ *             return self._npfc
+ *         def __set__(self, value):             # <<<<<<<<<<<<<<
+ *             self._npfc = value
+ * 
+ */
+
+  /* function exit code */
+  __pyx_r = 0;
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_AddTraceback("c_dana.Connection.npfc.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = -1;
+  __pyx_L0:;
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "c_dana.pyx":372
  *     property active:
  *         """ Whether connection is active """
  *         def __get__(self):             # <<<<<<<<<<<<<<
@@ -6991,7 +8960,7 @@ static PyObject *__pyx_pf_6c_dana_10Connection_6active___get__(struct __pyx_obj_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
 
-  /* "c_dana.pyx":291
+  /* "c_dana.pyx":373
  *         """ Whether connection is active """
  *         def __get__(self):
  *             return self._active             # <<<<<<<<<<<<<<
@@ -6999,13 +8968,13 @@ static PyObject *__pyx_pf_6c_dana_10Connection_6active___get__(struct __pyx_obj_
  *             self._active = value
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->_active); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 291; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->_active); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 373; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "c_dana.pyx":290
+  /* "c_dana.pyx":372
  *     property active:
  *         """ Whether connection is active """
  *         def __get__(self):             # <<<<<<<<<<<<<<
@@ -7024,7 +8993,7 @@ static PyObject *__pyx_pf_6c_dana_10Connection_6active___get__(struct __pyx_obj_
   return __pyx_r;
 }
 
-/* "c_dana.pyx":292
+/* "c_dana.pyx":374
  *         def __get__(self):
  *             return self._active
  *         def __set__(self, value):             # <<<<<<<<<<<<<<
@@ -7054,17 +9023,17 @@ static int __pyx_pf_6c_dana_10Connection_6active_2__set__(struct __pyx_obj_6c_da
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__set__", 0);
 
-  /* "c_dana.pyx":293
+  /* "c_dana.pyx":375
  *             return self._active
  *         def __set__(self, value):
  *             self._active = value             # <<<<<<<<<<<<<<
  * 
  *     property source:
  */
-  __pyx_t_1 = __Pyx_PyInt_As_int(__pyx_v_value); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 293; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyInt_As_int(__pyx_v_value); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 375; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_v_self->_active = __pyx_t_1;
 
-  /* "c_dana.pyx":292
+  /* "c_dana.pyx":374
  *         def __get__(self):
  *             return self._active
  *         def __set__(self, value):             # <<<<<<<<<<<<<<
@@ -7083,7 +9052,7 @@ static int __pyx_pf_6c_dana_10Connection_6active_2__set__(struct __pyx_obj_6c_da
   return __pyx_r;
 }
 
-/* "c_dana.pyx":297
+/* "c_dana.pyx":379
  *     property source:
  *         """Source of the connection """
  *         def __get__(self):             # <<<<<<<<<<<<<<
@@ -7117,7 +9086,7 @@ static PyObject *__pyx_pf_6c_dana_10Connection_6source___get__(struct __pyx_obj_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
 
-  /* "c_dana.pyx":298
+  /* "c_dana.pyx":380
  *         """Source of the connection """
  *         def __get__(self):
  *             return np.asarray(self._source)             # <<<<<<<<<<<<<<
@@ -7125,13 +9094,13 @@ static PyObject *__pyx_pf_6c_dana_10Connection_6source___get__(struct __pyx_obj_
  *     property target:
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 298; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 380; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_asarray); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 298; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_asarray); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 380; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (unlikely(!__pyx_v_self->_source.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 298; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
-  __pyx_t_2 = __pyx_memoryview_fromslice(__pyx_v_self->_source, 1, (PyObject *(*)(char *)) __pyx_memview_get_double, (int (*)(char *, PyObject *)) __pyx_memview_set_double, 0);; if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 298; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (unlikely(!__pyx_v_self->_source.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 380; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+  __pyx_t_2 = __pyx_memoryview_fromslice(__pyx_v_self->_source, 1, (PyObject *(*)(char *)) __pyx_memview_get_double, (int (*)(char *, PyObject *)) __pyx_memview_set_double, 0);; if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 380; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_4 = NULL;
   if (CYTHON_COMPILING_IN_CPYTHON && unlikely(PyMethod_Check(__pyx_t_3))) {
@@ -7144,17 +9113,17 @@ static PyObject *__pyx_pf_6c_dana_10Connection_6source___get__(struct __pyx_obj_
     }
   }
   if (!__pyx_t_4) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 298; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 380; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_GOTREF(__pyx_t_1);
   } else {
-    __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 298; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 380; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_5);
     PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_4); __Pyx_GIVEREF(__pyx_t_4); __pyx_t_4 = NULL;
     PyTuple_SET_ITEM(__pyx_t_5, 0+1, __pyx_t_2);
     __Pyx_GIVEREF(__pyx_t_2);
     __pyx_t_2 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 298; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 380; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   }
@@ -7163,7 +9132,7 @@ static PyObject *__pyx_pf_6c_dana_10Connection_6source___get__(struct __pyx_obj_
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "c_dana.pyx":297
+  /* "c_dana.pyx":379
  *     property source:
  *         """Source of the connection """
  *         def __get__(self):             # <<<<<<<<<<<<<<
@@ -7186,7 +9155,7 @@ static PyObject *__pyx_pf_6c_dana_10Connection_6source___get__(struct __pyx_obj_
   return __pyx_r;
 }
 
-/* "c_dana.pyx":302
+/* "c_dana.pyx":384
  *     property target:
  *         """Target of the connection (numpy array)"""
  *         def __get__(self):             # <<<<<<<<<<<<<<
@@ -7220,7 +9189,7 @@ static PyObject *__pyx_pf_6c_dana_10Connection_6target___get__(struct __pyx_obj_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
 
-  /* "c_dana.pyx":303
+  /* "c_dana.pyx":385
  *         """Target of the connection (numpy array)"""
  *         def __get__(self):
  *             return np.asarray(self._target)             # <<<<<<<<<<<<<<
@@ -7228,13 +9197,13 @@ static PyObject *__pyx_pf_6c_dana_10Connection_6target___get__(struct __pyx_obj_
  *     property weights:
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 303; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 385; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_asarray); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 303; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_asarray); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 385; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (unlikely(!__pyx_v_self->_target.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 303; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
-  __pyx_t_2 = __pyx_memoryview_fromslice(__pyx_v_self->_target, 1, (PyObject *(*)(char *)) __pyx_memview_get_double, (int (*)(char *, PyObject *)) __pyx_memview_set_double, 0);; if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 303; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (unlikely(!__pyx_v_self->_target.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 385; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+  __pyx_t_2 = __pyx_memoryview_fromslice(__pyx_v_self->_target, 1, (PyObject *(*)(char *)) __pyx_memview_get_double, (int (*)(char *, PyObject *)) __pyx_memview_set_double, 0);; if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 385; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_4 = NULL;
   if (CYTHON_COMPILING_IN_CPYTHON && unlikely(PyMethod_Check(__pyx_t_3))) {
@@ -7247,17 +9216,17 @@ static PyObject *__pyx_pf_6c_dana_10Connection_6target___get__(struct __pyx_obj_
     }
   }
   if (!__pyx_t_4) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 303; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 385; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_GOTREF(__pyx_t_1);
   } else {
-    __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 303; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 385; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_5);
     PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_4); __Pyx_GIVEREF(__pyx_t_4); __pyx_t_4 = NULL;
     PyTuple_SET_ITEM(__pyx_t_5, 0+1, __pyx_t_2);
     __Pyx_GIVEREF(__pyx_t_2);
     __pyx_t_2 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 303; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 385; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   }
@@ -7266,7 +9235,7 @@ static PyObject *__pyx_pf_6c_dana_10Connection_6target___get__(struct __pyx_obj_
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "c_dana.pyx":302
+  /* "c_dana.pyx":384
  *     property target:
  *         """Target of the connection (numpy array)"""
  *         def __get__(self):             # <<<<<<<<<<<<<<
@@ -7289,7 +9258,7 @@ static PyObject *__pyx_pf_6c_dana_10Connection_6target___get__(struct __pyx_obj_
   return __pyx_r;
 }
 
-/* "c_dana.pyx":307
+/* "c_dana.pyx":389
  *     property weights:
  *         """Weights matrix (numpy array)"""
  *         def __get__(self):             # <<<<<<<<<<<<<<
@@ -7323,7 +9292,7 @@ static PyObject *__pyx_pf_6c_dana_10Connection_7weights___get__(struct __pyx_obj
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
 
-  /* "c_dana.pyx":308
+  /* "c_dana.pyx":390
  *         """Weights matrix (numpy array)"""
  *         def __get__(self):
  *             return np.asarray(self._weights)             # <<<<<<<<<<<<<<
@@ -7331,13 +9300,13 @@ static PyObject *__pyx_pf_6c_dana_10Connection_7weights___get__(struct __pyx_obj
  *             self._weights = weights
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 308; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 390; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_asarray); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 308; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_asarray); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 390; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (unlikely(!__pyx_v_self->_weights.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 308; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
-  __pyx_t_2 = __pyx_memoryview_fromslice(__pyx_v_self->_weights, 1, (PyObject *(*)(char *)) __pyx_memview_get_double, (int (*)(char *, PyObject *)) __pyx_memview_set_double, 0);; if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 308; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (unlikely(!__pyx_v_self->_weights.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 390; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+  __pyx_t_2 = __pyx_memoryview_fromslice(__pyx_v_self->_weights, 1, (PyObject *(*)(char *)) __pyx_memview_get_double, (int (*)(char *, PyObject *)) __pyx_memview_set_double, 0);; if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 390; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_4 = NULL;
   if (CYTHON_COMPILING_IN_CPYTHON && unlikely(PyMethod_Check(__pyx_t_3))) {
@@ -7350,17 +9319,17 @@ static PyObject *__pyx_pf_6c_dana_10Connection_7weights___get__(struct __pyx_obj
     }
   }
   if (!__pyx_t_4) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 308; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 390; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_GOTREF(__pyx_t_1);
   } else {
-    __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 308; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 390; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_5);
     PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_4); __Pyx_GIVEREF(__pyx_t_4); __pyx_t_4 = NULL;
     PyTuple_SET_ITEM(__pyx_t_5, 0+1, __pyx_t_2);
     __Pyx_GIVEREF(__pyx_t_2);
     __pyx_t_2 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 308; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 390; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   }
@@ -7369,7 +9338,7 @@ static PyObject *__pyx_pf_6c_dana_10Connection_7weights___get__(struct __pyx_obj
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "c_dana.pyx":307
+  /* "c_dana.pyx":389
  *     property weights:
  *         """Weights matrix (numpy array)"""
  *         def __get__(self):             # <<<<<<<<<<<<<<
@@ -7392,7 +9361,7 @@ static PyObject *__pyx_pf_6c_dana_10Connection_7weights___get__(struct __pyx_obj
   return __pyx_r;
 }
 
-/* "c_dana.pyx":309
+/* "c_dana.pyx":391
  *         def __get__(self):
  *             return np.asarray(self._weights)
  *         def __set__(self, weights):             # <<<<<<<<<<<<<<
@@ -7422,7 +9391,7 @@ static int __pyx_pf_6c_dana_10Connection_7weights_2__set__(struct __pyx_obj_6c_d
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__set__", 0);
 
-  /* "c_dana.pyx":310
+  /* "c_dana.pyx":392
  *             return np.asarray(self._weights)
  *         def __set__(self, weights):
  *             self._weights = weights             # <<<<<<<<<<<<<<
@@ -7430,13 +9399,13 @@ static int __pyx_pf_6c_dana_10Connection_7weights_2__set__(struct __pyx_obj_6c_d
  * 
  */
   __pyx_t_1 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(__pyx_v_weights);
-  if (unlikely(!__pyx_t_1.memview)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 310; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (unlikely(!__pyx_t_1.memview)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 392; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __PYX_XDEC_MEMVIEW(&__pyx_v_self->_weights, 0);
   __pyx_v_self->_weights = __pyx_t_1;
   __pyx_t_1.memview = NULL;
   __pyx_t_1.data = NULL;
 
-  /* "c_dana.pyx":309
+  /* "c_dana.pyx":391
  *         def __get__(self):
  *             return np.asarray(self._weights)
  *         def __set__(self, weights):             # <<<<<<<<<<<<<<
@@ -7456,7 +9425,7 @@ static int __pyx_pf_6c_dana_10Connection_7weights_2__set__(struct __pyx_obj_6c_d
   return __pyx_r;
 }
 
-/* "c_dana.pyx":315
+/* "c_dana.pyx":397
  * # --- OneToOne---
  * cdef class OneToOne(Connection):
  *     def propagate(self):             # <<<<<<<<<<<<<<
@@ -7493,7 +9462,7 @@ static PyObject *__pyx_pf_6c_dana_8OneToOne_propagate(struct __pyx_obj_6c_dana_O
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("propagate", 0);
 
-  /* "c_dana.pyx":317
+  /* "c_dana.pyx":399
  *     def propagate(self):
  *         cdef int i
  *         if not self._active: return             # <<<<<<<<<<<<<<
@@ -7507,26 +9476,26 @@ static PyObject *__pyx_pf_6c_dana_8OneToOne_propagate(struct __pyx_obj_6c_dana_O
     goto __pyx_L0;
   }
 
-  /* "c_dana.pyx":319
+  /* "c_dana.pyx":401
  *         if not self._active: return
  * 
  *         for i in range(self._target.shape[0]):             # <<<<<<<<<<<<<<
  *             self._target[i] += self._source[i] * self._weights[i] * self._gain
  * 
  */
-  if (unlikely(!__pyx_v_self->__pyx_base._target.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 319; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+  if (unlikely(!__pyx_v_self->__pyx_base._target.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 401; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
   __pyx_t_2 = (__pyx_v_self->__pyx_base._target.shape[0]);
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "c_dana.pyx":320
+    /* "c_dana.pyx":402
  * 
  *         for i in range(self._target.shape[0]):
  *             self._target[i] += self._source[i] * self._weights[i] * self._gain             # <<<<<<<<<<<<<<
  * 
  * 
  */
-    if (unlikely(!__pyx_v_self->__pyx_base._source.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 320; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+    if (unlikely(!__pyx_v_self->__pyx_base._source.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 402; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
     __pyx_t_4 = __pyx_v_i;
     __pyx_t_5 = -1;
     if (__pyx_t_4 < 0) {
@@ -7535,9 +9504,9 @@ static PyObject *__pyx_pf_6c_dana_8OneToOne_propagate(struct __pyx_obj_6c_dana_O
     } else if (unlikely(__pyx_t_4 >= __pyx_v_self->__pyx_base._source.shape[0])) __pyx_t_5 = 0;
     if (unlikely(__pyx_t_5 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_5);
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 320; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 402; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
-    if (unlikely(!__pyx_v_self->__pyx_base._weights.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 320; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+    if (unlikely(!__pyx_v_self->__pyx_base._weights.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 402; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
     __pyx_t_5 = __pyx_v_i;
     __pyx_t_6 = -1;
     if (__pyx_t_5 < 0) {
@@ -7546,9 +9515,9 @@ static PyObject *__pyx_pf_6c_dana_8OneToOne_propagate(struct __pyx_obj_6c_dana_O
     } else if (unlikely(__pyx_t_5 >= __pyx_v_self->__pyx_base._weights.shape[0])) __pyx_t_6 = 0;
     if (unlikely(__pyx_t_6 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_6);
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 320; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 402; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
-    if (unlikely(!__pyx_v_self->__pyx_base._target.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 320; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+    if (unlikely(!__pyx_v_self->__pyx_base._target.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 402; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
     __pyx_t_6 = __pyx_v_i;
     __pyx_t_7 = -1;
     if (__pyx_t_6 < 0) {
@@ -7557,12 +9526,12 @@ static PyObject *__pyx_pf_6c_dana_8OneToOne_propagate(struct __pyx_obj_6c_dana_O
     } else if (unlikely(__pyx_t_6 >= __pyx_v_self->__pyx_base._target.shape[0])) __pyx_t_7 = 0;
     if (unlikely(__pyx_t_7 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_7);
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 320; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 402; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
     *((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._target.data + __pyx_t_6 * __pyx_v_self->__pyx_base._target.strides[0]) )) += (((*((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._source.data + __pyx_t_4 * __pyx_v_self->__pyx_base._source.strides[0]) ))) * (*((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._weights.data + __pyx_t_5 * __pyx_v_self->__pyx_base._weights.strides[0]) )))) * __pyx_v_self->__pyx_base._gain);
   }
 
-  /* "c_dana.pyx":315
+  /* "c_dana.pyx":397
  * # --- OneToOne---
  * cdef class OneToOne(Connection):
  *     def propagate(self):             # <<<<<<<<<<<<<<
@@ -7582,7 +9551,7 @@ static PyObject *__pyx_pf_6c_dana_8OneToOne_propagate(struct __pyx_obj_6c_dana_O
   return __pyx_r;
 }
 
-/* "c_dana.pyx":325
+/* "c_dana.pyx":407
  * # --- OneToAll ---
  * cdef class OneToAll(Connection):
  *     def propagate(self):             # <<<<<<<<<<<<<<
@@ -7623,7 +9592,7 @@ static PyObject *__pyx_pf_6c_dana_8OneToAll_propagate(struct __pyx_obj_6c_dana_O
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("propagate", 0);
 
-  /* "c_dana.pyx":327
+  /* "c_dana.pyx":409
  *     def propagate(self):
  *         cdef int i,j
  *         if not self._active: return             # <<<<<<<<<<<<<<
@@ -7637,7 +9606,7 @@ static PyObject *__pyx_pf_6c_dana_8OneToAll_propagate(struct __pyx_obj_6c_dana_O
     goto __pyx_L0;
   }
 
-  /* "c_dana.pyx":329
+  /* "c_dana.pyx":411
  *         if not self._active: return
  * 
  *         for i in range(4):             # <<<<<<<<<<<<<<
@@ -7647,14 +9616,14 @@ static PyObject *__pyx_pf_6c_dana_8OneToAll_propagate(struct __pyx_obj_6c_dana_O
   for (__pyx_t_2 = 0; __pyx_t_2 < 4; __pyx_t_2+=1) {
     __pyx_v_i = __pyx_t_2;
 
-    /* "c_dana.pyx":330
+    /* "c_dana.pyx":412
  * 
  *         for i in range(4):
  *             v = self._source[i] * self._weights[i] * self._gain             # <<<<<<<<<<<<<<
  *             for j in range(4):
  *                 self._target[j] += v
  */
-    if (unlikely(!__pyx_v_self->__pyx_base._source.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 330; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+    if (unlikely(!__pyx_v_self->__pyx_base._source.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 412; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
     __pyx_t_3 = __pyx_v_i;
     __pyx_t_4 = -1;
     if (__pyx_t_3 < 0) {
@@ -7663,9 +9632,9 @@ static PyObject *__pyx_pf_6c_dana_8OneToAll_propagate(struct __pyx_obj_6c_dana_O
     } else if (unlikely(__pyx_t_3 >= __pyx_v_self->__pyx_base._source.shape[0])) __pyx_t_4 = 0;
     if (unlikely(__pyx_t_4 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_4);
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 330; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 412; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
-    if (unlikely(!__pyx_v_self->__pyx_base._weights.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 330; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+    if (unlikely(!__pyx_v_self->__pyx_base._weights.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 412; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
     __pyx_t_4 = __pyx_v_i;
     __pyx_t_5 = -1;
     if (__pyx_t_4 < 0) {
@@ -7674,14 +9643,14 @@ static PyObject *__pyx_pf_6c_dana_8OneToAll_propagate(struct __pyx_obj_6c_dana_O
     } else if (unlikely(__pyx_t_4 >= __pyx_v_self->__pyx_base._weights.shape[0])) __pyx_t_5 = 0;
     if (unlikely(__pyx_t_5 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_5);
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 330; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 412; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
-    __pyx_t_6 = PyFloat_FromDouble((((*((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._source.data + __pyx_t_3 * __pyx_v_self->__pyx_base._source.strides[0]) ))) * (*((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._weights.data + __pyx_t_4 * __pyx_v_self->__pyx_base._weights.strides[0]) )))) * __pyx_v_self->__pyx_base._gain)); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 330; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_6 = PyFloat_FromDouble((((*((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._source.data + __pyx_t_3 * __pyx_v_self->__pyx_base._source.strides[0]) ))) * (*((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._weights.data + __pyx_t_4 * __pyx_v_self->__pyx_base._weights.strides[0]) )))) * __pyx_v_self->__pyx_base._gain)); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 412; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_XDECREF_SET(__pyx_v_v, __pyx_t_6);
     __pyx_t_6 = 0;
 
-    /* "c_dana.pyx":331
+    /* "c_dana.pyx":413
  *         for i in range(4):
  *             v = self._source[i] * self._weights[i] * self._gain
  *             for j in range(4):             # <<<<<<<<<<<<<<
@@ -7691,15 +9660,15 @@ static PyObject *__pyx_pf_6c_dana_8OneToAll_propagate(struct __pyx_obj_6c_dana_O
     for (__pyx_t_5 = 0; __pyx_t_5 < 4; __pyx_t_5+=1) {
       __pyx_v_j = __pyx_t_5;
 
-      /* "c_dana.pyx":332
+      /* "c_dana.pyx":414
  *             v = self._source[i] * self._weights[i] * self._gain
  *             for j in range(4):
  *                 self._target[j] += v             # <<<<<<<<<<<<<<
  * 
  * # --- AllToAll ---
  */
-      __pyx_t_7 = __pyx_PyFloat_AsDouble(__pyx_v_v); if (unlikely((__pyx_t_7 == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 332; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-      if (unlikely(!__pyx_v_self->__pyx_base._target.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 332; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+      __pyx_t_7 = __pyx_PyFloat_AsDouble(__pyx_v_v); if (unlikely((__pyx_t_7 == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 414; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      if (unlikely(!__pyx_v_self->__pyx_base._target.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 414; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
       __pyx_t_8 = __pyx_v_j;
       __pyx_t_9 = -1;
       if (__pyx_t_8 < 0) {
@@ -7708,13 +9677,13 @@ static PyObject *__pyx_pf_6c_dana_8OneToAll_propagate(struct __pyx_obj_6c_dana_O
       } else if (unlikely(__pyx_t_8 >= __pyx_v_self->__pyx_base._target.shape[0])) __pyx_t_9 = 0;
       if (unlikely(__pyx_t_9 != -1)) {
         __Pyx_RaiseBufferIndexError(__pyx_t_9);
-        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 332; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 414; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
       *((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._target.data + __pyx_t_8 * __pyx_v_self->__pyx_base._target.strides[0]) )) += __pyx_t_7;
     }
   }
 
-  /* "c_dana.pyx":325
+  /* "c_dana.pyx":407
  * # --- OneToAll ---
  * cdef class OneToAll(Connection):
  *     def propagate(self):             # <<<<<<<<<<<<<<
@@ -7736,7 +9705,7 @@ static PyObject *__pyx_pf_6c_dana_8OneToAll_propagate(struct __pyx_obj_6c_dana_O
   return __pyx_r;
 }
 
-/* "c_dana.pyx":336
+/* "c_dana.pyx":432
  * # --- AllToAll ---
  * cdef class AllToAll(Connection):
  *     def propagate(self):             # <<<<<<<<<<<<<<
@@ -7781,32 +9750,32 @@ static PyObject *__pyx_pf_6c_dana_8AllToAll_propagate(struct __pyx_obj_6c_dana_A
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("propagate", 0);
 
-  /* "c_dana.pyx":338
+  /* "c_dana.pyx":434
  *     def propagate(self):
  *         cdef int i,j
  *         cdef int s_size = self._source.shape[0]             # <<<<<<<<<<<<<<
  *         cdef int t_size = self._target.shape[0]
  *         if not self._active: return
  */
-  if (unlikely(!__pyx_v_self->__pyx_base._source.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 338; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+  if (unlikely(!__pyx_v_self->__pyx_base._source.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 434; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
   __pyx_v_s_size = (__pyx_v_self->__pyx_base._source.shape[0]);
 
-  /* "c_dana.pyx":339
+  /* "c_dana.pyx":435
  *         cdef int i,j
  *         cdef int s_size = self._source.shape[0]
  *         cdef int t_size = self._target.shape[0]             # <<<<<<<<<<<<<<
  *         if not self._active: return
  * 
  */
-  if (unlikely(!__pyx_v_self->__pyx_base._target.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 339; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+  if (unlikely(!__pyx_v_self->__pyx_base._target.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 435; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
   __pyx_v_t_size = (__pyx_v_self->__pyx_base._target.shape[0]);
 
-  /* "c_dana.pyx":340
+  /* "c_dana.pyx":436
  *         cdef int s_size = self._source.shape[0]
  *         cdef int t_size = self._target.shape[0]
  *         if not self._active: return             # <<<<<<<<<<<<<<
  * 
- *         for i in range(s_size):
+ *         for i in range(t_size):
  */
   __pyx_t_1 = ((!(__pyx_v_self->__pyx_base._active != 0)) != 0);
   if (__pyx_t_1) {
@@ -7815,46 +9784,46 @@ static PyObject *__pyx_pf_6c_dana_8AllToAll_propagate(struct __pyx_obj_6c_dana_A
     goto __pyx_L0;
   }
 
-  /* "c_dana.pyx":342
+  /* "c_dana.pyx":438
  *         if not self._active: return
  * 
- *         for i in range(s_size):             # <<<<<<<<<<<<<<
+ *         for i in range(t_size):             # <<<<<<<<<<<<<<
  *             v = 0
- *             for j in range(t_size):
+ *             for j in range(s_size):
  */
-  __pyx_t_2 = __pyx_v_s_size;
+  __pyx_t_2 = __pyx_v_t_size;
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "c_dana.pyx":343
+    /* "c_dana.pyx":439
  * 
- *         for i in range(s_size):
+ *         for i in range(t_size):
  *             v = 0             # <<<<<<<<<<<<<<
- *             for j in range(t_size):
- *                 v += self._source[j] * self._weights[i+j*s_size]
+ *             for j in range(s_size):
+ *                 v += self._source[j] * self._weights[i*t_size+j]
  */
     __Pyx_INCREF(__pyx_int_0);
     __Pyx_XDECREF_SET(__pyx_v_v, __pyx_int_0);
 
-    /* "c_dana.pyx":344
- *         for i in range(s_size):
+    /* "c_dana.pyx":440
+ *         for i in range(t_size):
  *             v = 0
- *             for j in range(t_size):             # <<<<<<<<<<<<<<
- *                 v += self._source[j] * self._weights[i+j*s_size]
+ *             for j in range(s_size):             # <<<<<<<<<<<<<<
+ *                 v += self._source[j] * self._weights[i*t_size+j]
  *             self._target[i] += v * self._gain
  */
-    __pyx_t_4 = __pyx_v_t_size;
+    __pyx_t_4 = __pyx_v_s_size;
     for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
       __pyx_v_j = __pyx_t_5;
 
-      /* "c_dana.pyx":345
+      /* "c_dana.pyx":441
  *             v = 0
- *             for j in range(t_size):
- *                 v += self._source[j] * self._weights[i+j*s_size]             # <<<<<<<<<<<<<<
+ *             for j in range(s_size):
+ *                 v += self._source[j] * self._weights[i*t_size+j]             # <<<<<<<<<<<<<<
  *             self._target[i] += v * self._gain
  * 
  */
-      if (unlikely(!__pyx_v_self->__pyx_base._source.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 345; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+      if (unlikely(!__pyx_v_self->__pyx_base._source.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 441; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
       __pyx_t_6 = __pyx_v_j;
       __pyx_t_7 = -1;
       if (__pyx_t_6 < 0) {
@@ -7863,10 +9832,10 @@ static PyObject *__pyx_pf_6c_dana_8AllToAll_propagate(struct __pyx_obj_6c_dana_A
       } else if (unlikely(__pyx_t_6 >= __pyx_v_self->__pyx_base._source.shape[0])) __pyx_t_7 = 0;
       if (unlikely(__pyx_t_7 != -1)) {
         __Pyx_RaiseBufferIndexError(__pyx_t_7);
-        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 345; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 441; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
-      if (unlikely(!__pyx_v_self->__pyx_base._weights.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 345; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
-      __pyx_t_7 = (__pyx_v_i + (__pyx_v_j * __pyx_v_s_size));
+      if (unlikely(!__pyx_v_self->__pyx_base._weights.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 441; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+      __pyx_t_7 = ((__pyx_v_i * __pyx_v_t_size) + __pyx_v_j);
       __pyx_t_8 = -1;
       if (__pyx_t_7 < 0) {
         __pyx_t_7 += __pyx_v_self->__pyx_base._weights.shape[0];
@@ -7874,32 +9843,32 @@ static PyObject *__pyx_pf_6c_dana_8AllToAll_propagate(struct __pyx_obj_6c_dana_A
       } else if (unlikely(__pyx_t_7 >= __pyx_v_self->__pyx_base._weights.shape[0])) __pyx_t_8 = 0;
       if (unlikely(__pyx_t_8 != -1)) {
         __Pyx_RaiseBufferIndexError(__pyx_t_8);
-        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 345; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 441; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
-      __pyx_t_9 = PyFloat_FromDouble(((*((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._source.data + __pyx_t_6 * __pyx_v_self->__pyx_base._source.strides[0]) ))) * (*((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._weights.data + __pyx_t_7 * __pyx_v_self->__pyx_base._weights.strides[0]) ))))); if (unlikely(!__pyx_t_9)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 345; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_9 = PyFloat_FromDouble(((*((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._source.data + __pyx_t_6 * __pyx_v_self->__pyx_base._source.strides[0]) ))) * (*((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._weights.data + __pyx_t_7 * __pyx_v_self->__pyx_base._weights.strides[0]) ))))); if (unlikely(!__pyx_t_9)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 441; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_9);
-      __pyx_t_10 = PyNumber_InPlaceAdd(__pyx_v_v, __pyx_t_9); if (unlikely(!__pyx_t_10)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 345; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_10 = PyNumber_InPlaceAdd(__pyx_v_v, __pyx_t_9); if (unlikely(!__pyx_t_10)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 441; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_10);
       __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
       __Pyx_DECREF_SET(__pyx_v_v, __pyx_t_10);
       __pyx_t_10 = 0;
     }
 
-    /* "c_dana.pyx":346
- *             for j in range(t_size):
- *                 v += self._source[j] * self._weights[i+j*s_size]
+    /* "c_dana.pyx":442
+ *             for j in range(s_size):
+ *                 v += self._source[j] * self._weights[i*t_size+j]
  *             self._target[i] += v * self._gain             # <<<<<<<<<<<<<<
  * 
  * 
  */
-    __pyx_t_10 = PyFloat_FromDouble(__pyx_v_self->__pyx_base._gain); if (unlikely(!__pyx_t_10)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 346; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_10 = PyFloat_FromDouble(__pyx_v_self->__pyx_base._gain); if (unlikely(!__pyx_t_10)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 442; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_10);
-    __pyx_t_9 = PyNumber_Multiply(__pyx_v_v, __pyx_t_10); if (unlikely(!__pyx_t_9)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 346; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_9 = PyNumber_Multiply(__pyx_v_v, __pyx_t_10); if (unlikely(!__pyx_t_9)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 442; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_9);
     __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-    __pyx_t_11 = __pyx_PyFloat_AsDouble(__pyx_t_9); if (unlikely((__pyx_t_11 == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 346; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_11 = __pyx_PyFloat_AsDouble(__pyx_t_9); if (unlikely((__pyx_t_11 == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 442; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-    if (unlikely(!__pyx_v_self->__pyx_base._target.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 346; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+    if (unlikely(!__pyx_v_self->__pyx_base._target.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 442; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
     __pyx_t_4 = __pyx_v_i;
     __pyx_t_5 = -1;
     if (__pyx_t_4 < 0) {
@@ -7908,12 +9877,12 @@ static PyObject *__pyx_pf_6c_dana_8AllToAll_propagate(struct __pyx_obj_6c_dana_A
     } else if (unlikely(__pyx_t_4 >= __pyx_v_self->__pyx_base._target.shape[0])) __pyx_t_5 = 0;
     if (unlikely(__pyx_t_5 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_5);
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 346; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 442; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
     *((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._target.data + __pyx_t_4 * __pyx_v_self->__pyx_base._target.strides[0]) )) += __pyx_t_11;
   }
 
-  /* "c_dana.pyx":336
+  /* "c_dana.pyx":432
  * # --- AllToAll ---
  * cdef class AllToAll(Connection):
  *     def propagate(self):             # <<<<<<<<<<<<<<
@@ -7936,7 +9905,7 @@ static PyObject *__pyx_pf_6c_dana_8AllToAll_propagate(struct __pyx_obj_6c_dana_A
   return __pyx_r;
 }
 
-/* "c_dana.pyx":351
+/* "c_dana.pyx":447
  * # --- AssToMot ---
  * cdef class AssToMot(Connection):
  *     def propagate(self):             # <<<<<<<<<<<<<<
@@ -7977,7 +9946,7 @@ static PyObject *__pyx_pf_6c_dana_8AssToMot_propagate(struct __pyx_obj_6c_dana_A
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("propagate", 0);
 
-  /* "c_dana.pyx":353
+  /* "c_dana.pyx":449
  *     def propagate(self):
  *         cdef int i,j
  *         if not self._active: return             # <<<<<<<<<<<<<<
@@ -7991,7 +9960,7 @@ static PyObject *__pyx_pf_6c_dana_8AssToMot_propagate(struct __pyx_obj_6c_dana_A
     goto __pyx_L0;
   }
 
-  /* "c_dana.pyx":355
+  /* "c_dana.pyx":451
  *         if not self._active: return
  * 
  *         for i in range(4):             # <<<<<<<<<<<<<<
@@ -8001,7 +9970,7 @@ static PyObject *__pyx_pf_6c_dana_8AssToMot_propagate(struct __pyx_obj_6c_dana_A
   for (__pyx_t_2 = 0; __pyx_t_2 < 4; __pyx_t_2+=1) {
     __pyx_v_i = __pyx_t_2;
 
-    /* "c_dana.pyx":356
+    /* "c_dana.pyx":452
  * 
  *         for i in range(4):
  *             v = 0             # <<<<<<<<<<<<<<
@@ -8011,7 +9980,7 @@ static PyObject *__pyx_pf_6c_dana_8AssToMot_propagate(struct __pyx_obj_6c_dana_A
     __Pyx_INCREF(__pyx_int_0);
     __Pyx_XDECREF_SET(__pyx_v_v, __pyx_int_0);
 
-    /* "c_dana.pyx":357
+    /* "c_dana.pyx":453
  *         for i in range(4):
  *             v = 0
  *             for j in range(4):             # <<<<<<<<<<<<<<
@@ -8021,14 +9990,14 @@ static PyObject *__pyx_pf_6c_dana_8AssToMot_propagate(struct __pyx_obj_6c_dana_A
     for (__pyx_t_3 = 0; __pyx_t_3 < 4; __pyx_t_3+=1) {
       __pyx_v_j = __pyx_t_3;
 
-      /* "c_dana.pyx":358
+      /* "c_dana.pyx":454
  *             v = 0
  *             for j in range(4):
  *                 v += self._source[i+j*4] * self._weights[i]             # <<<<<<<<<<<<<<
  *             self._target[i] += v * self._gain
  * 
  */
-      if (unlikely(!__pyx_v_self->__pyx_base._source.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 358; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+      if (unlikely(!__pyx_v_self->__pyx_base._source.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 454; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
       __pyx_t_4 = (__pyx_v_i + (__pyx_v_j * 4));
       __pyx_t_5 = -1;
       if (__pyx_t_4 < 0) {
@@ -8037,9 +10006,9 @@ static PyObject *__pyx_pf_6c_dana_8AssToMot_propagate(struct __pyx_obj_6c_dana_A
       } else if (unlikely(__pyx_t_4 >= __pyx_v_self->__pyx_base._source.shape[0])) __pyx_t_5 = 0;
       if (unlikely(__pyx_t_5 != -1)) {
         __Pyx_RaiseBufferIndexError(__pyx_t_5);
-        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 358; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 454; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
-      if (unlikely(!__pyx_v_self->__pyx_base._weights.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 358; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+      if (unlikely(!__pyx_v_self->__pyx_base._weights.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 454; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
       __pyx_t_5 = __pyx_v_i;
       __pyx_t_6 = -1;
       if (__pyx_t_5 < 0) {
@@ -8048,32 +10017,32 @@ static PyObject *__pyx_pf_6c_dana_8AssToMot_propagate(struct __pyx_obj_6c_dana_A
       } else if (unlikely(__pyx_t_5 >= __pyx_v_self->__pyx_base._weights.shape[0])) __pyx_t_6 = 0;
       if (unlikely(__pyx_t_6 != -1)) {
         __Pyx_RaiseBufferIndexError(__pyx_t_6);
-        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 358; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 454; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
-      __pyx_t_7 = PyFloat_FromDouble(((*((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._source.data + __pyx_t_4 * __pyx_v_self->__pyx_base._source.strides[0]) ))) * (*((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._weights.data + __pyx_t_5 * __pyx_v_self->__pyx_base._weights.strides[0]) ))))); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 358; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_7 = PyFloat_FromDouble(((*((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._source.data + __pyx_t_4 * __pyx_v_self->__pyx_base._source.strides[0]) ))) * (*((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._weights.data + __pyx_t_5 * __pyx_v_self->__pyx_base._weights.strides[0]) ))))); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 454; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_7);
-      __pyx_t_8 = PyNumber_InPlaceAdd(__pyx_v_v, __pyx_t_7); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 358; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_8 = PyNumber_InPlaceAdd(__pyx_v_v, __pyx_t_7); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 454; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
       __Pyx_DECREF_SET(__pyx_v_v, __pyx_t_8);
       __pyx_t_8 = 0;
     }
 
-    /* "c_dana.pyx":359
+    /* "c_dana.pyx":455
  *             for j in range(4):
  *                 v += self._source[i+j*4] * self._weights[i]
  *             self._target[i] += v * self._gain             # <<<<<<<<<<<<<<
  * 
  * # --- AssToCog ---
  */
-    __pyx_t_8 = PyFloat_FromDouble(__pyx_v_self->__pyx_base._gain); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 359; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_8 = PyFloat_FromDouble(__pyx_v_self->__pyx_base._gain); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 455; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_8);
-    __pyx_t_7 = PyNumber_Multiply(__pyx_v_v, __pyx_t_8); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 359; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_7 = PyNumber_Multiply(__pyx_v_v, __pyx_t_8); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 455; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_7);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __pyx_t_9 = __pyx_PyFloat_AsDouble(__pyx_t_7); if (unlikely((__pyx_t_9 == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 359; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_9 = __pyx_PyFloat_AsDouble(__pyx_t_7); if (unlikely((__pyx_t_9 == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 455; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-    if (unlikely(!__pyx_v_self->__pyx_base._target.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 359; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+    if (unlikely(!__pyx_v_self->__pyx_base._target.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 455; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
     __pyx_t_3 = __pyx_v_i;
     __pyx_t_6 = -1;
     if (__pyx_t_3 < 0) {
@@ -8082,12 +10051,12 @@ static PyObject *__pyx_pf_6c_dana_8AssToMot_propagate(struct __pyx_obj_6c_dana_A
     } else if (unlikely(__pyx_t_3 >= __pyx_v_self->__pyx_base._target.shape[0])) __pyx_t_6 = 0;
     if (unlikely(__pyx_t_6 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_6);
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 359; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 455; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
     *((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._target.data + __pyx_t_3 * __pyx_v_self->__pyx_base._target.strides[0]) )) += __pyx_t_9;
   }
 
-  /* "c_dana.pyx":351
+  /* "c_dana.pyx":447
  * # --- AssToMot ---
  * cdef class AssToMot(Connection):
  *     def propagate(self):             # <<<<<<<<<<<<<<
@@ -8110,7 +10079,7 @@ static PyObject *__pyx_pf_6c_dana_8AssToMot_propagate(struct __pyx_obj_6c_dana_A
   return __pyx_r;
 }
 
-/* "c_dana.pyx":363
+/* "c_dana.pyx":459
  * # --- AssToCog ---
  * cdef class AssToCog(Connection):
  *     def propagate(self):             # <<<<<<<<<<<<<<
@@ -8151,7 +10120,7 @@ static PyObject *__pyx_pf_6c_dana_8AssToCog_propagate(struct __pyx_obj_6c_dana_A
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("propagate", 0);
 
-  /* "c_dana.pyx":365
+  /* "c_dana.pyx":461
  *     def propagate(self):
  *         cdef int i,j
  *         if not self._active: return             # <<<<<<<<<<<<<<
@@ -8165,7 +10134,7 @@ static PyObject *__pyx_pf_6c_dana_8AssToCog_propagate(struct __pyx_obj_6c_dana_A
     goto __pyx_L0;
   }
 
-  /* "c_dana.pyx":367
+  /* "c_dana.pyx":463
  *         if not self._active: return
  * 
  *         for i in range(4):             # <<<<<<<<<<<<<<
@@ -8175,7 +10144,7 @@ static PyObject *__pyx_pf_6c_dana_8AssToCog_propagate(struct __pyx_obj_6c_dana_A
   for (__pyx_t_2 = 0; __pyx_t_2 < 4; __pyx_t_2+=1) {
     __pyx_v_i = __pyx_t_2;
 
-    /* "c_dana.pyx":368
+    /* "c_dana.pyx":464
  * 
  *         for i in range(4):
  *             v = 0             # <<<<<<<<<<<<<<
@@ -8185,7 +10154,7 @@ static PyObject *__pyx_pf_6c_dana_8AssToCog_propagate(struct __pyx_obj_6c_dana_A
     __Pyx_INCREF(__pyx_int_0);
     __Pyx_XDECREF_SET(__pyx_v_v, __pyx_int_0);
 
-    /* "c_dana.pyx":369
+    /* "c_dana.pyx":465
  *         for i in range(4):
  *             v = 0
  *             for j in range(4):             # <<<<<<<<<<<<<<
@@ -8195,14 +10164,14 @@ static PyObject *__pyx_pf_6c_dana_8AssToCog_propagate(struct __pyx_obj_6c_dana_A
     for (__pyx_t_3 = 0; __pyx_t_3 < 4; __pyx_t_3+=1) {
       __pyx_v_j = __pyx_t_3;
 
-      /* "c_dana.pyx":370
+      /* "c_dana.pyx":466
  *             v = 0
  *             for j in range(4):
  *                 v += self._source[j+i*4] * self._weights[i]             # <<<<<<<<<<<<<<
  *             self._target[i] += v * self._gain
  * 
  */
-      if (unlikely(!__pyx_v_self->__pyx_base._source.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 370; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+      if (unlikely(!__pyx_v_self->__pyx_base._source.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 466; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
       __pyx_t_4 = (__pyx_v_j + (__pyx_v_i * 4));
       __pyx_t_5 = -1;
       if (__pyx_t_4 < 0) {
@@ -8211,9 +10180,9 @@ static PyObject *__pyx_pf_6c_dana_8AssToCog_propagate(struct __pyx_obj_6c_dana_A
       } else if (unlikely(__pyx_t_4 >= __pyx_v_self->__pyx_base._source.shape[0])) __pyx_t_5 = 0;
       if (unlikely(__pyx_t_5 != -1)) {
         __Pyx_RaiseBufferIndexError(__pyx_t_5);
-        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 370; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 466; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
-      if (unlikely(!__pyx_v_self->__pyx_base._weights.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 370; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+      if (unlikely(!__pyx_v_self->__pyx_base._weights.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 466; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
       __pyx_t_5 = __pyx_v_i;
       __pyx_t_6 = -1;
       if (__pyx_t_5 < 0) {
@@ -8222,32 +10191,32 @@ static PyObject *__pyx_pf_6c_dana_8AssToCog_propagate(struct __pyx_obj_6c_dana_A
       } else if (unlikely(__pyx_t_5 >= __pyx_v_self->__pyx_base._weights.shape[0])) __pyx_t_6 = 0;
       if (unlikely(__pyx_t_6 != -1)) {
         __Pyx_RaiseBufferIndexError(__pyx_t_6);
-        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 370; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 466; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
-      __pyx_t_7 = PyFloat_FromDouble(((*((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._source.data + __pyx_t_4 * __pyx_v_self->__pyx_base._source.strides[0]) ))) * (*((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._weights.data + __pyx_t_5 * __pyx_v_self->__pyx_base._weights.strides[0]) ))))); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 370; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_7 = PyFloat_FromDouble(((*((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._source.data + __pyx_t_4 * __pyx_v_self->__pyx_base._source.strides[0]) ))) * (*((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._weights.data + __pyx_t_5 * __pyx_v_self->__pyx_base._weights.strides[0]) ))))); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 466; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_7);
-      __pyx_t_8 = PyNumber_InPlaceAdd(__pyx_v_v, __pyx_t_7); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 370; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_8 = PyNumber_InPlaceAdd(__pyx_v_v, __pyx_t_7); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 466; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
       __Pyx_DECREF_SET(__pyx_v_v, __pyx_t_8);
       __pyx_t_8 = 0;
     }
 
-    /* "c_dana.pyx":371
+    /* "c_dana.pyx":467
  *             for j in range(4):
  *                 v += self._source[j+i*4] * self._weights[i]
  *             self._target[i] += v * self._gain             # <<<<<<<<<<<<<<
  * 
  * 
  */
-    __pyx_t_8 = PyFloat_FromDouble(__pyx_v_self->__pyx_base._gain); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 371; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_8 = PyFloat_FromDouble(__pyx_v_self->__pyx_base._gain); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 467; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_8);
-    __pyx_t_7 = PyNumber_Multiply(__pyx_v_v, __pyx_t_8); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 371; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_7 = PyNumber_Multiply(__pyx_v_v, __pyx_t_8); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 467; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_7);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __pyx_t_9 = __pyx_PyFloat_AsDouble(__pyx_t_7); if (unlikely((__pyx_t_9 == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 371; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_9 = __pyx_PyFloat_AsDouble(__pyx_t_7); if (unlikely((__pyx_t_9 == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 467; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-    if (unlikely(!__pyx_v_self->__pyx_base._target.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 371; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+    if (unlikely(!__pyx_v_self->__pyx_base._target.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 467; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
     __pyx_t_3 = __pyx_v_i;
     __pyx_t_6 = -1;
     if (__pyx_t_3 < 0) {
@@ -8256,12 +10225,12 @@ static PyObject *__pyx_pf_6c_dana_8AssToCog_propagate(struct __pyx_obj_6c_dana_A
     } else if (unlikely(__pyx_t_3 >= __pyx_v_self->__pyx_base._target.shape[0])) __pyx_t_6 = 0;
     if (unlikely(__pyx_t_6 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_6);
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 371; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 467; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
     *((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._target.data + __pyx_t_3 * __pyx_v_self->__pyx_base._target.strides[0]) )) += __pyx_t_9;
   }
 
-  /* "c_dana.pyx":363
+  /* "c_dana.pyx":459
  * # --- AssToCog ---
  * cdef class AssToCog(Connection):
  *     def propagate(self):             # <<<<<<<<<<<<<<
@@ -8284,7 +10253,7 @@ static PyObject *__pyx_pf_6c_dana_8AssToCog_propagate(struct __pyx_obj_6c_dana_A
   return __pyx_r;
 }
 
-/* "c_dana.pyx":376
+/* "c_dana.pyx":472
  * # --- MotToAss ---
  * cdef class MotToAss(Connection):
  *     def propagate(self):             # <<<<<<<<<<<<<<
@@ -8323,7 +10292,7 @@ static PyObject *__pyx_pf_6c_dana_8MotToAss_propagate(struct __pyx_obj_6c_dana_M
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("propagate", 0);
 
-  /* "c_dana.pyx":379
+  /* "c_dana.pyx":475
  *         cdef int i,j
  *         cdef double v
  *         if not self._active: return             # <<<<<<<<<<<<<<
@@ -8337,7 +10306,7 @@ static PyObject *__pyx_pf_6c_dana_8MotToAss_propagate(struct __pyx_obj_6c_dana_M
     goto __pyx_L0;
   }
 
-  /* "c_dana.pyx":381
+  /* "c_dana.pyx":477
  *         if not self._active: return
  * 
  *         for i in range(4):             # <<<<<<<<<<<<<<
@@ -8347,14 +10316,14 @@ static PyObject *__pyx_pf_6c_dana_8MotToAss_propagate(struct __pyx_obj_6c_dana_M
   for (__pyx_t_2 = 0; __pyx_t_2 < 4; __pyx_t_2+=1) {
     __pyx_v_i = __pyx_t_2;
 
-    /* "c_dana.pyx":382
+    /* "c_dana.pyx":478
  * 
  *         for i in range(4):
  *             v = self._source[i] * self._weights[i] * self._gain             # <<<<<<<<<<<<<<
  *             for j in range(4):
  *                 self._target[j*4+i] += v
  */
-    if (unlikely(!__pyx_v_self->__pyx_base._source.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 382; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+    if (unlikely(!__pyx_v_self->__pyx_base._source.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 478; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
     __pyx_t_3 = __pyx_v_i;
     __pyx_t_4 = -1;
     if (__pyx_t_3 < 0) {
@@ -8363,9 +10332,9 @@ static PyObject *__pyx_pf_6c_dana_8MotToAss_propagate(struct __pyx_obj_6c_dana_M
     } else if (unlikely(__pyx_t_3 >= __pyx_v_self->__pyx_base._source.shape[0])) __pyx_t_4 = 0;
     if (unlikely(__pyx_t_4 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_4);
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 382; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 478; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
-    if (unlikely(!__pyx_v_self->__pyx_base._weights.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 382; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+    if (unlikely(!__pyx_v_self->__pyx_base._weights.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 478; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
     __pyx_t_4 = __pyx_v_i;
     __pyx_t_5 = -1;
     if (__pyx_t_4 < 0) {
@@ -8374,11 +10343,11 @@ static PyObject *__pyx_pf_6c_dana_8MotToAss_propagate(struct __pyx_obj_6c_dana_M
     } else if (unlikely(__pyx_t_4 >= __pyx_v_self->__pyx_base._weights.shape[0])) __pyx_t_5 = 0;
     if (unlikely(__pyx_t_5 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_5);
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 382; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 478; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
     __pyx_v_v = (((*((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._source.data + __pyx_t_3 * __pyx_v_self->__pyx_base._source.strides[0]) ))) * (*((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._weights.data + __pyx_t_4 * __pyx_v_self->__pyx_base._weights.strides[0]) )))) * __pyx_v_self->__pyx_base._gain);
 
-    /* "c_dana.pyx":383
+    /* "c_dana.pyx":479
  *         for i in range(4):
  *             v = self._source[i] * self._weights[i] * self._gain
  *             for j in range(4):             # <<<<<<<<<<<<<<
@@ -8388,14 +10357,14 @@ static PyObject *__pyx_pf_6c_dana_8MotToAss_propagate(struct __pyx_obj_6c_dana_M
     for (__pyx_t_5 = 0; __pyx_t_5 < 4; __pyx_t_5+=1) {
       __pyx_v_j = __pyx_t_5;
 
-      /* "c_dana.pyx":384
+      /* "c_dana.pyx":480
  *             v = self._source[i] * self._weights[i] * self._gain
  *             for j in range(4):
  *                 self._target[j*4+i] += v             # <<<<<<<<<<<<<<
  * 
  * # --- CogToAss ---
  */
-      if (unlikely(!__pyx_v_self->__pyx_base._target.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 384; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+      if (unlikely(!__pyx_v_self->__pyx_base._target.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 480; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
       __pyx_t_6 = ((__pyx_v_j * 4) + __pyx_v_i);
       __pyx_t_7 = -1;
       if (__pyx_t_6 < 0) {
@@ -8404,13 +10373,13 @@ static PyObject *__pyx_pf_6c_dana_8MotToAss_propagate(struct __pyx_obj_6c_dana_M
       } else if (unlikely(__pyx_t_6 >= __pyx_v_self->__pyx_base._target.shape[0])) __pyx_t_7 = 0;
       if (unlikely(__pyx_t_7 != -1)) {
         __Pyx_RaiseBufferIndexError(__pyx_t_7);
-        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 384; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 480; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
       *((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._target.data + __pyx_t_6 * __pyx_v_self->__pyx_base._target.strides[0]) )) += __pyx_v_v;
     }
   }
 
-  /* "c_dana.pyx":376
+  /* "c_dana.pyx":472
  * # --- MotToAss ---
  * cdef class MotToAss(Connection):
  *     def propagate(self):             # <<<<<<<<<<<<<<
@@ -8430,7 +10399,7 @@ static PyObject *__pyx_pf_6c_dana_8MotToAss_propagate(struct __pyx_obj_6c_dana_M
   return __pyx_r;
 }
 
-/* "c_dana.pyx":388
+/* "c_dana.pyx":484
  * # --- CogToAss ---
  * cdef class CogToAss(Connection):
  *     def propagate(self):             # <<<<<<<<<<<<<<
@@ -8469,7 +10438,7 @@ static PyObject *__pyx_pf_6c_dana_8CogToAss_propagate(struct __pyx_obj_6c_dana_C
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("propagate", 0);
 
-  /* "c_dana.pyx":391
+  /* "c_dana.pyx":487
  *         cdef int i,j
  *         cdef double v
  *         if not self._active: return             # <<<<<<<<<<<<<<
@@ -8483,7 +10452,7 @@ static PyObject *__pyx_pf_6c_dana_8CogToAss_propagate(struct __pyx_obj_6c_dana_C
     goto __pyx_L0;
   }
 
-  /* "c_dana.pyx":393
+  /* "c_dana.pyx":489
  *         if not self._active: return
  * 
  *         for i in range(4):             # <<<<<<<<<<<<<<
@@ -8493,14 +10462,14 @@ static PyObject *__pyx_pf_6c_dana_8CogToAss_propagate(struct __pyx_obj_6c_dana_C
   for (__pyx_t_2 = 0; __pyx_t_2 < 4; __pyx_t_2+=1) {
     __pyx_v_i = __pyx_t_2;
 
-    /* "c_dana.pyx":394
+    /* "c_dana.pyx":490
  * 
  *         for i in range(4):
  *             v = self._source[i] * self._weights[i] * self._gain             # <<<<<<<<<<<<<<
  *             for j in range(4):
  *                 self._target[i*4+j] += v
  */
-    if (unlikely(!__pyx_v_self->__pyx_base._source.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 394; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+    if (unlikely(!__pyx_v_self->__pyx_base._source.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 490; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
     __pyx_t_3 = __pyx_v_i;
     __pyx_t_4 = -1;
     if (__pyx_t_3 < 0) {
@@ -8509,9 +10478,9 @@ static PyObject *__pyx_pf_6c_dana_8CogToAss_propagate(struct __pyx_obj_6c_dana_C
     } else if (unlikely(__pyx_t_3 >= __pyx_v_self->__pyx_base._source.shape[0])) __pyx_t_4 = 0;
     if (unlikely(__pyx_t_4 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_4);
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 394; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 490; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
-    if (unlikely(!__pyx_v_self->__pyx_base._weights.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 394; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+    if (unlikely(!__pyx_v_self->__pyx_base._weights.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 490; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
     __pyx_t_4 = __pyx_v_i;
     __pyx_t_5 = -1;
     if (__pyx_t_4 < 0) {
@@ -8520,25 +10489,28 @@ static PyObject *__pyx_pf_6c_dana_8CogToAss_propagate(struct __pyx_obj_6c_dana_C
     } else if (unlikely(__pyx_t_4 >= __pyx_v_self->__pyx_base._weights.shape[0])) __pyx_t_5 = 0;
     if (unlikely(__pyx_t_5 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_5);
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 394; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 490; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
     __pyx_v_v = (((*((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._source.data + __pyx_t_3 * __pyx_v_self->__pyx_base._source.strides[0]) ))) * (*((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._weights.data + __pyx_t_4 * __pyx_v_self->__pyx_base._weights.strides[0]) )))) * __pyx_v_self->__pyx_base._gain);
 
-    /* "c_dana.pyx":395
+    /* "c_dana.pyx":491
  *         for i in range(4):
  *             v = self._source[i] * self._weights[i] * self._gain
  *             for j in range(4):             # <<<<<<<<<<<<<<
  *                 self._target[i*4+j] += v
+ * 
  */
     for (__pyx_t_5 = 0; __pyx_t_5 < 4; __pyx_t_5+=1) {
       __pyx_v_j = __pyx_t_5;
 
-      /* "c_dana.pyx":396
+      /* "c_dana.pyx":492
  *             v = self._source[i] * self._weights[i] * self._gain
  *             for j in range(4):
  *                 self._target[i*4+j] += v             # <<<<<<<<<<<<<<
+ * 
+ * # --- MotToPPC ---
  */
-      if (unlikely(!__pyx_v_self->__pyx_base._target.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 396; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+      if (unlikely(!__pyx_v_self->__pyx_base._target.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 492; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
       __pyx_t_6 = ((__pyx_v_i * 4) + __pyx_v_j);
       __pyx_t_7 = -1;
       if (__pyx_t_6 < 0) {
@@ -8547,13 +10519,13 @@ static PyObject *__pyx_pf_6c_dana_8CogToAss_propagate(struct __pyx_obj_6c_dana_C
       } else if (unlikely(__pyx_t_6 >= __pyx_v_self->__pyx_base._target.shape[0])) __pyx_t_7 = 0;
       if (unlikely(__pyx_t_7 != -1)) {
         __Pyx_RaiseBufferIndexError(__pyx_t_7);
-        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 396; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 492; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
       *((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._target.data + __pyx_t_6 * __pyx_v_self->__pyx_base._target.strides[0]) )) += __pyx_v_v;
     }
   }
 
-  /* "c_dana.pyx":388
+  /* "c_dana.pyx":484
  * # --- CogToAss ---
  * cdef class CogToAss(Connection):
  *     def propagate(self):             # <<<<<<<<<<<<<<
@@ -8566,6 +10538,1388 @@ static PyObject *__pyx_pf_6c_dana_8CogToAss_propagate(struct __pyx_obj_6c_dana_C
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_AddTraceback("c_dana.CogToAss.propagate", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "c_dana.pyx":496
+ * # --- MotToPPC ---
+ * cdef class MotToPPC(Connection):
+ *     def propagate(self):             # <<<<<<<<<<<<<<
+ *         cdef int i,j
+ *         cdef double v
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_6c_dana_8MotToPPC_1propagate(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_6c_dana_8MotToPPC_1propagate(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("propagate (wrapper)", 0);
+  __pyx_r = __pyx_pf_6c_dana_8MotToPPC_propagate(((struct __pyx_obj_6c_dana_MotToPPC *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_6c_dana_8MotToPPC_propagate(struct __pyx_obj_6c_dana_MotToPPC *__pyx_v_self) {
+  int __pyx_v_i;
+  int __pyx_v_j;
+  double __pyx_v_v;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  int __pyx_t_1;
+  int __pyx_t_2;
+  int __pyx_t_3;
+  int __pyx_t_4;
+  int __pyx_t_5;
+  int __pyx_t_6;
+  int __pyx_t_7;
+  int __pyx_t_8;
+  int __pyx_t_9;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("propagate", 0);
+
+  /* "c_dana.pyx":499
+ *         cdef int i,j
+ *         cdef double v
+ *         if not self._active: return             # <<<<<<<<<<<<<<
+ * 
+ *         for i in range(self._n):
+ */
+  __pyx_t_1 = ((!(__pyx_v_self->__pyx_base._active != 0)) != 0);
+  if (__pyx_t_1) {
+    __Pyx_XDECREF(__pyx_r);
+    __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+    goto __pyx_L0;
+  }
+
+  /* "c_dana.pyx":501
+ *         if not self._active: return
+ * 
+ *         for i in range(self._n):             # <<<<<<<<<<<<<<
+ *             v = self._source[i] * self._weights[i] * self._gain
+ *             for j in range(self._narm):
+ */
+  __pyx_t_2 = __pyx_v_self->__pyx_base._n;
+  for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
+    __pyx_v_i = __pyx_t_3;
+
+    /* "c_dana.pyx":502
+ * 
+ *         for i in range(self._n):
+ *             v = self._source[i] * self._weights[i] * self._gain             # <<<<<<<<<<<<<<
+ *             for j in range(self._narm):
+ *                 self._target[j*self._n+i] += v
+ */
+    if (unlikely(!__pyx_v_self->__pyx_base._source.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 502; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+    __pyx_t_4 = __pyx_v_i;
+    __pyx_t_5 = -1;
+    if (__pyx_t_4 < 0) {
+      __pyx_t_4 += __pyx_v_self->__pyx_base._source.shape[0];
+      if (unlikely(__pyx_t_4 < 0)) __pyx_t_5 = 0;
+    } else if (unlikely(__pyx_t_4 >= __pyx_v_self->__pyx_base._source.shape[0])) __pyx_t_5 = 0;
+    if (unlikely(__pyx_t_5 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_5);
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 502; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    }
+    if (unlikely(!__pyx_v_self->__pyx_base._weights.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 502; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+    __pyx_t_5 = __pyx_v_i;
+    __pyx_t_6 = -1;
+    if (__pyx_t_5 < 0) {
+      __pyx_t_5 += __pyx_v_self->__pyx_base._weights.shape[0];
+      if (unlikely(__pyx_t_5 < 0)) __pyx_t_6 = 0;
+    } else if (unlikely(__pyx_t_5 >= __pyx_v_self->__pyx_base._weights.shape[0])) __pyx_t_6 = 0;
+    if (unlikely(__pyx_t_6 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_6);
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 502; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    }
+    __pyx_v_v = (((*((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._source.data + __pyx_t_4 * __pyx_v_self->__pyx_base._source.strides[0]) ))) * (*((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._weights.data + __pyx_t_5 * __pyx_v_self->__pyx_base._weights.strides[0]) )))) * __pyx_v_self->__pyx_base._gain);
+
+    /* "c_dana.pyx":503
+ *         for i in range(self._n):
+ *             v = self._source[i] * self._weights[i] * self._gain
+ *             for j in range(self._narm):             # <<<<<<<<<<<<<<
+ *                 self._target[j*self._n+i] += v
+ * 
+ */
+    __pyx_t_6 = __pyx_v_self->__pyx_base._narm;
+    for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
+      __pyx_v_j = __pyx_t_7;
+
+      /* "c_dana.pyx":504
+ *             v = self._source[i] * self._weights[i] * self._gain
+ *             for j in range(self._narm):
+ *                 self._target[j*self._n+i] += v             # <<<<<<<<<<<<<<
+ * 
+ * # --- ARMtoPPC ---
+ */
+      if (unlikely(!__pyx_v_self->__pyx_base._target.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 504; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+      __pyx_t_8 = ((__pyx_v_j * __pyx_v_self->__pyx_base._n) + __pyx_v_i);
+      __pyx_t_9 = -1;
+      if (__pyx_t_8 < 0) {
+        __pyx_t_8 += __pyx_v_self->__pyx_base._target.shape[0];
+        if (unlikely(__pyx_t_8 < 0)) __pyx_t_9 = 0;
+      } else if (unlikely(__pyx_t_8 >= __pyx_v_self->__pyx_base._target.shape[0])) __pyx_t_9 = 0;
+      if (unlikely(__pyx_t_9 != -1)) {
+        __Pyx_RaiseBufferIndexError(__pyx_t_9);
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 504; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      }
+      *((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._target.data + __pyx_t_8 * __pyx_v_self->__pyx_base._target.strides[0]) )) += __pyx_v_v;
+    }
+  }
+
+  /* "c_dana.pyx":496
+ * # --- MotToPPC ---
+ * cdef class MotToPPC(Connection):
+ *     def propagate(self):             # <<<<<<<<<<<<<<
+ *         cdef int i,j
+ *         cdef double v
+ */
+
+  /* function exit code */
+  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_AddTraceback("c_dana.MotToPPC.propagate", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "c_dana.pyx":508
+ * # --- ARMtoPPC ---
+ * cdef class ARMtoPPC(Connection):
+ *     def propagate(self):             # <<<<<<<<<<<<<<
+ *         cdef int i,j
+ *         cdef double v
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_6c_dana_8ARMtoPPC_1propagate(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_6c_dana_8ARMtoPPC_1propagate(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("propagate (wrapper)", 0);
+  __pyx_r = __pyx_pf_6c_dana_8ARMtoPPC_propagate(((struct __pyx_obj_6c_dana_ARMtoPPC *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_6c_dana_8ARMtoPPC_propagate(struct __pyx_obj_6c_dana_ARMtoPPC *__pyx_v_self) {
+  int __pyx_v_i;
+  int __pyx_v_j;
+  double __pyx_v_v;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  int __pyx_t_1;
+  int __pyx_t_2;
+  int __pyx_t_3;
+  int __pyx_t_4;
+  int __pyx_t_5;
+  int __pyx_t_6;
+  int __pyx_t_7;
+  int __pyx_t_8;
+  int __pyx_t_9;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("propagate", 0);
+
+  /* "c_dana.pyx":511
+ *         cdef int i,j
+ *         cdef double v
+ *         if not self._active: return             # <<<<<<<<<<<<<<
+ * 
+ *         for i in range(self._narm ):
+ */
+  __pyx_t_1 = ((!(__pyx_v_self->__pyx_base._active != 0)) != 0);
+  if (__pyx_t_1) {
+    __Pyx_XDECREF(__pyx_r);
+    __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+    goto __pyx_L0;
+  }
+
+  /* "c_dana.pyx":513
+ *         if not self._active: return
+ * 
+ *         for i in range(self._narm ):             # <<<<<<<<<<<<<<
+ *             v = self._source[i] * self._weights[i] * self._gain
+ *             for j in range(self._n):
+ */
+  __pyx_t_2 = __pyx_v_self->__pyx_base._narm;
+  for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
+    __pyx_v_i = __pyx_t_3;
+
+    /* "c_dana.pyx":514
+ * 
+ *         for i in range(self._narm ):
+ *             v = self._source[i] * self._weights[i] * self._gain             # <<<<<<<<<<<<<<
+ *             for j in range(self._n):
+ *                 self._target[i*self._n+j] += v
+ */
+    if (unlikely(!__pyx_v_self->__pyx_base._source.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 514; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+    __pyx_t_4 = __pyx_v_i;
+    __pyx_t_5 = -1;
+    if (__pyx_t_4 < 0) {
+      __pyx_t_4 += __pyx_v_self->__pyx_base._source.shape[0];
+      if (unlikely(__pyx_t_4 < 0)) __pyx_t_5 = 0;
+    } else if (unlikely(__pyx_t_4 >= __pyx_v_self->__pyx_base._source.shape[0])) __pyx_t_5 = 0;
+    if (unlikely(__pyx_t_5 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_5);
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 514; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    }
+    if (unlikely(!__pyx_v_self->__pyx_base._weights.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 514; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+    __pyx_t_5 = __pyx_v_i;
+    __pyx_t_6 = -1;
+    if (__pyx_t_5 < 0) {
+      __pyx_t_5 += __pyx_v_self->__pyx_base._weights.shape[0];
+      if (unlikely(__pyx_t_5 < 0)) __pyx_t_6 = 0;
+    } else if (unlikely(__pyx_t_5 >= __pyx_v_self->__pyx_base._weights.shape[0])) __pyx_t_6 = 0;
+    if (unlikely(__pyx_t_6 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_6);
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 514; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    }
+    __pyx_v_v = (((*((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._source.data + __pyx_t_4 * __pyx_v_self->__pyx_base._source.strides[0]) ))) * (*((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._weights.data + __pyx_t_5 * __pyx_v_self->__pyx_base._weights.strides[0]) )))) * __pyx_v_self->__pyx_base._gain);
+
+    /* "c_dana.pyx":515
+ *         for i in range(self._narm ):
+ *             v = self._source[i] * self._weights[i] * self._gain
+ *             for j in range(self._n):             # <<<<<<<<<<<<<<
+ *                 self._target[i*self._n+j] += v
+ * 
+ */
+    __pyx_t_6 = __pyx_v_self->__pyx_base._n;
+    for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
+      __pyx_v_j = __pyx_t_7;
+
+      /* "c_dana.pyx":516
+ *             v = self._source[i] * self._weights[i] * self._gain
+ *             for j in range(self._n):
+ *                 self._target[i*self._n+j] += v             # <<<<<<<<<<<<<<
+ * 
+ * # --- PFCtoSMA ---
+ */
+      if (unlikely(!__pyx_v_self->__pyx_base._target.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 516; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+      __pyx_t_8 = ((__pyx_v_i * __pyx_v_self->__pyx_base._n) + __pyx_v_j);
+      __pyx_t_9 = -1;
+      if (__pyx_t_8 < 0) {
+        __pyx_t_8 += __pyx_v_self->__pyx_base._target.shape[0];
+        if (unlikely(__pyx_t_8 < 0)) __pyx_t_9 = 0;
+      } else if (unlikely(__pyx_t_8 >= __pyx_v_self->__pyx_base._target.shape[0])) __pyx_t_9 = 0;
+      if (unlikely(__pyx_t_9 != -1)) {
+        __Pyx_RaiseBufferIndexError(__pyx_t_9);
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 516; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      }
+      *((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._target.data + __pyx_t_8 * __pyx_v_self->__pyx_base._target.strides[0]) )) += __pyx_v_v;
+    }
+  }
+
+  /* "c_dana.pyx":508
+ * # --- ARMtoPPC ---
+ * cdef class ARMtoPPC(Connection):
+ *     def propagate(self):             # <<<<<<<<<<<<<<
+ *         cdef int i,j
+ *         cdef double v
+ */
+
+  /* function exit code */
+  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_AddTraceback("c_dana.ARMtoPPC.propagate", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "c_dana.pyx":520
+ * # --- PFCtoSMA ---
+ * cdef class PFCtoSMA(Connection):
+ *     def propagate(self):             # <<<<<<<<<<<<<<
+ *         cdef int i,j
+ *         cdef double v
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_6c_dana_8PFCtoSMA_1propagate(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_6c_dana_8PFCtoSMA_1propagate(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("propagate (wrapper)", 0);
+  __pyx_r = __pyx_pf_6c_dana_8PFCtoSMA_propagate(((struct __pyx_obj_6c_dana_PFCtoSMA *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_6c_dana_8PFCtoSMA_propagate(struct __pyx_obj_6c_dana_PFCtoSMA *__pyx_v_self) {
+  int __pyx_v_i;
+  int __pyx_v_j;
+  double __pyx_v_v;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  int __pyx_t_1;
+  int __pyx_t_2;
+  int __pyx_t_3;
+  int __pyx_t_4;
+  int __pyx_t_5;
+  int __pyx_t_6;
+  int __pyx_t_7;
+  int __pyx_t_8;
+  int __pyx_t_9;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("propagate", 0);
+
+  /* "c_dana.pyx":523
+ *         cdef int i,j
+ *         cdef double v
+ *         if not self._active: return             # <<<<<<<<<<<<<<
+ * 
+ *         for i in range(self._npfc):
+ */
+  __pyx_t_1 = ((!(__pyx_v_self->__pyx_base._active != 0)) != 0);
+  if (__pyx_t_1) {
+    __Pyx_XDECREF(__pyx_r);
+    __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+    goto __pyx_L0;
+  }
+
+  /* "c_dana.pyx":525
+ *         if not self._active: return
+ * 
+ *         for i in range(self._npfc):             # <<<<<<<<<<<<<<
+ *             v = self._source[i] * self._weights[i] * self._gain
+ *             for j in range(self._narm):
+ */
+  __pyx_t_2 = __pyx_v_self->__pyx_base._npfc;
+  for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
+    __pyx_v_i = __pyx_t_3;
+
+    /* "c_dana.pyx":526
+ * 
+ *         for i in range(self._npfc):
+ *             v = self._source[i] * self._weights[i] * self._gain             # <<<<<<<<<<<<<<
+ *             for j in range(self._narm):
+ *                 self._target[j*self._npfc+i] += v
+ */
+    if (unlikely(!__pyx_v_self->__pyx_base._source.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 526; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+    __pyx_t_4 = __pyx_v_i;
+    __pyx_t_5 = -1;
+    if (__pyx_t_4 < 0) {
+      __pyx_t_4 += __pyx_v_self->__pyx_base._source.shape[0];
+      if (unlikely(__pyx_t_4 < 0)) __pyx_t_5 = 0;
+    } else if (unlikely(__pyx_t_4 >= __pyx_v_self->__pyx_base._source.shape[0])) __pyx_t_5 = 0;
+    if (unlikely(__pyx_t_5 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_5);
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 526; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    }
+    if (unlikely(!__pyx_v_self->__pyx_base._weights.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 526; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+    __pyx_t_5 = __pyx_v_i;
+    __pyx_t_6 = -1;
+    if (__pyx_t_5 < 0) {
+      __pyx_t_5 += __pyx_v_self->__pyx_base._weights.shape[0];
+      if (unlikely(__pyx_t_5 < 0)) __pyx_t_6 = 0;
+    } else if (unlikely(__pyx_t_5 >= __pyx_v_self->__pyx_base._weights.shape[0])) __pyx_t_6 = 0;
+    if (unlikely(__pyx_t_6 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_6);
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 526; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    }
+    __pyx_v_v = (((*((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._source.data + __pyx_t_4 * __pyx_v_self->__pyx_base._source.strides[0]) ))) * (*((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._weights.data + __pyx_t_5 * __pyx_v_self->__pyx_base._weights.strides[0]) )))) * __pyx_v_self->__pyx_base._gain);
+
+    /* "c_dana.pyx":527
+ *         for i in range(self._npfc):
+ *             v = self._source[i] * self._weights[i] * self._gain
+ *             for j in range(self._narm):             # <<<<<<<<<<<<<<
+ *                 self._target[j*self._npfc+i] += v
+ * 
+ */
+    __pyx_t_6 = __pyx_v_self->__pyx_base._narm;
+    for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
+      __pyx_v_j = __pyx_t_7;
+
+      /* "c_dana.pyx":528
+ *             v = self._source[i] * self._weights[i] * self._gain
+ *             for j in range(self._narm):
+ *                 self._target[j*self._npfc+i] += v             # <<<<<<<<<<<<<<
+ * 
+ * 
+ */
+      if (unlikely(!__pyx_v_self->__pyx_base._target.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 528; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+      __pyx_t_8 = ((__pyx_v_j * __pyx_v_self->__pyx_base._npfc) + __pyx_v_i);
+      __pyx_t_9 = -1;
+      if (__pyx_t_8 < 0) {
+        __pyx_t_8 += __pyx_v_self->__pyx_base._target.shape[0];
+        if (unlikely(__pyx_t_8 < 0)) __pyx_t_9 = 0;
+      } else if (unlikely(__pyx_t_8 >= __pyx_v_self->__pyx_base._target.shape[0])) __pyx_t_9 = 0;
+      if (unlikely(__pyx_t_9 != -1)) {
+        __Pyx_RaiseBufferIndexError(__pyx_t_9);
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 528; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      }
+      *((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._target.data + __pyx_t_8 * __pyx_v_self->__pyx_base._target.strides[0]) )) += __pyx_v_v;
+    }
+  }
+
+  /* "c_dana.pyx":520
+ * # --- PFCtoSMA ---
+ * cdef class PFCtoSMA(Connection):
+ *     def propagate(self):             # <<<<<<<<<<<<<<
+ *         cdef int i,j
+ *         cdef double v
+ */
+
+  /* function exit code */
+  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_AddTraceback("c_dana.PFCtoSMA.propagate", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "c_dana.pyx":533
+ * # --- ARMtoSMA ---
+ * cdef class ARMtoSMA(Connection):
+ *     def propagate(self):             # <<<<<<<<<<<<<<
+ *         cdef int i,j
+ *         cdef double v
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_6c_dana_8ARMtoSMA_1propagate(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_6c_dana_8ARMtoSMA_1propagate(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("propagate (wrapper)", 0);
+  __pyx_r = __pyx_pf_6c_dana_8ARMtoSMA_propagate(((struct __pyx_obj_6c_dana_ARMtoSMA *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_6c_dana_8ARMtoSMA_propagate(struct __pyx_obj_6c_dana_ARMtoSMA *__pyx_v_self) {
+  int __pyx_v_i;
+  int __pyx_v_j;
+  double __pyx_v_v;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  int __pyx_t_1;
+  int __pyx_t_2;
+  int __pyx_t_3;
+  int __pyx_t_4;
+  int __pyx_t_5;
+  int __pyx_t_6;
+  int __pyx_t_7;
+  int __pyx_t_8;
+  int __pyx_t_9;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("propagate", 0);
+
+  /* "c_dana.pyx":536
+ *         cdef int i,j
+ *         cdef double v
+ *         if not self._active: return             # <<<<<<<<<<<<<<
+ * 
+ *         for i in range(self._narm ):
+ */
+  __pyx_t_1 = ((!(__pyx_v_self->__pyx_base._active != 0)) != 0);
+  if (__pyx_t_1) {
+    __Pyx_XDECREF(__pyx_r);
+    __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+    goto __pyx_L0;
+  }
+
+  /* "c_dana.pyx":538
+ *         if not self._active: return
+ * 
+ *         for i in range(self._narm ):             # <<<<<<<<<<<<<<
+ *             v = self._source[i] * self._weights[i] * self._gain
+ *             for j in range(self._npfc):
+ */
+  __pyx_t_2 = __pyx_v_self->__pyx_base._narm;
+  for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
+    __pyx_v_i = __pyx_t_3;
+
+    /* "c_dana.pyx":539
+ * 
+ *         for i in range(self._narm ):
+ *             v = self._source[i] * self._weights[i] * self._gain             # <<<<<<<<<<<<<<
+ *             for j in range(self._npfc):
+ *                 self._target[i*self._npfc+j] += v
+ */
+    if (unlikely(!__pyx_v_self->__pyx_base._source.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 539; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+    __pyx_t_4 = __pyx_v_i;
+    __pyx_t_5 = -1;
+    if (__pyx_t_4 < 0) {
+      __pyx_t_4 += __pyx_v_self->__pyx_base._source.shape[0];
+      if (unlikely(__pyx_t_4 < 0)) __pyx_t_5 = 0;
+    } else if (unlikely(__pyx_t_4 >= __pyx_v_self->__pyx_base._source.shape[0])) __pyx_t_5 = 0;
+    if (unlikely(__pyx_t_5 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_5);
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 539; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    }
+    if (unlikely(!__pyx_v_self->__pyx_base._weights.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 539; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+    __pyx_t_5 = __pyx_v_i;
+    __pyx_t_6 = -1;
+    if (__pyx_t_5 < 0) {
+      __pyx_t_5 += __pyx_v_self->__pyx_base._weights.shape[0];
+      if (unlikely(__pyx_t_5 < 0)) __pyx_t_6 = 0;
+    } else if (unlikely(__pyx_t_5 >= __pyx_v_self->__pyx_base._weights.shape[0])) __pyx_t_6 = 0;
+    if (unlikely(__pyx_t_6 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_6);
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 539; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    }
+    __pyx_v_v = (((*((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._source.data + __pyx_t_4 * __pyx_v_self->__pyx_base._source.strides[0]) ))) * (*((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._weights.data + __pyx_t_5 * __pyx_v_self->__pyx_base._weights.strides[0]) )))) * __pyx_v_self->__pyx_base._gain);
+
+    /* "c_dana.pyx":540
+ *         for i in range(self._narm ):
+ *             v = self._source[i] * self._weights[i] * self._gain
+ *             for j in range(self._npfc):             # <<<<<<<<<<<<<<
+ *                 self._target[i*self._npfc+j] += v
+ * 
+ */
+    __pyx_t_6 = __pyx_v_self->__pyx_base._npfc;
+    for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
+      __pyx_v_j = __pyx_t_7;
+
+      /* "c_dana.pyx":541
+ *             v = self._source[i] * self._weights[i] * self._gain
+ *             for j in range(self._npfc):
+ *                 self._target[i*self._npfc+j] += v             # <<<<<<<<<<<<<<
+ * 
+ * # --- SMAtoARM ---
+ */
+      if (unlikely(!__pyx_v_self->__pyx_base._target.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 541; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+      __pyx_t_8 = ((__pyx_v_i * __pyx_v_self->__pyx_base._npfc) + __pyx_v_j);
+      __pyx_t_9 = -1;
+      if (__pyx_t_8 < 0) {
+        __pyx_t_8 += __pyx_v_self->__pyx_base._target.shape[0];
+        if (unlikely(__pyx_t_8 < 0)) __pyx_t_9 = 0;
+      } else if (unlikely(__pyx_t_8 >= __pyx_v_self->__pyx_base._target.shape[0])) __pyx_t_9 = 0;
+      if (unlikely(__pyx_t_9 != -1)) {
+        __Pyx_RaiseBufferIndexError(__pyx_t_9);
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 541; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      }
+      *((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._target.data + __pyx_t_8 * __pyx_v_self->__pyx_base._target.strides[0]) )) += __pyx_v_v;
+    }
+  }
+
+  /* "c_dana.pyx":533
+ * # --- ARMtoSMA ---
+ * cdef class ARMtoSMA(Connection):
+ *     def propagate(self):             # <<<<<<<<<<<<<<
+ *         cdef int i,j
+ *         cdef double v
+ */
+
+  /* function exit code */
+  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_AddTraceback("c_dana.ARMtoSMA.propagate", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "c_dana.pyx":545
+ * # --- SMAtoARM ---
+ * cdef class SMAtoARM(Connection):
+ *     def propagate(self):             # <<<<<<<<<<<<<<
+ *         cdef int i,j,k
+ *         cdef double v
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_6c_dana_8SMAtoARM_1propagate(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_6c_dana_8SMAtoARM_1propagate(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("propagate (wrapper)", 0);
+  __pyx_r = __pyx_pf_6c_dana_8SMAtoARM_propagate(((struct __pyx_obj_6c_dana_SMAtoARM *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_6c_dana_8SMAtoARM_propagate(struct __pyx_obj_6c_dana_SMAtoARM *__pyx_v_self) {
+  int __pyx_v_i;
+  int __pyx_v_j;
+  int __pyx_v_k;
+  double __pyx_v_v;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  int __pyx_t_1;
+  int __pyx_t_2;
+  int __pyx_t_3;
+  int __pyx_t_4;
+  int __pyx_t_5;
+  int __pyx_t_6;
+  int __pyx_t_7;
+  int __pyx_t_8;
+  int __pyx_t_9;
+  int __pyx_t_10;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("propagate", 0);
+
+  /* "c_dana.pyx":548
+ *         cdef int i,j,k
+ *         cdef double v
+ *         if not self._active: return             # <<<<<<<<<<<<<<
+ * 
+ *         for k in range(self._narm):
+ */
+  __pyx_t_1 = ((!(__pyx_v_self->__pyx_base._active != 0)) != 0);
+  if (__pyx_t_1) {
+    __Pyx_XDECREF(__pyx_r);
+    __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+    goto __pyx_L0;
+  }
+
+  /* "c_dana.pyx":550
+ *         if not self._active: return
+ * 
+ *         for k in range(self._narm):             # <<<<<<<<<<<<<<
+ *             v = 0
+ * 
+ */
+  __pyx_t_2 = __pyx_v_self->__pyx_base._narm;
+  for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
+    __pyx_v_k = __pyx_t_3;
+
+    /* "c_dana.pyx":551
+ * 
+ *         for k in range(self._narm):
+ *             v = 0             # <<<<<<<<<<<<<<
+ * 
+ *             for i in range(self._narm):
+ */
+    __pyx_v_v = 0.0;
+
+    /* "c_dana.pyx":553
+ *             v = 0
+ * 
+ *             for i in range(self._narm):             # <<<<<<<<<<<<<<
+ *                 for j in range(self._npfc):
+ *                    v += self._source[i*self._npfc+j] * self._weights[k*self._narm*self._npfc+i*self._npfc+j]
+ */
+    __pyx_t_4 = __pyx_v_self->__pyx_base._narm;
+    for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
+      __pyx_v_i = __pyx_t_5;
+
+      /* "c_dana.pyx":554
+ * 
+ *             for i in range(self._narm):
+ *                 for j in range(self._npfc):             # <<<<<<<<<<<<<<
+ *                    v += self._source[i*self._npfc+j] * self._weights[k*self._narm*self._npfc+i*self._npfc+j]
+ * 
+ */
+      __pyx_t_6 = __pyx_v_self->__pyx_base._npfc;
+      for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
+        __pyx_v_j = __pyx_t_7;
+
+        /* "c_dana.pyx":555
+ *             for i in range(self._narm):
+ *                 for j in range(self._npfc):
+ *                    v += self._source[i*self._npfc+j] * self._weights[k*self._narm*self._npfc+i*self._npfc+j]             # <<<<<<<<<<<<<<
+ * 
+ *             self._target[k] += v * self._gain
+ */
+        if (unlikely(!__pyx_v_self->__pyx_base._source.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 555; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+        __pyx_t_8 = ((__pyx_v_i * __pyx_v_self->__pyx_base._npfc) + __pyx_v_j);
+        __pyx_t_9 = -1;
+        if (__pyx_t_8 < 0) {
+          __pyx_t_8 += __pyx_v_self->__pyx_base._source.shape[0];
+          if (unlikely(__pyx_t_8 < 0)) __pyx_t_9 = 0;
+        } else if (unlikely(__pyx_t_8 >= __pyx_v_self->__pyx_base._source.shape[0])) __pyx_t_9 = 0;
+        if (unlikely(__pyx_t_9 != -1)) {
+          __Pyx_RaiseBufferIndexError(__pyx_t_9);
+          {__pyx_filename = __pyx_f[0]; __pyx_lineno = 555; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        }
+        if (unlikely(!__pyx_v_self->__pyx_base._weights.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 555; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+        __pyx_t_9 = ((((__pyx_v_k * __pyx_v_self->__pyx_base._narm) * __pyx_v_self->__pyx_base._npfc) + (__pyx_v_i * __pyx_v_self->__pyx_base._npfc)) + __pyx_v_j);
+        __pyx_t_10 = -1;
+        if (__pyx_t_9 < 0) {
+          __pyx_t_9 += __pyx_v_self->__pyx_base._weights.shape[0];
+          if (unlikely(__pyx_t_9 < 0)) __pyx_t_10 = 0;
+        } else if (unlikely(__pyx_t_9 >= __pyx_v_self->__pyx_base._weights.shape[0])) __pyx_t_10 = 0;
+        if (unlikely(__pyx_t_10 != -1)) {
+          __Pyx_RaiseBufferIndexError(__pyx_t_10);
+          {__pyx_filename = __pyx_f[0]; __pyx_lineno = 555; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        }
+        __pyx_v_v = (__pyx_v_v + ((*((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._source.data + __pyx_t_8 * __pyx_v_self->__pyx_base._source.strides[0]) ))) * (*((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._weights.data + __pyx_t_9 * __pyx_v_self->__pyx_base._weights.strides[0]) )))));
+      }
+    }
+
+    /* "c_dana.pyx":557
+ *                    v += self._source[i*self._npfc+j] * self._weights[k*self._narm*self._npfc+i*self._npfc+j]
+ * 
+ *             self._target[k] += v * self._gain             # <<<<<<<<<<<<<<
+ * 
+ * # --- PPCtoPFC ---
+ */
+    if (unlikely(!__pyx_v_self->__pyx_base._target.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 557; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+    __pyx_t_4 = __pyx_v_k;
+    __pyx_t_5 = -1;
+    if (__pyx_t_4 < 0) {
+      __pyx_t_4 += __pyx_v_self->__pyx_base._target.shape[0];
+      if (unlikely(__pyx_t_4 < 0)) __pyx_t_5 = 0;
+    } else if (unlikely(__pyx_t_4 >= __pyx_v_self->__pyx_base._target.shape[0])) __pyx_t_5 = 0;
+    if (unlikely(__pyx_t_5 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_5);
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 557; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    }
+    *((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._target.data + __pyx_t_4 * __pyx_v_self->__pyx_base._target.strides[0]) )) += (__pyx_v_v * __pyx_v_self->__pyx_base._gain);
+  }
+
+  /* "c_dana.pyx":545
+ * # --- SMAtoARM ---
+ * cdef class SMAtoARM(Connection):
+ *     def propagate(self):             # <<<<<<<<<<<<<<
+ *         cdef int i,j,k
+ *         cdef double v
+ */
+
+  /* function exit code */
+  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_AddTraceback("c_dana.SMAtoARM.propagate", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "c_dana.pyx":561
+ * # --- PPCtoPFC ---
+ * cdef class PPCtoPFC(Connection):
+ *     def propagate(self):             # <<<<<<<<<<<<<<
+ *         cdef int i,j,k
+ *         cdef double v
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_6c_dana_8PPCtoPFC_1propagate(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_6c_dana_8PPCtoPFC_1propagate(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("propagate (wrapper)", 0);
+  __pyx_r = __pyx_pf_6c_dana_8PPCtoPFC_propagate(((struct __pyx_obj_6c_dana_PPCtoPFC *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_6c_dana_8PPCtoPFC_propagate(struct __pyx_obj_6c_dana_PPCtoPFC *__pyx_v_self) {
+  int __pyx_v_i;
+  int __pyx_v_j;
+  int __pyx_v_k;
+  double __pyx_v_v;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  int __pyx_t_1;
+  int __pyx_t_2;
+  int __pyx_t_3;
+  int __pyx_t_4;
+  int __pyx_t_5;
+  int __pyx_t_6;
+  int __pyx_t_7;
+  int __pyx_t_8;
+  int __pyx_t_9;
+  int __pyx_t_10;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("propagate", 0);
+
+  /* "c_dana.pyx":564
+ *         cdef int i,j,k
+ *         cdef double v
+ *         if not self._active: return             # <<<<<<<<<<<<<<
+ * 
+ *         for k in range(self._npfc):
+ */
+  __pyx_t_1 = ((!(__pyx_v_self->__pyx_base._active != 0)) != 0);
+  if (__pyx_t_1) {
+    __Pyx_XDECREF(__pyx_r);
+    __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+    goto __pyx_L0;
+  }
+
+  /* "c_dana.pyx":566
+ *         if not self._active: return
+ * 
+ *         for k in range(self._npfc):             # <<<<<<<<<<<<<<
+ *             v = 0
+ * 
+ */
+  __pyx_t_2 = __pyx_v_self->__pyx_base._npfc;
+  for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
+    __pyx_v_k = __pyx_t_3;
+
+    /* "c_dana.pyx":567
+ * 
+ *         for k in range(self._npfc):
+ *             v = 0             # <<<<<<<<<<<<<<
+ * 
+ *             for i in range(self._narm):
+ */
+    __pyx_v_v = 0.0;
+
+    /* "c_dana.pyx":569
+ *             v = 0
+ * 
+ *             for i in range(self._narm):             # <<<<<<<<<<<<<<
+ *                 for j in range(self._n):
+ *                    v += self._source[i*self._n+j] * self._weights[k*self._narm*self._n+i*self._n+j]
+ */
+    __pyx_t_4 = __pyx_v_self->__pyx_base._narm;
+    for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
+      __pyx_v_i = __pyx_t_5;
+
+      /* "c_dana.pyx":570
+ * 
+ *             for i in range(self._narm):
+ *                 for j in range(self._n):             # <<<<<<<<<<<<<<
+ *                    v += self._source[i*self._n+j] * self._weights[k*self._narm*self._n+i*self._n+j]
+ * 
+ */
+      __pyx_t_6 = __pyx_v_self->__pyx_base._n;
+      for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
+        __pyx_v_j = __pyx_t_7;
+
+        /* "c_dana.pyx":571
+ *             for i in range(self._narm):
+ *                 for j in range(self._n):
+ *                    v += self._source[i*self._n+j] * self._weights[k*self._narm*self._n+i*self._n+j]             # <<<<<<<<<<<<<<
+ * 
+ *             self._target[k] += v * self._gain
+ */
+        if (unlikely(!__pyx_v_self->__pyx_base._source.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 571; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+        __pyx_t_8 = ((__pyx_v_i * __pyx_v_self->__pyx_base._n) + __pyx_v_j);
+        __pyx_t_9 = -1;
+        if (__pyx_t_8 < 0) {
+          __pyx_t_8 += __pyx_v_self->__pyx_base._source.shape[0];
+          if (unlikely(__pyx_t_8 < 0)) __pyx_t_9 = 0;
+        } else if (unlikely(__pyx_t_8 >= __pyx_v_self->__pyx_base._source.shape[0])) __pyx_t_9 = 0;
+        if (unlikely(__pyx_t_9 != -1)) {
+          __Pyx_RaiseBufferIndexError(__pyx_t_9);
+          {__pyx_filename = __pyx_f[0]; __pyx_lineno = 571; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        }
+        if (unlikely(!__pyx_v_self->__pyx_base._weights.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 571; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+        __pyx_t_9 = ((((__pyx_v_k * __pyx_v_self->__pyx_base._narm) * __pyx_v_self->__pyx_base._n) + (__pyx_v_i * __pyx_v_self->__pyx_base._n)) + __pyx_v_j);
+        __pyx_t_10 = -1;
+        if (__pyx_t_9 < 0) {
+          __pyx_t_9 += __pyx_v_self->__pyx_base._weights.shape[0];
+          if (unlikely(__pyx_t_9 < 0)) __pyx_t_10 = 0;
+        } else if (unlikely(__pyx_t_9 >= __pyx_v_self->__pyx_base._weights.shape[0])) __pyx_t_10 = 0;
+        if (unlikely(__pyx_t_10 != -1)) {
+          __Pyx_RaiseBufferIndexError(__pyx_t_10);
+          {__pyx_filename = __pyx_f[0]; __pyx_lineno = 571; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        }
+        __pyx_v_v = (__pyx_v_v + ((*((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._source.data + __pyx_t_8 * __pyx_v_self->__pyx_base._source.strides[0]) ))) * (*((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._weights.data + __pyx_t_9 * __pyx_v_self->__pyx_base._weights.strides[0]) )))));
+      }
+    }
+
+    /* "c_dana.pyx":573
+ *                    v += self._source[i*self._n+j] * self._weights[k*self._narm*self._n+i*self._n+j]
+ * 
+ *             self._target[k] += v * self._gain             # <<<<<<<<<<<<<<
+ * 
+ * # --- PPCtoSTR ---
+ */
+    if (unlikely(!__pyx_v_self->__pyx_base._target.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 573; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+    __pyx_t_4 = __pyx_v_k;
+    __pyx_t_5 = -1;
+    if (__pyx_t_4 < 0) {
+      __pyx_t_4 += __pyx_v_self->__pyx_base._target.shape[0];
+      if (unlikely(__pyx_t_4 < 0)) __pyx_t_5 = 0;
+    } else if (unlikely(__pyx_t_4 >= __pyx_v_self->__pyx_base._target.shape[0])) __pyx_t_5 = 0;
+    if (unlikely(__pyx_t_5 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_5);
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 573; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    }
+    *((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._target.data + __pyx_t_4 * __pyx_v_self->__pyx_base._target.strides[0]) )) += (__pyx_v_v * __pyx_v_self->__pyx_base._gain);
+  }
+
+  /* "c_dana.pyx":561
+ * # --- PPCtoPFC ---
+ * cdef class PPCtoPFC(Connection):
+ *     def propagate(self):             # <<<<<<<<<<<<<<
+ *         cdef int i,j,k
+ *         cdef double v
+ */
+
+  /* function exit code */
+  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_AddTraceback("c_dana.PPCtoPFC.propagate", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "c_dana.pyx":577
+ * # --- PPCtoSTR ---
+ * cdef class PPCtoSTR(Connection):
+ *     def propagate(self):             # <<<<<<<<<<<<<<
+ *         cdef int i,k
+ *         if not self._active: return
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_6c_dana_8PPCtoSTR_1propagate(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_6c_dana_8PPCtoSTR_1propagate(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("propagate (wrapper)", 0);
+  __pyx_r = __pyx_pf_6c_dana_8PPCtoSTR_propagate(((struct __pyx_obj_6c_dana_PPCtoSTR *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_6c_dana_8PPCtoSTR_propagate(struct __pyx_obj_6c_dana_PPCtoSTR *__pyx_v_self) {
+  int __pyx_v_i;
+  int __pyx_v_k;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  int __pyx_t_1;
+  int __pyx_t_2;
+  int __pyx_t_3;
+  int __pyx_t_4;
+  int __pyx_t_5;
+  int __pyx_t_6;
+  int __pyx_t_7;
+  int __pyx_t_8;
+  int __pyx_t_9;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("propagate", 0);
+
+  /* "c_dana.pyx":579
+ *     def propagate(self):
+ *         cdef int i,k
+ *         if not self._active: return             # <<<<<<<<<<<<<<
+ * 
+ *         for k in range(self._npfc):
+ */
+  __pyx_t_1 = ((!(__pyx_v_self->__pyx_base._active != 0)) != 0);
+  if (__pyx_t_1) {
+    __Pyx_XDECREF(__pyx_r);
+    __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+    goto __pyx_L0;
+  }
+
+  /* "c_dana.pyx":581
+ *         if not self._active: return
+ * 
+ *         for k in range(self._npfc):             # <<<<<<<<<<<<<<
+ *             for i in range(self._narm*self._n):
+ *                 self._target[k*self._narm*self._n + i] += self._source[i] * self._weights[k*self._narm*self._n +i] * self._gain
+ */
+  __pyx_t_2 = __pyx_v_self->__pyx_base._npfc;
+  for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
+    __pyx_v_k = __pyx_t_3;
+
+    /* "c_dana.pyx":582
+ * 
+ *         for k in range(self._npfc):
+ *             for i in range(self._narm*self._n):             # <<<<<<<<<<<<<<
+ *                 self._target[k*self._narm*self._n + i] += self._source[i] * self._weights[k*self._narm*self._n +i] * self._gain
+ * 
+ */
+    __pyx_t_4 = (__pyx_v_self->__pyx_base._narm * __pyx_v_self->__pyx_base._n);
+    for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
+      __pyx_v_i = __pyx_t_5;
+
+      /* "c_dana.pyx":583
+ *         for k in range(self._npfc):
+ *             for i in range(self._narm*self._n):
+ *                 self._target[k*self._narm*self._n + i] += self._source[i] * self._weights[k*self._narm*self._n +i] * self._gain             # <<<<<<<<<<<<<<
+ * 
+ * 
+ */
+      if (unlikely(!__pyx_v_self->__pyx_base._source.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 583; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+      __pyx_t_6 = __pyx_v_i;
+      __pyx_t_7 = -1;
+      if (__pyx_t_6 < 0) {
+        __pyx_t_6 += __pyx_v_self->__pyx_base._source.shape[0];
+        if (unlikely(__pyx_t_6 < 0)) __pyx_t_7 = 0;
+      } else if (unlikely(__pyx_t_6 >= __pyx_v_self->__pyx_base._source.shape[0])) __pyx_t_7 = 0;
+      if (unlikely(__pyx_t_7 != -1)) {
+        __Pyx_RaiseBufferIndexError(__pyx_t_7);
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 583; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      }
+      if (unlikely(!__pyx_v_self->__pyx_base._weights.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 583; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+      __pyx_t_7 = (((__pyx_v_k * __pyx_v_self->__pyx_base._narm) * __pyx_v_self->__pyx_base._n) + __pyx_v_i);
+      __pyx_t_8 = -1;
+      if (__pyx_t_7 < 0) {
+        __pyx_t_7 += __pyx_v_self->__pyx_base._weights.shape[0];
+        if (unlikely(__pyx_t_7 < 0)) __pyx_t_8 = 0;
+      } else if (unlikely(__pyx_t_7 >= __pyx_v_self->__pyx_base._weights.shape[0])) __pyx_t_8 = 0;
+      if (unlikely(__pyx_t_8 != -1)) {
+        __Pyx_RaiseBufferIndexError(__pyx_t_8);
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 583; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      }
+      if (unlikely(!__pyx_v_self->__pyx_base._target.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 583; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+      __pyx_t_8 = (((__pyx_v_k * __pyx_v_self->__pyx_base._narm) * __pyx_v_self->__pyx_base._n) + __pyx_v_i);
+      __pyx_t_9 = -1;
+      if (__pyx_t_8 < 0) {
+        __pyx_t_8 += __pyx_v_self->__pyx_base._target.shape[0];
+        if (unlikely(__pyx_t_8 < 0)) __pyx_t_9 = 0;
+      } else if (unlikely(__pyx_t_8 >= __pyx_v_self->__pyx_base._target.shape[0])) __pyx_t_9 = 0;
+      if (unlikely(__pyx_t_9 != -1)) {
+        __Pyx_RaiseBufferIndexError(__pyx_t_9);
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 583; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      }
+      *((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._target.data + __pyx_t_8 * __pyx_v_self->__pyx_base._target.strides[0]) )) += (((*((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._source.data + __pyx_t_6 * __pyx_v_self->__pyx_base._source.strides[0]) ))) * (*((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._weights.data + __pyx_t_7 * __pyx_v_self->__pyx_base._weights.strides[0]) )))) * __pyx_v_self->__pyx_base._gain);
+    }
+  }
+
+  /* "c_dana.pyx":577
+ * # --- PPCtoSTR ---
+ * cdef class PPCtoSTR(Connection):
+ *     def propagate(self):             # <<<<<<<<<<<<<<
+ *         cdef int i,k
+ *         if not self._active: return
+ */
+
+  /* function exit code */
+  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_AddTraceback("c_dana.PPCtoSTR.propagate", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "c_dana.pyx":588
+ * # --- PFCtoSTR ---
+ * cdef class PFCtoSTR(Connection):
+ *     def propagate(self):             # <<<<<<<<<<<<<<
+ *         cdef int i,k
+ *         if not self._active: return
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_6c_dana_8PFCtoSTR_1propagate(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_6c_dana_8PFCtoSTR_1propagate(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("propagate (wrapper)", 0);
+  __pyx_r = __pyx_pf_6c_dana_8PFCtoSTR_propagate(((struct __pyx_obj_6c_dana_PFCtoSTR *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_6c_dana_8PFCtoSTR_propagate(struct __pyx_obj_6c_dana_PFCtoSTR *__pyx_v_self) {
+  int __pyx_v_i;
+  int __pyx_v_k;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  int __pyx_t_1;
+  int __pyx_t_2;
+  int __pyx_t_3;
+  int __pyx_t_4;
+  int __pyx_t_5;
+  int __pyx_t_6;
+  int __pyx_t_7;
+  int __pyx_t_8;
+  int __pyx_t_9;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("propagate", 0);
+
+  /* "c_dana.pyx":590
+ *     def propagate(self):
+ *         cdef int i,k
+ *         if not self._active: return             # <<<<<<<<<<<<<<
+ * 
+ *         for k in range(self._npfc):
+ */
+  __pyx_t_1 = ((!(__pyx_v_self->__pyx_base._active != 0)) != 0);
+  if (__pyx_t_1) {
+    __Pyx_XDECREF(__pyx_r);
+    __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+    goto __pyx_L0;
+  }
+
+  /* "c_dana.pyx":592
+ *         if not self._active: return
+ * 
+ *         for k in range(self._npfc):             # <<<<<<<<<<<<<<
+ *             for i in range(self._narm*self._n):
+ *                    self._target[k*self._narm*self._n + i] += self._source[k] * self._weights[k*self._narm*self._n + i] * self._gain
+ */
+  __pyx_t_2 = __pyx_v_self->__pyx_base._npfc;
+  for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
+    __pyx_v_k = __pyx_t_3;
+
+    /* "c_dana.pyx":593
+ * 
+ *         for k in range(self._npfc):
+ *             for i in range(self._narm*self._n):             # <<<<<<<<<<<<<<
+ *                    self._target[k*self._narm*self._n + i] += self._source[k] * self._weights[k*self._narm*self._n + i] * self._gain
+ * 
+ */
+    __pyx_t_4 = (__pyx_v_self->__pyx_base._narm * __pyx_v_self->__pyx_base._n);
+    for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
+      __pyx_v_i = __pyx_t_5;
+
+      /* "c_dana.pyx":594
+ *         for k in range(self._npfc):
+ *             for i in range(self._narm*self._n):
+ *                    self._target[k*self._narm*self._n + i] += self._source[k] * self._weights[k*self._narm*self._n + i] * self._gain             # <<<<<<<<<<<<<<
+ * 
+ * 
+ */
+      if (unlikely(!__pyx_v_self->__pyx_base._source.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 594; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+      __pyx_t_6 = __pyx_v_k;
+      __pyx_t_7 = -1;
+      if (__pyx_t_6 < 0) {
+        __pyx_t_6 += __pyx_v_self->__pyx_base._source.shape[0];
+        if (unlikely(__pyx_t_6 < 0)) __pyx_t_7 = 0;
+      } else if (unlikely(__pyx_t_6 >= __pyx_v_self->__pyx_base._source.shape[0])) __pyx_t_7 = 0;
+      if (unlikely(__pyx_t_7 != -1)) {
+        __Pyx_RaiseBufferIndexError(__pyx_t_7);
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 594; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      }
+      if (unlikely(!__pyx_v_self->__pyx_base._weights.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 594; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+      __pyx_t_7 = (((__pyx_v_k * __pyx_v_self->__pyx_base._narm) * __pyx_v_self->__pyx_base._n) + __pyx_v_i);
+      __pyx_t_8 = -1;
+      if (__pyx_t_7 < 0) {
+        __pyx_t_7 += __pyx_v_self->__pyx_base._weights.shape[0];
+        if (unlikely(__pyx_t_7 < 0)) __pyx_t_8 = 0;
+      } else if (unlikely(__pyx_t_7 >= __pyx_v_self->__pyx_base._weights.shape[0])) __pyx_t_8 = 0;
+      if (unlikely(__pyx_t_8 != -1)) {
+        __Pyx_RaiseBufferIndexError(__pyx_t_8);
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 594; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      }
+      if (unlikely(!__pyx_v_self->__pyx_base._target.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 594; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+      __pyx_t_8 = (((__pyx_v_k * __pyx_v_self->__pyx_base._narm) * __pyx_v_self->__pyx_base._n) + __pyx_v_i);
+      __pyx_t_9 = -1;
+      if (__pyx_t_8 < 0) {
+        __pyx_t_8 += __pyx_v_self->__pyx_base._target.shape[0];
+        if (unlikely(__pyx_t_8 < 0)) __pyx_t_9 = 0;
+      } else if (unlikely(__pyx_t_8 >= __pyx_v_self->__pyx_base._target.shape[0])) __pyx_t_9 = 0;
+      if (unlikely(__pyx_t_9 != -1)) {
+        __Pyx_RaiseBufferIndexError(__pyx_t_9);
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 594; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      }
+      *((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._target.data + __pyx_t_8 * __pyx_v_self->__pyx_base._target.strides[0]) )) += (((*((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._source.data + __pyx_t_6 * __pyx_v_self->__pyx_base._source.strides[0]) ))) * (*((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._weights.data + __pyx_t_7 * __pyx_v_self->__pyx_base._weights.strides[0]) )))) * __pyx_v_self->__pyx_base._gain);
+    }
+  }
+
+  /* "c_dana.pyx":588
+ * # --- PFCtoSTR ---
+ * cdef class PFCtoSTR(Connection):
+ *     def propagate(self):             # <<<<<<<<<<<<<<
+ *         cdef int i,k
+ *         if not self._active: return
+ */
+
+  /* function exit code */
+  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_AddTraceback("c_dana.PFCtoSTR.propagate", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "c_dana.pyx":599
+ * # --- STRpfcToBG ---
+ * cdef class STRpfcToBG(Connection):
+ *     def propagate(self):             # <<<<<<<<<<<<<<
+ *         cdef int i,j,k
+ *         cdef double v
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_6c_dana_10STRpfcToBG_1propagate(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_6c_dana_10STRpfcToBG_1propagate(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("propagate (wrapper)", 0);
+  __pyx_r = __pyx_pf_6c_dana_10STRpfcToBG_propagate(((struct __pyx_obj_6c_dana_STRpfcToBG *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_6c_dana_10STRpfcToBG_propagate(struct __pyx_obj_6c_dana_STRpfcToBG *__pyx_v_self) {
+  int __pyx_v_i;
+  int __pyx_v_k;
+  double __pyx_v_v;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  int __pyx_t_1;
+  int __pyx_t_2;
+  int __pyx_t_3;
+  int __pyx_t_4;
+  int __pyx_t_5;
+  int __pyx_t_6;
+  int __pyx_t_7;
+  int __pyx_t_8;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("propagate", 0);
+
+  /* "c_dana.pyx":602
+ *         cdef int i,j,k
+ *         cdef double v
+ *         if not self._active: return             # <<<<<<<<<<<<<<
+ * 
+ *         for k in range(self._npfc):
+ */
+  __pyx_t_1 = ((!(__pyx_v_self->__pyx_base._active != 0)) != 0);
+  if (__pyx_t_1) {
+    __Pyx_XDECREF(__pyx_r);
+    __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+    goto __pyx_L0;
+  }
+
+  /* "c_dana.pyx":604
+ *         if not self._active: return
+ * 
+ *         for k in range(self._npfc):             # <<<<<<<<<<<<<<
+ *             v = 0
+ * 
+ */
+  __pyx_t_2 = __pyx_v_self->__pyx_base._npfc;
+  for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
+    __pyx_v_k = __pyx_t_3;
+
+    /* "c_dana.pyx":605
+ * 
+ *         for k in range(self._npfc):
+ *             v = 0             # <<<<<<<<<<<<<<
+ * 
+ *             for i in range(self._narm*self._n):
+ */
+    __pyx_v_v = 0.0;
+
+    /* "c_dana.pyx":607
+ *             v = 0
+ * 
+ *             for i in range(self._narm*self._n):             # <<<<<<<<<<<<<<
+ *                    v += self._source[k*self._narm*self._n+i] * self._weights[k*self._narm*self._n+i]
+ * 
+ */
+    __pyx_t_4 = (__pyx_v_self->__pyx_base._narm * __pyx_v_self->__pyx_base._n);
+    for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
+      __pyx_v_i = __pyx_t_5;
+
+      /* "c_dana.pyx":608
+ * 
+ *             for i in range(self._narm*self._n):
+ *                    v += self._source[k*self._narm*self._n+i] * self._weights[k*self._narm*self._n+i]             # <<<<<<<<<<<<<<
+ * 
+ *             self._target[k] += v * self._gain
+ */
+      if (unlikely(!__pyx_v_self->__pyx_base._source.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 608; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+      __pyx_t_6 = (((__pyx_v_k * __pyx_v_self->__pyx_base._narm) * __pyx_v_self->__pyx_base._n) + __pyx_v_i);
+      __pyx_t_7 = -1;
+      if (__pyx_t_6 < 0) {
+        __pyx_t_6 += __pyx_v_self->__pyx_base._source.shape[0];
+        if (unlikely(__pyx_t_6 < 0)) __pyx_t_7 = 0;
+      } else if (unlikely(__pyx_t_6 >= __pyx_v_self->__pyx_base._source.shape[0])) __pyx_t_7 = 0;
+      if (unlikely(__pyx_t_7 != -1)) {
+        __Pyx_RaiseBufferIndexError(__pyx_t_7);
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 608; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      }
+      if (unlikely(!__pyx_v_self->__pyx_base._weights.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 608; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+      __pyx_t_7 = (((__pyx_v_k * __pyx_v_self->__pyx_base._narm) * __pyx_v_self->__pyx_base._n) + __pyx_v_i);
+      __pyx_t_8 = -1;
+      if (__pyx_t_7 < 0) {
+        __pyx_t_7 += __pyx_v_self->__pyx_base._weights.shape[0];
+        if (unlikely(__pyx_t_7 < 0)) __pyx_t_8 = 0;
+      } else if (unlikely(__pyx_t_7 >= __pyx_v_self->__pyx_base._weights.shape[0])) __pyx_t_8 = 0;
+      if (unlikely(__pyx_t_8 != -1)) {
+        __Pyx_RaiseBufferIndexError(__pyx_t_8);
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 608; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      }
+      __pyx_v_v = (__pyx_v_v + ((*((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._source.data + __pyx_t_6 * __pyx_v_self->__pyx_base._source.strides[0]) ))) * (*((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._weights.data + __pyx_t_7 * __pyx_v_self->__pyx_base._weights.strides[0]) )))));
+    }
+
+    /* "c_dana.pyx":610
+ *                    v += self._source[k*self._narm*self._n+i] * self._weights[k*self._narm*self._n+i]
+ * 
+ *             self._target[k] += v * self._gain             # <<<<<<<<<<<<<<
+ */
+    if (unlikely(!__pyx_v_self->__pyx_base._target.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");{__pyx_filename = __pyx_f[0]; __pyx_lineno = 610; __pyx_clineno = __LINE__; goto __pyx_L1_error;}}
+    __pyx_t_4 = __pyx_v_k;
+    __pyx_t_5 = -1;
+    if (__pyx_t_4 < 0) {
+      __pyx_t_4 += __pyx_v_self->__pyx_base._target.shape[0];
+      if (unlikely(__pyx_t_4 < 0)) __pyx_t_5 = 0;
+    } else if (unlikely(__pyx_t_4 >= __pyx_v_self->__pyx_base._target.shape[0])) __pyx_t_5 = 0;
+    if (unlikely(__pyx_t_5 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_5);
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 610; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    }
+    *((double *) ( /* dim=0 */ (__pyx_v_self->__pyx_base._target.data + __pyx_t_4 * __pyx_v_self->__pyx_base._target.strides[0]) )) += (__pyx_v_v * __pyx_v_self->__pyx_base._gain);
+  }
+
+  /* "c_dana.pyx":599
+ * # --- STRpfcToBG ---
+ * cdef class STRpfcToBG(Connection):
+ *     def propagate(self):             # <<<<<<<<<<<<<<
+ *         cdef int i,j,k
+ *         cdef double v
+ */
+
+  /* function exit code */
+  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_AddTraceback("c_dana.STRpfcToBG.propagate", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -8729,7 +12083,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  * 
  *             if ((flags & pybuf.PyBUF_F_CONTIGUOUS == pybuf.PyBUF_F_CONTIGUOUS)
  */
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__7, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__6, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_Raise(__pyx_t_3, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -8769,7 +12123,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  * 
  *             info.buf = PyArray_DATA(self)
  */
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__8, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 219; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__7, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 219; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_Raise(__pyx_t_3, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -9046,7 +12400,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  *                 if   t == NPY_BYTE:        f = "b"
  *                 elif t == NPY_UBYTE:       f = "B"
  */
-      __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__9, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 257; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__8, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 257; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_Raise(__pyx_t_3, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -9854,7 +13208,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
  * 
  *         if ((child.byteorder == c'>' and little_endian) or
  */
-      __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_RuntimeError, __pyx_tuple__10, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 799; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_RuntimeError, __pyx_tuple__9, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 799; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_Raise(__pyx_t_3, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -9906,7 +13260,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
  *             # One could encode it in the format string and have Cython
  *             # complain instead, BUT: < and > in format strings also imply
  */
-      __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__11, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 803; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__10, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 803; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_Raise(__pyx_t_3, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -10007,7 +13361,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
  * 
  *             # Until ticket #99 is fixed, use integers to avoid warnings
  */
-        __pyx_t_4 = __Pyx_PyObject_Call(__pyx_builtin_RuntimeError, __pyx_tuple__12, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 823; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_4 = __Pyx_PyObject_Call(__pyx_builtin_RuntimeError, __pyx_tuple__11, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 823; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_4);
         __Pyx_Raise(__pyx_t_4, 0, 0, 0);
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -10762,7 +14116,7 @@ static int __pyx_array_MemoryView_5array___cinit__(struct __pyx_array_obj *__pyx
  * 
  *         if itemsize <= 0:
  */
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__13, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 127; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__12, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 127; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_Raise(__pyx_t_3, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -10786,7 +14140,7 @@ static int __pyx_array_MemoryView_5array___cinit__(struct __pyx_array_obj *__pyx
  * 
  *         if isinstance(format, unicode):
  */
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__14, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 130; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__13, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 130; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_Raise(__pyx_t_3, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -10884,7 +14238,7 @@ static int __pyx_array_MemoryView_5array___cinit__(struct __pyx_array_obj *__pyx
  * 
  * 
  */
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__15, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 142; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__14, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 142; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_Raise(__pyx_t_3, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -11135,7 +14489,7 @@ static int __pyx_array_MemoryView_5array___cinit__(struct __pyx_array_obj *__pyx
  * 
  *             if self.dtype_is_object:
  */
-      __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__16, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 170; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__15, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 170; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_Raise(__pyx_t_3, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -11353,7 +14707,7 @@ static int __pyx_array_getbuffer_MemoryView_5array_2__getbuffer__(struct __pyx_a
  *         info.buf = self.data
  *         info.len = self.len
  */
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__17, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 186; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__16, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 186; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_Raise(__pyx_t_3, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -13946,7 +17300,7 @@ static PyObject *__pyx_memoryview_convert_item_to_object(struct __pyx_memoryview
  *         else:
  *             if len(self.view.format) == 1:
  */
-      __pyx_t_6 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__18, NULL); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 445; __pyx_clineno = __LINE__; goto __pyx_L5_except_error;}
+      __pyx_t_6 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__17, NULL); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 445; __pyx_clineno = __LINE__; goto __pyx_L5_except_error;}
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_Raise(__pyx_t_6, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
@@ -14725,7 +18079,7 @@ static PyObject *__pyx_memoryview_get_strides_MemoryView_10memoryview_7strides__
  * 
  *             return tuple([self.view.strides[i] for i in xrange(self.view.ndim)])
  */
-    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__19, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 521; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__18, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 521; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_Raise(__pyx_t_2, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -16188,9 +19542,9 @@ static PyObject *_unellipsify(PyObject *__pyx_v_index, int __pyx_v_ndim) {
         __Pyx_GOTREF(__pyx_t_7);
         { Py_ssize_t __pyx_temp;
           for (__pyx_temp=0; __pyx_temp < ((__pyx_v_ndim - __pyx_t_8) + 1); __pyx_temp++) {
-            __Pyx_INCREF(__pyx_slice__20);
-            PyList_SET_ITEM(__pyx_t_7, __pyx_temp, __pyx_slice__20);
-            __Pyx_GIVEREF(__pyx_slice__20);
+            __Pyx_INCREF(__pyx_slice__19);
+            PyList_SET_ITEM(__pyx_t_7, __pyx_temp, __pyx_slice__19);
+            __Pyx_GIVEREF(__pyx_slice__19);
           }
         }
         __pyx_t_9 = __Pyx_PyList_Extend(__pyx_v_result, __pyx_t_7); if (unlikely(__pyx_t_9 == -1)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 638; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
@@ -16215,7 +19569,7 @@ static PyObject *_unellipsify(PyObject *__pyx_v_index, int __pyx_v_ndim) {
  *             have_slices = True
  *         else:
  */
-        __pyx_t_9 = __Pyx_PyList_Append(__pyx_v_result, __pyx_slice__21); if (unlikely(__pyx_t_9 == -1)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 641; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_9 = __Pyx_PyList_Append(__pyx_v_result, __pyx_slice__20); if (unlikely(__pyx_t_9 == -1)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 641; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
       __pyx_L7:;
 
@@ -16344,9 +19698,9 @@ static PyObject *_unellipsify(PyObject *__pyx_v_index, int __pyx_v_ndim) {
     __Pyx_GOTREF(__pyx_t_3);
     { Py_ssize_t __pyx_temp;
       for (__pyx_temp=0; __pyx_temp < __pyx_v_nslices; __pyx_temp++) {
-        __Pyx_INCREF(__pyx_slice__22);
-        PyList_SET_ITEM(__pyx_t_3, __pyx_temp, __pyx_slice__22);
-        __Pyx_GIVEREF(__pyx_slice__22);
+        __Pyx_INCREF(__pyx_slice__21);
+        PyList_SET_ITEM(__pyx_t_3, __pyx_temp, __pyx_slice__21);
+        __Pyx_GIVEREF(__pyx_slice__21);
       }
     }
     __pyx_t_9 = __Pyx_PyList_Extend(__pyx_v_result, __pyx_t_3); if (unlikely(__pyx_t_9 == -1)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 652; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
@@ -16465,7 +19819,7 @@ static PyObject *assert_direct_dimensions(Py_ssize_t *__pyx_v_suboffsets, int __
  * 
  * 
  */
-      __pyx_t_4 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__23, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 660; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_4 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__22, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 660; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_Raise(__pyx_t_4, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -21791,12 +25145,42 @@ static PyObject *__pyx_getprop_6c_dana_5Group_V(PyObject *o, CYTHON_UNUSED void 
   return __pyx_pw_6c_dana_5Group_1V_1__get__(o);
 }
 
+static int __pyx_setprop_6c_dana_5Group_V(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
+  if (v) {
+    return __pyx_pw_6c_dana_5Group_1V_3__set__(o, v);
+  }
+  else {
+    PyErr_SetString(PyExc_NotImplementedError, "__del__");
+    return -1;
+  }
+}
+
 static PyObject *__pyx_getprop_6c_dana_5Group_U(PyObject *o, CYTHON_UNUSED void *x) {
   return __pyx_pw_6c_dana_5Group_1U_1__get__(o);
 }
 
+static int __pyx_setprop_6c_dana_5Group_U(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
+  if (v) {
+    return __pyx_pw_6c_dana_5Group_1U_3__set__(o, v);
+  }
+  else {
+    PyErr_SetString(PyExc_NotImplementedError, "__del__");
+    return -1;
+  }
+}
+
 static PyObject *__pyx_getprop_6c_dana_5Group_Isyn(PyObject *o, CYTHON_UNUSED void *x) {
   return __pyx_pw_6c_dana_5Group_4Isyn_1__get__(o);
+}
+
+static int __pyx_setprop_6c_dana_5Group_Isyn(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
+  if (v) {
+    return __pyx_pw_6c_dana_5Group_4Isyn_3__set__(o, v);
+  }
+  else {
+    PyErr_SetString(PyExc_NotImplementedError, "__del__");
+    return -1;
+  }
 }
 
 static PyObject *__pyx_getprop_6c_dana_5Group_Iext(PyObject *o, CYTHON_UNUSED void *x) {
@@ -21824,9 +25208,9 @@ static struct PyGetSetDef __pyx_getsets_6c_dana_Group[] = {
   {(char *)"delta", __pyx_getprop_6c_dana_5Group_delta, 0, __pyx_k_Difference_of_activity_between, 0},
   {(char *)"tau", __pyx_getprop_6c_dana_5Group_tau, __pyx_setprop_6c_dana_5Group_tau, __pyx_k_Membrane_time_constant, 0},
   {(char *)"rest", __pyx_getprop_6c_dana_5Group_rest, __pyx_setprop_6c_dana_5Group_rest, __pyx_k_Membrane_resting_potential, 0},
-  {(char *)"V", __pyx_getprop_6c_dana_5Group_V, 0, __pyx_k_Firing_rate, 0},
-  {(char *)"U", __pyx_getprop_6c_dana_5Group_U, 0, __pyx_k_Membrane_potential, 0},
-  {(char *)"Isyn", __pyx_getprop_6c_dana_5Group_Isyn, 0, __pyx_k_Input_current_from_external_syn, 0},
+  {(char *)"V", __pyx_getprop_6c_dana_5Group_V, __pyx_setprop_6c_dana_5Group_V, __pyx_k_Firing_rate, 0},
+  {(char *)"U", __pyx_getprop_6c_dana_5Group_U, __pyx_setprop_6c_dana_5Group_U, __pyx_k_Membrane_potential, 0},
+  {(char *)"Isyn", __pyx_getprop_6c_dana_5Group_Isyn, __pyx_setprop_6c_dana_5Group_Isyn, __pyx_k_Input_current_from_external_syn, 0},
   {(char *)"Iext", __pyx_getprop_6c_dana_5Group_Iext, __pyx_setprop_6c_dana_5Group_Iext, __pyx_k_Input_current_from_external_sou, 0},
   {0, 0, 0, 0, 0}
 };
@@ -21919,6 +25303,8 @@ static PyObject *__pyx_tp_new_6c_dana_Structure(PyTypeObject *t, CYTHON_UNUSED P
   p = ((struct __pyx_obj_6c_dana_Structure *)o);
   p->_mot = ((struct __pyx_obj_6c_dana_Group *)Py_None); Py_INCREF(Py_None);
   p->_cog = ((struct __pyx_obj_6c_dana_Group *)Py_None); Py_INCREF(Py_None);
+  p->_pfcth1 = ((struct __pyx_obj_6c_dana_Group *)Py_None); Py_INCREF(Py_None);
+  p->_pfcth2 = ((struct __pyx_obj_6c_dana_Group *)Py_None); Py_INCREF(Py_None);
   return o;
 }
 
@@ -21932,6 +25318,8 @@ static void __pyx_tp_dealloc_6c_dana_Structure(PyObject *o) {
   PyObject_GC_UnTrack(o);
   Py_CLEAR(p->_mot);
   Py_CLEAR(p->_cog);
+  Py_CLEAR(p->_pfcth1);
+  Py_CLEAR(p->_pfcth2);
   (*Py_TYPE(o)->tp_free)(o);
 }
 
@@ -21943,6 +25331,12 @@ static int __pyx_tp_traverse_6c_dana_Structure(PyObject *o, visitproc v, void *a
   }
   if (p->_cog) {
     e = (*v)(((PyObject*)p->_cog), a); if (e) return e;
+  }
+  if (p->_pfcth1) {
+    e = (*v)(((PyObject*)p->_pfcth1), a); if (e) return e;
+  }
+  if (p->_pfcth2) {
+    e = (*v)(((PyObject*)p->_pfcth2), a); if (e) return e;
   }
   return 0;
 }
@@ -21956,6 +25350,12 @@ static int __pyx_tp_clear_6c_dana_Structure(PyObject *o) {
   tmp = ((PyObject*)p->_cog);
   p->_cog = ((struct __pyx_obj_6c_dana_Group *)Py_None); Py_INCREF(Py_None);
   Py_XDECREF(tmp);
+  tmp = ((PyObject*)p->_pfcth1);
+  p->_pfcth1 = ((struct __pyx_obj_6c_dana_Group *)Py_None); Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
+  tmp = ((PyObject*)p->_pfcth2);
+  p->_pfcth2 = ((struct __pyx_obj_6c_dana_Group *)Py_None); Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
   return 0;
 }
 
@@ -21967,6 +25367,14 @@ static PyObject *__pyx_getprop_6c_dana_9Structure_cog(PyObject *o, CYTHON_UNUSED
   return __pyx_pw_6c_dana_9Structure_3cog_1__get__(o);
 }
 
+static PyObject *__pyx_getprop_6c_dana_9Structure_pfcth1(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_6c_dana_9Structure_6pfcth1_1__get__(o);
+}
+
+static PyObject *__pyx_getprop_6c_dana_9Structure_pfcth2(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_6c_dana_9Structure_6pfcth2_1__get__(o);
+}
+
 static PyMethodDef __pyx_methods_6c_dana_Structure[] = {
   {"evaluate", (PyCFunction)__pyx_pw_6c_dana_9Structure_3evaluate, METH_O, 0},
   {"reset", (PyCFunction)__pyx_pw_6c_dana_9Structure_5reset, METH_NOARGS, 0},
@@ -21976,6 +25384,8 @@ static PyMethodDef __pyx_methods_6c_dana_Structure[] = {
 static struct PyGetSetDef __pyx_getsets_6c_dana_Structure[] = {
   {(char *)"mot", __pyx_getprop_6c_dana_9Structure_mot, 0, __pyx_k_The_motor_group, 0},
   {(char *)"cog", __pyx_getprop_6c_dana_9Structure_cog, 0, __pyx_k_The_cognitive_group, 0},
+  {(char *)"pfcth1", __pyx_getprop_6c_dana_9Structure_pfcth1, 0, __pyx_k_The_cognitive_group, 0},
+  {(char *)"pfcth2", __pyx_getprop_6c_dana_9Structure_pfcth2, 0, __pyx_k_The_cognitive_group, 0},
   {0, 0, 0, 0, 0}
 };
 
@@ -22164,6 +25574,135 @@ static PyTypeObject __pyx_type_6c_dana_AssociativeStructure = {
   #endif
 };
 
+static PyObject *__pyx_tp_new_6c_dana_ArmStructure(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
+  struct __pyx_obj_6c_dana_ArmStructure *p;
+  PyObject *o;
+  if (likely((t->tp_flags & Py_TPFLAGS_IS_ABSTRACT) == 0)) {
+    o = (*t->tp_alloc)(t, 0);
+  } else {
+    o = (PyObject *) PyBaseObject_Type.tp_new(t, __pyx_empty_tuple, 0);
+  }
+  if (unlikely(!o)) return 0;
+  p = ((struct __pyx_obj_6c_dana_ArmStructure *)o);
+  p->_theta1 = ((struct __pyx_obj_6c_dana_Group *)Py_None); Py_INCREF(Py_None);
+  p->_theta2 = ((struct __pyx_obj_6c_dana_Group *)Py_None); Py_INCREF(Py_None);
+  return o;
+}
+
+static void __pyx_tp_dealloc_6c_dana_ArmStructure(PyObject *o) {
+  struct __pyx_obj_6c_dana_ArmStructure *p = (struct __pyx_obj_6c_dana_ArmStructure *)o;
+  #if PY_VERSION_HEX >= 0x030400a1
+  if (unlikely(Py_TYPE(o)->tp_finalize) && !_PyGC_FINALIZED(o)) {
+    if (PyObject_CallFinalizerFromDealloc(o)) return;
+  }
+  #endif
+  PyObject_GC_UnTrack(o);
+  Py_CLEAR(p->_theta1);
+  Py_CLEAR(p->_theta2);
+  (*Py_TYPE(o)->tp_free)(o);
+}
+
+static int __pyx_tp_traverse_6c_dana_ArmStructure(PyObject *o, visitproc v, void *a) {
+  int e;
+  struct __pyx_obj_6c_dana_ArmStructure *p = (struct __pyx_obj_6c_dana_ArmStructure *)o;
+  if (p->_theta1) {
+    e = (*v)(((PyObject*)p->_theta1), a); if (e) return e;
+  }
+  if (p->_theta2) {
+    e = (*v)(((PyObject*)p->_theta2), a); if (e) return e;
+  }
+  return 0;
+}
+
+static int __pyx_tp_clear_6c_dana_ArmStructure(PyObject *o) {
+  PyObject* tmp;
+  struct __pyx_obj_6c_dana_ArmStructure *p = (struct __pyx_obj_6c_dana_ArmStructure *)o;
+  tmp = ((PyObject*)p->_theta1);
+  p->_theta1 = ((struct __pyx_obj_6c_dana_Group *)Py_None); Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
+  tmp = ((PyObject*)p->_theta2);
+  p->_theta2 = ((struct __pyx_obj_6c_dana_Group *)Py_None); Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
+  return 0;
+}
+
+static PyObject *__pyx_getprop_6c_dana_12ArmStructure_theta1(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_6c_dana_12ArmStructure_6theta1_1__get__(o);
+}
+
+static PyObject *__pyx_getprop_6c_dana_12ArmStructure_theta2(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_6c_dana_12ArmStructure_6theta2_1__get__(o);
+}
+
+static PyMethodDef __pyx_methods_6c_dana_ArmStructure[] = {
+  {"evaluate", (PyCFunction)__pyx_pw_6c_dana_12ArmStructure_3evaluate, METH_O, 0},
+  {"reset", (PyCFunction)__pyx_pw_6c_dana_12ArmStructure_5reset, METH_NOARGS, 0},
+  {0, 0, 0, 0}
+};
+
+static struct PyGetSetDef __pyx_getsets_6c_dana_ArmStructure[] = {
+  {(char *)"theta1", __pyx_getprop_6c_dana_12ArmStructure_theta1, 0, __pyx_k_The_motor_group, 0},
+  {(char *)"theta2", __pyx_getprop_6c_dana_12ArmStructure_theta2, 0, __pyx_k_The_cognitive_group, 0},
+  {0, 0, 0, 0, 0}
+};
+
+static PyTypeObject __pyx_type_6c_dana_ArmStructure = {
+  PyVarObject_HEAD_INIT(0, 0)
+  "c_dana.ArmStructure", /*tp_name*/
+  sizeof(struct __pyx_obj_6c_dana_ArmStructure), /*tp_basicsize*/
+  0, /*tp_itemsize*/
+  __pyx_tp_dealloc_6c_dana_ArmStructure, /*tp_dealloc*/
+  0, /*tp_print*/
+  0, /*tp_getattr*/
+  0, /*tp_setattr*/
+  #if PY_MAJOR_VERSION < 3
+  0, /*tp_compare*/
+  #else
+  0, /*reserved*/
+  #endif
+  0, /*tp_repr*/
+  0, /*tp_as_number*/
+  0, /*tp_as_sequence*/
+  0, /*tp_as_mapping*/
+  0, /*tp_hash*/
+  0, /*tp_call*/
+  0, /*tp_str*/
+  0, /*tp_getattro*/
+  0, /*tp_setattro*/
+  0, /*tp_as_buffer*/
+  Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE|Py_TPFLAGS_HAVE_GC, /*tp_flags*/
+  0, /*tp_doc*/
+  __pyx_tp_traverse_6c_dana_ArmStructure, /*tp_traverse*/
+  __pyx_tp_clear_6c_dana_ArmStructure, /*tp_clear*/
+  0, /*tp_richcompare*/
+  0, /*tp_weaklistoffset*/
+  0, /*tp_iter*/
+  0, /*tp_iternext*/
+  __pyx_methods_6c_dana_ArmStructure, /*tp_methods*/
+  0, /*tp_members*/
+  __pyx_getsets_6c_dana_ArmStructure, /*tp_getset*/
+  0, /*tp_base*/
+  0, /*tp_dict*/
+  0, /*tp_descr_get*/
+  0, /*tp_descr_set*/
+  0, /*tp_dictoffset*/
+  __pyx_pw_6c_dana_12ArmStructure_1__init__, /*tp_init*/
+  0, /*tp_alloc*/
+  __pyx_tp_new_6c_dana_ArmStructure, /*tp_new*/
+  0, /*tp_free*/
+  0, /*tp_is_gc*/
+  0, /*tp_bases*/
+  0, /*tp_mro*/
+  0, /*tp_cache*/
+  0, /*tp_subclasses*/
+  0, /*tp_weaklist*/
+  0, /*tp_del*/
+  0, /*tp_version_tag*/
+  #if PY_VERSION_HEX >= 0x030400a1
+  0, /*tp_finalize*/
+  #endif
+};
+
 static PyObject *__pyx_tp_new_6c_dana_Connection(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
   struct __pyx_obj_6c_dana_Connection *p;
   PyObject *o;
@@ -22203,6 +25742,48 @@ static PyObject *__pyx_getprop_6c_dana_10Connection_gain(PyObject *o, CYTHON_UNU
 static int __pyx_setprop_6c_dana_10Connection_gain(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
   if (v) {
     return __pyx_pw_6c_dana_10Connection_4gain_3__set__(o, v);
+  }
+  else {
+    PyErr_SetString(PyExc_NotImplementedError, "__del__");
+    return -1;
+  }
+}
+
+static PyObject *__pyx_getprop_6c_dana_10Connection_n(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_6c_dana_10Connection_1n_1__get__(o);
+}
+
+static int __pyx_setprop_6c_dana_10Connection_n(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
+  if (v) {
+    return __pyx_pw_6c_dana_10Connection_1n_3__set__(o, v);
+  }
+  else {
+    PyErr_SetString(PyExc_NotImplementedError, "__del__");
+    return -1;
+  }
+}
+
+static PyObject *__pyx_getprop_6c_dana_10Connection_narm(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_6c_dana_10Connection_4narm_1__get__(o);
+}
+
+static int __pyx_setprop_6c_dana_10Connection_narm(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
+  if (v) {
+    return __pyx_pw_6c_dana_10Connection_4narm_3__set__(o, v);
+  }
+  else {
+    PyErr_SetString(PyExc_NotImplementedError, "__del__");
+    return -1;
+  }
+}
+
+static PyObject *__pyx_getprop_6c_dana_10Connection_npfc(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_6c_dana_10Connection_4npfc_1__get__(o);
+}
+
+static int __pyx_setprop_6c_dana_10Connection_npfc(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
+  if (v) {
+    return __pyx_pw_6c_dana_10Connection_4npfc_3__set__(o, v);
   }
   else {
     PyErr_SetString(PyExc_NotImplementedError, "__del__");
@@ -22253,6 +25834,9 @@ static PyMethodDef __pyx_methods_6c_dana_Connection[] = {
 
 static struct PyGetSetDef __pyx_getsets_6c_dana_Connection[] = {
   {(char *)"gain", __pyx_getprop_6c_dana_10Connection_gain, __pyx_setprop_6c_dana_10Connection_gain, __pyx_k_Gain_of_the_connection, 0},
+  {(char *)"n", __pyx_getprop_6c_dana_10Connection_n, __pyx_setprop_6c_dana_10Connection_n, __pyx_k_Gain_of_the_connection, 0},
+  {(char *)"narm", __pyx_getprop_6c_dana_10Connection_narm, __pyx_setprop_6c_dana_10Connection_narm, __pyx_k_Gain_of_the_connection, 0},
+  {(char *)"npfc", __pyx_getprop_6c_dana_10Connection_npfc, __pyx_setprop_6c_dana_10Connection_npfc, __pyx_k_Gain_of_the_connection, 0},
   {(char *)"active", __pyx_getprop_6c_dana_10Connection_active, __pyx_setprop_6c_dana_10Connection_active, __pyx_k_Whether_connection_is_active, 0},
   {(char *)"source", __pyx_getprop_6c_dana_10Connection_source, 0, __pyx_k_Source_of_the_connection, 0},
   {(char *)"target", __pyx_getprop_6c_dana_10Connection_target, 0, __pyx_k_Target_of_the_connection_numpy_a, 0},
@@ -22807,6 +26391,654 @@ static PyTypeObject __pyx_type_6c_dana_CogToAss = {
   #endif
   0, /*tp_alloc*/
   __pyx_tp_new_6c_dana_CogToAss, /*tp_new*/
+  0, /*tp_free*/
+  0, /*tp_is_gc*/
+  0, /*tp_bases*/
+  0, /*tp_mro*/
+  0, /*tp_cache*/
+  0, /*tp_subclasses*/
+  0, /*tp_weaklist*/
+  0, /*tp_del*/
+  0, /*tp_version_tag*/
+  #if PY_VERSION_HEX >= 0x030400a1
+  0, /*tp_finalize*/
+  #endif
+};
+
+static PyObject *__pyx_tp_new_6c_dana_MotToPPC(PyTypeObject *t, PyObject *a, PyObject *k) {
+  PyObject *o = __pyx_tp_new_6c_dana_Connection(t, a, k);
+  if (unlikely(!o)) return 0;
+  return o;
+}
+
+static PyMethodDef __pyx_methods_6c_dana_MotToPPC[] = {
+  {"propagate", (PyCFunction)__pyx_pw_6c_dana_8MotToPPC_1propagate, METH_NOARGS, 0},
+  {0, 0, 0, 0}
+};
+
+static PyTypeObject __pyx_type_6c_dana_MotToPPC = {
+  PyVarObject_HEAD_INIT(0, 0)
+  "c_dana.MotToPPC", /*tp_name*/
+  sizeof(struct __pyx_obj_6c_dana_MotToPPC), /*tp_basicsize*/
+  0, /*tp_itemsize*/
+  __pyx_tp_dealloc_6c_dana_Connection, /*tp_dealloc*/
+  0, /*tp_print*/
+  0, /*tp_getattr*/
+  0, /*tp_setattr*/
+  #if PY_MAJOR_VERSION < 3
+  0, /*tp_compare*/
+  #else
+  0, /*reserved*/
+  #endif
+  0, /*tp_repr*/
+  0, /*tp_as_number*/
+  0, /*tp_as_sequence*/
+  0, /*tp_as_mapping*/
+  0, /*tp_hash*/
+  0, /*tp_call*/
+  0, /*tp_str*/
+  0, /*tp_getattro*/
+  0, /*tp_setattro*/
+  0, /*tp_as_buffer*/
+  Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE, /*tp_flags*/
+  0, /*tp_doc*/
+  0, /*tp_traverse*/
+  0, /*tp_clear*/
+  0, /*tp_richcompare*/
+  0, /*tp_weaklistoffset*/
+  0, /*tp_iter*/
+  0, /*tp_iternext*/
+  __pyx_methods_6c_dana_MotToPPC, /*tp_methods*/
+  0, /*tp_members*/
+  0, /*tp_getset*/
+  0, /*tp_base*/
+  0, /*tp_dict*/
+  0, /*tp_descr_get*/
+  0, /*tp_descr_set*/
+  0, /*tp_dictoffset*/
+  #if CYTHON_COMPILING_IN_PYPY
+  __pyx_pw_6c_dana_10Connection_1__init__, /*tp_init*/
+  #else
+  0, /*tp_init*/
+  #endif
+  0, /*tp_alloc*/
+  __pyx_tp_new_6c_dana_MotToPPC, /*tp_new*/
+  0, /*tp_free*/
+  0, /*tp_is_gc*/
+  0, /*tp_bases*/
+  0, /*tp_mro*/
+  0, /*tp_cache*/
+  0, /*tp_subclasses*/
+  0, /*tp_weaklist*/
+  0, /*tp_del*/
+  0, /*tp_version_tag*/
+  #if PY_VERSION_HEX >= 0x030400a1
+  0, /*tp_finalize*/
+  #endif
+};
+
+static PyObject *__pyx_tp_new_6c_dana_ARMtoPPC(PyTypeObject *t, PyObject *a, PyObject *k) {
+  PyObject *o = __pyx_tp_new_6c_dana_Connection(t, a, k);
+  if (unlikely(!o)) return 0;
+  return o;
+}
+
+static PyMethodDef __pyx_methods_6c_dana_ARMtoPPC[] = {
+  {"propagate", (PyCFunction)__pyx_pw_6c_dana_8ARMtoPPC_1propagate, METH_NOARGS, 0},
+  {0, 0, 0, 0}
+};
+
+static PyTypeObject __pyx_type_6c_dana_ARMtoPPC = {
+  PyVarObject_HEAD_INIT(0, 0)
+  "c_dana.ARMtoPPC", /*tp_name*/
+  sizeof(struct __pyx_obj_6c_dana_ARMtoPPC), /*tp_basicsize*/
+  0, /*tp_itemsize*/
+  __pyx_tp_dealloc_6c_dana_Connection, /*tp_dealloc*/
+  0, /*tp_print*/
+  0, /*tp_getattr*/
+  0, /*tp_setattr*/
+  #if PY_MAJOR_VERSION < 3
+  0, /*tp_compare*/
+  #else
+  0, /*reserved*/
+  #endif
+  0, /*tp_repr*/
+  0, /*tp_as_number*/
+  0, /*tp_as_sequence*/
+  0, /*tp_as_mapping*/
+  0, /*tp_hash*/
+  0, /*tp_call*/
+  0, /*tp_str*/
+  0, /*tp_getattro*/
+  0, /*tp_setattro*/
+  0, /*tp_as_buffer*/
+  Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE, /*tp_flags*/
+  0, /*tp_doc*/
+  0, /*tp_traverse*/
+  0, /*tp_clear*/
+  0, /*tp_richcompare*/
+  0, /*tp_weaklistoffset*/
+  0, /*tp_iter*/
+  0, /*tp_iternext*/
+  __pyx_methods_6c_dana_ARMtoPPC, /*tp_methods*/
+  0, /*tp_members*/
+  0, /*tp_getset*/
+  0, /*tp_base*/
+  0, /*tp_dict*/
+  0, /*tp_descr_get*/
+  0, /*tp_descr_set*/
+  0, /*tp_dictoffset*/
+  #if CYTHON_COMPILING_IN_PYPY
+  __pyx_pw_6c_dana_10Connection_1__init__, /*tp_init*/
+  #else
+  0, /*tp_init*/
+  #endif
+  0, /*tp_alloc*/
+  __pyx_tp_new_6c_dana_ARMtoPPC, /*tp_new*/
+  0, /*tp_free*/
+  0, /*tp_is_gc*/
+  0, /*tp_bases*/
+  0, /*tp_mro*/
+  0, /*tp_cache*/
+  0, /*tp_subclasses*/
+  0, /*tp_weaklist*/
+  0, /*tp_del*/
+  0, /*tp_version_tag*/
+  #if PY_VERSION_HEX >= 0x030400a1
+  0, /*tp_finalize*/
+  #endif
+};
+
+static PyObject *__pyx_tp_new_6c_dana_PFCtoSMA(PyTypeObject *t, PyObject *a, PyObject *k) {
+  PyObject *o = __pyx_tp_new_6c_dana_Connection(t, a, k);
+  if (unlikely(!o)) return 0;
+  return o;
+}
+
+static PyMethodDef __pyx_methods_6c_dana_PFCtoSMA[] = {
+  {"propagate", (PyCFunction)__pyx_pw_6c_dana_8PFCtoSMA_1propagate, METH_NOARGS, 0},
+  {0, 0, 0, 0}
+};
+
+static PyTypeObject __pyx_type_6c_dana_PFCtoSMA = {
+  PyVarObject_HEAD_INIT(0, 0)
+  "c_dana.PFCtoSMA", /*tp_name*/
+  sizeof(struct __pyx_obj_6c_dana_PFCtoSMA), /*tp_basicsize*/
+  0, /*tp_itemsize*/
+  __pyx_tp_dealloc_6c_dana_Connection, /*tp_dealloc*/
+  0, /*tp_print*/
+  0, /*tp_getattr*/
+  0, /*tp_setattr*/
+  #if PY_MAJOR_VERSION < 3
+  0, /*tp_compare*/
+  #else
+  0, /*reserved*/
+  #endif
+  0, /*tp_repr*/
+  0, /*tp_as_number*/
+  0, /*tp_as_sequence*/
+  0, /*tp_as_mapping*/
+  0, /*tp_hash*/
+  0, /*tp_call*/
+  0, /*tp_str*/
+  0, /*tp_getattro*/
+  0, /*tp_setattro*/
+  0, /*tp_as_buffer*/
+  Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE, /*tp_flags*/
+  0, /*tp_doc*/
+  0, /*tp_traverse*/
+  0, /*tp_clear*/
+  0, /*tp_richcompare*/
+  0, /*tp_weaklistoffset*/
+  0, /*tp_iter*/
+  0, /*tp_iternext*/
+  __pyx_methods_6c_dana_PFCtoSMA, /*tp_methods*/
+  0, /*tp_members*/
+  0, /*tp_getset*/
+  0, /*tp_base*/
+  0, /*tp_dict*/
+  0, /*tp_descr_get*/
+  0, /*tp_descr_set*/
+  0, /*tp_dictoffset*/
+  #if CYTHON_COMPILING_IN_PYPY
+  __pyx_pw_6c_dana_10Connection_1__init__, /*tp_init*/
+  #else
+  0, /*tp_init*/
+  #endif
+  0, /*tp_alloc*/
+  __pyx_tp_new_6c_dana_PFCtoSMA, /*tp_new*/
+  0, /*tp_free*/
+  0, /*tp_is_gc*/
+  0, /*tp_bases*/
+  0, /*tp_mro*/
+  0, /*tp_cache*/
+  0, /*tp_subclasses*/
+  0, /*tp_weaklist*/
+  0, /*tp_del*/
+  0, /*tp_version_tag*/
+  #if PY_VERSION_HEX >= 0x030400a1
+  0, /*tp_finalize*/
+  #endif
+};
+
+static PyObject *__pyx_tp_new_6c_dana_ARMtoSMA(PyTypeObject *t, PyObject *a, PyObject *k) {
+  PyObject *o = __pyx_tp_new_6c_dana_Connection(t, a, k);
+  if (unlikely(!o)) return 0;
+  return o;
+}
+
+static PyMethodDef __pyx_methods_6c_dana_ARMtoSMA[] = {
+  {"propagate", (PyCFunction)__pyx_pw_6c_dana_8ARMtoSMA_1propagate, METH_NOARGS, 0},
+  {0, 0, 0, 0}
+};
+
+static PyTypeObject __pyx_type_6c_dana_ARMtoSMA = {
+  PyVarObject_HEAD_INIT(0, 0)
+  "c_dana.ARMtoSMA", /*tp_name*/
+  sizeof(struct __pyx_obj_6c_dana_ARMtoSMA), /*tp_basicsize*/
+  0, /*tp_itemsize*/
+  __pyx_tp_dealloc_6c_dana_Connection, /*tp_dealloc*/
+  0, /*tp_print*/
+  0, /*tp_getattr*/
+  0, /*tp_setattr*/
+  #if PY_MAJOR_VERSION < 3
+  0, /*tp_compare*/
+  #else
+  0, /*reserved*/
+  #endif
+  0, /*tp_repr*/
+  0, /*tp_as_number*/
+  0, /*tp_as_sequence*/
+  0, /*tp_as_mapping*/
+  0, /*tp_hash*/
+  0, /*tp_call*/
+  0, /*tp_str*/
+  0, /*tp_getattro*/
+  0, /*tp_setattro*/
+  0, /*tp_as_buffer*/
+  Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE, /*tp_flags*/
+  0, /*tp_doc*/
+  0, /*tp_traverse*/
+  0, /*tp_clear*/
+  0, /*tp_richcompare*/
+  0, /*tp_weaklistoffset*/
+  0, /*tp_iter*/
+  0, /*tp_iternext*/
+  __pyx_methods_6c_dana_ARMtoSMA, /*tp_methods*/
+  0, /*tp_members*/
+  0, /*tp_getset*/
+  0, /*tp_base*/
+  0, /*tp_dict*/
+  0, /*tp_descr_get*/
+  0, /*tp_descr_set*/
+  0, /*tp_dictoffset*/
+  #if CYTHON_COMPILING_IN_PYPY
+  __pyx_pw_6c_dana_10Connection_1__init__, /*tp_init*/
+  #else
+  0, /*tp_init*/
+  #endif
+  0, /*tp_alloc*/
+  __pyx_tp_new_6c_dana_ARMtoSMA, /*tp_new*/
+  0, /*tp_free*/
+  0, /*tp_is_gc*/
+  0, /*tp_bases*/
+  0, /*tp_mro*/
+  0, /*tp_cache*/
+  0, /*tp_subclasses*/
+  0, /*tp_weaklist*/
+  0, /*tp_del*/
+  0, /*tp_version_tag*/
+  #if PY_VERSION_HEX >= 0x030400a1
+  0, /*tp_finalize*/
+  #endif
+};
+
+static PyObject *__pyx_tp_new_6c_dana_SMAtoARM(PyTypeObject *t, PyObject *a, PyObject *k) {
+  PyObject *o = __pyx_tp_new_6c_dana_Connection(t, a, k);
+  if (unlikely(!o)) return 0;
+  return o;
+}
+
+static PyMethodDef __pyx_methods_6c_dana_SMAtoARM[] = {
+  {"propagate", (PyCFunction)__pyx_pw_6c_dana_8SMAtoARM_1propagate, METH_NOARGS, 0},
+  {0, 0, 0, 0}
+};
+
+static PyTypeObject __pyx_type_6c_dana_SMAtoARM = {
+  PyVarObject_HEAD_INIT(0, 0)
+  "c_dana.SMAtoARM", /*tp_name*/
+  sizeof(struct __pyx_obj_6c_dana_SMAtoARM), /*tp_basicsize*/
+  0, /*tp_itemsize*/
+  __pyx_tp_dealloc_6c_dana_Connection, /*tp_dealloc*/
+  0, /*tp_print*/
+  0, /*tp_getattr*/
+  0, /*tp_setattr*/
+  #if PY_MAJOR_VERSION < 3
+  0, /*tp_compare*/
+  #else
+  0, /*reserved*/
+  #endif
+  0, /*tp_repr*/
+  0, /*tp_as_number*/
+  0, /*tp_as_sequence*/
+  0, /*tp_as_mapping*/
+  0, /*tp_hash*/
+  0, /*tp_call*/
+  0, /*tp_str*/
+  0, /*tp_getattro*/
+  0, /*tp_setattro*/
+  0, /*tp_as_buffer*/
+  Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE, /*tp_flags*/
+  0, /*tp_doc*/
+  0, /*tp_traverse*/
+  0, /*tp_clear*/
+  0, /*tp_richcompare*/
+  0, /*tp_weaklistoffset*/
+  0, /*tp_iter*/
+  0, /*tp_iternext*/
+  __pyx_methods_6c_dana_SMAtoARM, /*tp_methods*/
+  0, /*tp_members*/
+  0, /*tp_getset*/
+  0, /*tp_base*/
+  0, /*tp_dict*/
+  0, /*tp_descr_get*/
+  0, /*tp_descr_set*/
+  0, /*tp_dictoffset*/
+  #if CYTHON_COMPILING_IN_PYPY
+  __pyx_pw_6c_dana_10Connection_1__init__, /*tp_init*/
+  #else
+  0, /*tp_init*/
+  #endif
+  0, /*tp_alloc*/
+  __pyx_tp_new_6c_dana_SMAtoARM, /*tp_new*/
+  0, /*tp_free*/
+  0, /*tp_is_gc*/
+  0, /*tp_bases*/
+  0, /*tp_mro*/
+  0, /*tp_cache*/
+  0, /*tp_subclasses*/
+  0, /*tp_weaklist*/
+  0, /*tp_del*/
+  0, /*tp_version_tag*/
+  #if PY_VERSION_HEX >= 0x030400a1
+  0, /*tp_finalize*/
+  #endif
+};
+
+static PyObject *__pyx_tp_new_6c_dana_PPCtoPFC(PyTypeObject *t, PyObject *a, PyObject *k) {
+  PyObject *o = __pyx_tp_new_6c_dana_Connection(t, a, k);
+  if (unlikely(!o)) return 0;
+  return o;
+}
+
+static PyMethodDef __pyx_methods_6c_dana_PPCtoPFC[] = {
+  {"propagate", (PyCFunction)__pyx_pw_6c_dana_8PPCtoPFC_1propagate, METH_NOARGS, 0},
+  {0, 0, 0, 0}
+};
+
+static PyTypeObject __pyx_type_6c_dana_PPCtoPFC = {
+  PyVarObject_HEAD_INIT(0, 0)
+  "c_dana.PPCtoPFC", /*tp_name*/
+  sizeof(struct __pyx_obj_6c_dana_PPCtoPFC), /*tp_basicsize*/
+  0, /*tp_itemsize*/
+  __pyx_tp_dealloc_6c_dana_Connection, /*tp_dealloc*/
+  0, /*tp_print*/
+  0, /*tp_getattr*/
+  0, /*tp_setattr*/
+  #if PY_MAJOR_VERSION < 3
+  0, /*tp_compare*/
+  #else
+  0, /*reserved*/
+  #endif
+  0, /*tp_repr*/
+  0, /*tp_as_number*/
+  0, /*tp_as_sequence*/
+  0, /*tp_as_mapping*/
+  0, /*tp_hash*/
+  0, /*tp_call*/
+  0, /*tp_str*/
+  0, /*tp_getattro*/
+  0, /*tp_setattro*/
+  0, /*tp_as_buffer*/
+  Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE, /*tp_flags*/
+  0, /*tp_doc*/
+  0, /*tp_traverse*/
+  0, /*tp_clear*/
+  0, /*tp_richcompare*/
+  0, /*tp_weaklistoffset*/
+  0, /*tp_iter*/
+  0, /*tp_iternext*/
+  __pyx_methods_6c_dana_PPCtoPFC, /*tp_methods*/
+  0, /*tp_members*/
+  0, /*tp_getset*/
+  0, /*tp_base*/
+  0, /*tp_dict*/
+  0, /*tp_descr_get*/
+  0, /*tp_descr_set*/
+  0, /*tp_dictoffset*/
+  #if CYTHON_COMPILING_IN_PYPY
+  __pyx_pw_6c_dana_10Connection_1__init__, /*tp_init*/
+  #else
+  0, /*tp_init*/
+  #endif
+  0, /*tp_alloc*/
+  __pyx_tp_new_6c_dana_PPCtoPFC, /*tp_new*/
+  0, /*tp_free*/
+  0, /*tp_is_gc*/
+  0, /*tp_bases*/
+  0, /*tp_mro*/
+  0, /*tp_cache*/
+  0, /*tp_subclasses*/
+  0, /*tp_weaklist*/
+  0, /*tp_del*/
+  0, /*tp_version_tag*/
+  #if PY_VERSION_HEX >= 0x030400a1
+  0, /*tp_finalize*/
+  #endif
+};
+
+static PyObject *__pyx_tp_new_6c_dana_PPCtoSTR(PyTypeObject *t, PyObject *a, PyObject *k) {
+  PyObject *o = __pyx_tp_new_6c_dana_Connection(t, a, k);
+  if (unlikely(!o)) return 0;
+  return o;
+}
+
+static PyMethodDef __pyx_methods_6c_dana_PPCtoSTR[] = {
+  {"propagate", (PyCFunction)__pyx_pw_6c_dana_8PPCtoSTR_1propagate, METH_NOARGS, 0},
+  {0, 0, 0, 0}
+};
+
+static PyTypeObject __pyx_type_6c_dana_PPCtoSTR = {
+  PyVarObject_HEAD_INIT(0, 0)
+  "c_dana.PPCtoSTR", /*tp_name*/
+  sizeof(struct __pyx_obj_6c_dana_PPCtoSTR), /*tp_basicsize*/
+  0, /*tp_itemsize*/
+  __pyx_tp_dealloc_6c_dana_Connection, /*tp_dealloc*/
+  0, /*tp_print*/
+  0, /*tp_getattr*/
+  0, /*tp_setattr*/
+  #if PY_MAJOR_VERSION < 3
+  0, /*tp_compare*/
+  #else
+  0, /*reserved*/
+  #endif
+  0, /*tp_repr*/
+  0, /*tp_as_number*/
+  0, /*tp_as_sequence*/
+  0, /*tp_as_mapping*/
+  0, /*tp_hash*/
+  0, /*tp_call*/
+  0, /*tp_str*/
+  0, /*tp_getattro*/
+  0, /*tp_setattro*/
+  0, /*tp_as_buffer*/
+  Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE, /*tp_flags*/
+  0, /*tp_doc*/
+  0, /*tp_traverse*/
+  0, /*tp_clear*/
+  0, /*tp_richcompare*/
+  0, /*tp_weaklistoffset*/
+  0, /*tp_iter*/
+  0, /*tp_iternext*/
+  __pyx_methods_6c_dana_PPCtoSTR, /*tp_methods*/
+  0, /*tp_members*/
+  0, /*tp_getset*/
+  0, /*tp_base*/
+  0, /*tp_dict*/
+  0, /*tp_descr_get*/
+  0, /*tp_descr_set*/
+  0, /*tp_dictoffset*/
+  #if CYTHON_COMPILING_IN_PYPY
+  __pyx_pw_6c_dana_10Connection_1__init__, /*tp_init*/
+  #else
+  0, /*tp_init*/
+  #endif
+  0, /*tp_alloc*/
+  __pyx_tp_new_6c_dana_PPCtoSTR, /*tp_new*/
+  0, /*tp_free*/
+  0, /*tp_is_gc*/
+  0, /*tp_bases*/
+  0, /*tp_mro*/
+  0, /*tp_cache*/
+  0, /*tp_subclasses*/
+  0, /*tp_weaklist*/
+  0, /*tp_del*/
+  0, /*tp_version_tag*/
+  #if PY_VERSION_HEX >= 0x030400a1
+  0, /*tp_finalize*/
+  #endif
+};
+
+static PyObject *__pyx_tp_new_6c_dana_PFCtoSTR(PyTypeObject *t, PyObject *a, PyObject *k) {
+  PyObject *o = __pyx_tp_new_6c_dana_Connection(t, a, k);
+  if (unlikely(!o)) return 0;
+  return o;
+}
+
+static PyMethodDef __pyx_methods_6c_dana_PFCtoSTR[] = {
+  {"propagate", (PyCFunction)__pyx_pw_6c_dana_8PFCtoSTR_1propagate, METH_NOARGS, 0},
+  {0, 0, 0, 0}
+};
+
+static PyTypeObject __pyx_type_6c_dana_PFCtoSTR = {
+  PyVarObject_HEAD_INIT(0, 0)
+  "c_dana.PFCtoSTR", /*tp_name*/
+  sizeof(struct __pyx_obj_6c_dana_PFCtoSTR), /*tp_basicsize*/
+  0, /*tp_itemsize*/
+  __pyx_tp_dealloc_6c_dana_Connection, /*tp_dealloc*/
+  0, /*tp_print*/
+  0, /*tp_getattr*/
+  0, /*tp_setattr*/
+  #if PY_MAJOR_VERSION < 3
+  0, /*tp_compare*/
+  #else
+  0, /*reserved*/
+  #endif
+  0, /*tp_repr*/
+  0, /*tp_as_number*/
+  0, /*tp_as_sequence*/
+  0, /*tp_as_mapping*/
+  0, /*tp_hash*/
+  0, /*tp_call*/
+  0, /*tp_str*/
+  0, /*tp_getattro*/
+  0, /*tp_setattro*/
+  0, /*tp_as_buffer*/
+  Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE, /*tp_flags*/
+  0, /*tp_doc*/
+  0, /*tp_traverse*/
+  0, /*tp_clear*/
+  0, /*tp_richcompare*/
+  0, /*tp_weaklistoffset*/
+  0, /*tp_iter*/
+  0, /*tp_iternext*/
+  __pyx_methods_6c_dana_PFCtoSTR, /*tp_methods*/
+  0, /*tp_members*/
+  0, /*tp_getset*/
+  0, /*tp_base*/
+  0, /*tp_dict*/
+  0, /*tp_descr_get*/
+  0, /*tp_descr_set*/
+  0, /*tp_dictoffset*/
+  #if CYTHON_COMPILING_IN_PYPY
+  __pyx_pw_6c_dana_10Connection_1__init__, /*tp_init*/
+  #else
+  0, /*tp_init*/
+  #endif
+  0, /*tp_alloc*/
+  __pyx_tp_new_6c_dana_PFCtoSTR, /*tp_new*/
+  0, /*tp_free*/
+  0, /*tp_is_gc*/
+  0, /*tp_bases*/
+  0, /*tp_mro*/
+  0, /*tp_cache*/
+  0, /*tp_subclasses*/
+  0, /*tp_weaklist*/
+  0, /*tp_del*/
+  0, /*tp_version_tag*/
+  #if PY_VERSION_HEX >= 0x030400a1
+  0, /*tp_finalize*/
+  #endif
+};
+
+static PyObject *__pyx_tp_new_6c_dana_STRpfcToBG(PyTypeObject *t, PyObject *a, PyObject *k) {
+  PyObject *o = __pyx_tp_new_6c_dana_Connection(t, a, k);
+  if (unlikely(!o)) return 0;
+  return o;
+}
+
+static PyMethodDef __pyx_methods_6c_dana_STRpfcToBG[] = {
+  {"propagate", (PyCFunction)__pyx_pw_6c_dana_10STRpfcToBG_1propagate, METH_NOARGS, 0},
+  {0, 0, 0, 0}
+};
+
+static PyTypeObject __pyx_type_6c_dana_STRpfcToBG = {
+  PyVarObject_HEAD_INIT(0, 0)
+  "c_dana.STRpfcToBG", /*tp_name*/
+  sizeof(struct __pyx_obj_6c_dana_STRpfcToBG), /*tp_basicsize*/
+  0, /*tp_itemsize*/
+  __pyx_tp_dealloc_6c_dana_Connection, /*tp_dealloc*/
+  0, /*tp_print*/
+  0, /*tp_getattr*/
+  0, /*tp_setattr*/
+  #if PY_MAJOR_VERSION < 3
+  0, /*tp_compare*/
+  #else
+  0, /*reserved*/
+  #endif
+  0, /*tp_repr*/
+  0, /*tp_as_number*/
+  0, /*tp_as_sequence*/
+  0, /*tp_as_mapping*/
+  0, /*tp_hash*/
+  0, /*tp_call*/
+  0, /*tp_str*/
+  0, /*tp_getattro*/
+  0, /*tp_setattro*/
+  0, /*tp_as_buffer*/
+  Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE, /*tp_flags*/
+  0, /*tp_doc*/
+  0, /*tp_traverse*/
+  0, /*tp_clear*/
+  0, /*tp_richcompare*/
+  0, /*tp_weaklistoffset*/
+  0, /*tp_iter*/
+  0, /*tp_iternext*/
+  __pyx_methods_6c_dana_STRpfcToBG, /*tp_methods*/
+  0, /*tp_members*/
+  0, /*tp_getset*/
+  0, /*tp_base*/
+  0, /*tp_dict*/
+  0, /*tp_descr_get*/
+  0, /*tp_descr_set*/
+  0, /*tp_dictoffset*/
+  #if CYTHON_COMPILING_IN_PYPY
+  __pyx_pw_6c_dana_10Connection_1__init__, /*tp_init*/
+  #else
+  0, /*tp_init*/
+  #endif
+  0, /*tp_alloc*/
+  __pyx_tp_new_6c_dana_STRpfcToBG, /*tp_new*/
   0, /*tp_free*/
   0, /*tp_is_gc*/
   0, /*tp_bases*/
@@ -23559,13 +27791,17 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_memview, __pyx_k_memview, sizeof(__pyx_k_memview), 0, 0, 1, 1},
   {&__pyx_n_s_min, __pyx_k_min, sizeof(__pyx_k_min), 0, 0, 1, 1},
   {&__pyx_n_s_mode, __pyx_k_mode, sizeof(__pyx_k_mode), 0, 0, 1, 1},
+  {&__pyx_n_s_n, __pyx_k_n, sizeof(__pyx_k_n), 0, 0, 1, 1},
+  {&__pyx_n_s_n_pfc, __pyx_k_n_pfc, sizeof(__pyx_k_n_pfc), 0, 0, 1, 1},
   {&__pyx_n_s_name, __pyx_k_name, sizeof(__pyx_k_name), 0, 0, 1, 1},
   {&__pyx_n_s_name_2, __pyx_k_name_2, sizeof(__pyx_k_name_2), 0, 0, 1, 1},
+  {&__pyx_n_s_narm, __pyx_k_narm, sizeof(__pyx_k_narm), 0, 0, 1, 1},
   {&__pyx_kp_u_ndarray_is_not_C_contiguous, __pyx_k_ndarray_is_not_C_contiguous, sizeof(__pyx_k_ndarray_is_not_C_contiguous), 0, 1, 0, 0},
   {&__pyx_kp_u_ndarray_is_not_Fortran_contiguou, __pyx_k_ndarray_is_not_Fortran_contiguou, sizeof(__pyx_k_ndarray_is_not_Fortran_contiguou), 0, 1, 0, 0},
   {&__pyx_n_s_ndim, __pyx_k_ndim, sizeof(__pyx_k_ndim), 0, 0, 1, 1},
   {&__pyx_n_s_noise, __pyx_k_noise, sizeof(__pyx_k_noise), 0, 0, 1, 1},
   {&__pyx_n_s_np, __pyx_k_np, sizeof(__pyx_k_np), 0, 0, 1, 1},
+  {&__pyx_n_s_npfc, __pyx_k_npfc, sizeof(__pyx_k_npfc), 0, 0, 1, 1},
   {&__pyx_n_s_numpy, __pyx_k_numpy, sizeof(__pyx_k_numpy), 0, 0, 1, 1},
   {&__pyx_n_s_obj, __pyx_k_obj, sizeof(__pyx_k_obj), 0, 0, 1, 1},
   {&__pyx_n_s_pack, __pyx_k_pack, sizeof(__pyx_k_pack), 0, 0, 1, 1},
@@ -23598,7 +27834,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, 0, 0, 0, 0, 0, 0}
 };
 static int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 165; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 171; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_builtin_RuntimeError = __Pyx_GetBuiltinName(__pyx_n_s_RuntimeError); if (!__pyx_builtin_RuntimeError) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 799; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_builtin_MemoryError = __Pyx_GetBuiltinName(__pyx_n_s_MemoryError); if (!__pyx_builtin_MemoryError) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 142; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
@@ -23621,38 +27857,16 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "c_dana.pyx":213
- * 
- *     def __init__(self, tau=0.01, rest=0, noise=0, activation=Identity()):
- *         self._mot = Group(np.zeros(4,dtype=dtype), tau=tau, rest=rest,             # <<<<<<<<<<<<<<
- *                            noise=noise, activation=activation)
- *         self._cog = Group(np.zeros(4,dtype=dtype), tau=tau, rest=rest,
- */
-  __pyx_tuple__3 = PyTuple_Pack(1, __pyx_int_4); if (unlikely(!__pyx_tuple__3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 213; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__3);
-  __Pyx_GIVEREF(__pyx_tuple__3);
-
-  /* "c_dana.pyx":215
- *         self._mot = Group(np.zeros(4,dtype=dtype), tau=tau, rest=rest,
- *                            noise=noise, activation=activation)
- *         self._cog = Group(np.zeros(4,dtype=dtype), tau=tau, rest=rest,             # <<<<<<<<<<<<<<
- *                          noise=noise, activation=activation)
- * 
- */
-  __pyx_tuple__4 = PyTuple_Pack(1, __pyx_int_4); if (unlikely(!__pyx_tuple__4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__4);
-  __Pyx_GIVEREF(__pyx_tuple__4);
-
-  /* "c_dana.pyx":244
+  /* "c_dana.pyx":268
  *     def __init__(self, tau=0.01, rest=0, noise=0, activation=Identity()):
  *         Structure.__init__(self, tau, rest, noise, activation)
  *         self._ass = Group(np.zeros(16,dtype=dtype), tau=tau, rest=rest,             # <<<<<<<<<<<<<<
  *                           noise=noise, activation=activation)
  * 
  */
-  __pyx_tuple__6 = PyTuple_Pack(1, __pyx_int_16); if (unlikely(!__pyx_tuple__6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 244; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__6);
-  __Pyx_GIVEREF(__pyx_tuple__6);
+  __pyx_tuple__4 = PyTuple_Pack(1, __pyx_int_16); if (unlikely(!__pyx_tuple__4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 268; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__4);
+  __Pyx_GIVEREF(__pyx_tuple__4);
 
   /* "../../../../../../../usr/local/lib/python2.7/site-packages/Cython/Includes/numpy/__init__.pxd":215
  *             if ((flags & pybuf.PyBUF_C_CONTIGUOUS == pybuf.PyBUF_C_CONTIGUOUS)
@@ -23661,9 +27875,9 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  *             if ((flags & pybuf.PyBUF_F_CONTIGUOUS == pybuf.PyBUF_F_CONTIGUOUS)
  */
-  __pyx_tuple__7 = PyTuple_Pack(1, __pyx_kp_u_ndarray_is_not_C_contiguous); if (unlikely(!__pyx_tuple__7)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__7);
-  __Pyx_GIVEREF(__pyx_tuple__7);
+  __pyx_tuple__6 = PyTuple_Pack(1, __pyx_kp_u_ndarray_is_not_C_contiguous); if (unlikely(!__pyx_tuple__6)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__6);
+  __Pyx_GIVEREF(__pyx_tuple__6);
 
   /* "../../../../../../../usr/local/lib/python2.7/site-packages/Cython/Includes/numpy/__init__.pxd":219
  *             if ((flags & pybuf.PyBUF_F_CONTIGUOUS == pybuf.PyBUF_F_CONTIGUOUS)
@@ -23672,9 +27886,9 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  *             info.buf = PyArray_DATA(self)
  */
-  __pyx_tuple__8 = PyTuple_Pack(1, __pyx_kp_u_ndarray_is_not_Fortran_contiguou); if (unlikely(!__pyx_tuple__8)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 219; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__8);
-  __Pyx_GIVEREF(__pyx_tuple__8);
+  __pyx_tuple__7 = PyTuple_Pack(1, __pyx_kp_u_ndarray_is_not_Fortran_contiguou); if (unlikely(!__pyx_tuple__7)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 219; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__7);
+  __Pyx_GIVEREF(__pyx_tuple__7);
 
   /* "../../../../../../../usr/local/lib/python2.7/site-packages/Cython/Includes/numpy/__init__.pxd":257
  *                 if ((descr.byteorder == c'>' and little_endian) or
@@ -23683,9 +27897,9 @@ static int __Pyx_InitCachedConstants(void) {
  *                 if   t == NPY_BYTE:        f = "b"
  *                 elif t == NPY_UBYTE:       f = "B"
  */
-  __pyx_tuple__9 = PyTuple_Pack(1, __pyx_kp_u_Non_native_byte_order_not_suppor); if (unlikely(!__pyx_tuple__9)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 257; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__9);
-  __Pyx_GIVEREF(__pyx_tuple__9);
+  __pyx_tuple__8 = PyTuple_Pack(1, __pyx_kp_u_Non_native_byte_order_not_suppor); if (unlikely(!__pyx_tuple__8)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 257; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__8);
+  __Pyx_GIVEREF(__pyx_tuple__8);
 
   /* "../../../../../../../usr/local/lib/python2.7/site-packages/Cython/Includes/numpy/__init__.pxd":799
  * 
@@ -23694,9 +27908,9 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  *         if ((child.byteorder == c'>' and little_endian) or
  */
-  __pyx_tuple__10 = PyTuple_Pack(1, __pyx_kp_u_Format_string_allocated_too_shor); if (unlikely(!__pyx_tuple__10)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 799; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__10);
-  __Pyx_GIVEREF(__pyx_tuple__10);
+  __pyx_tuple__9 = PyTuple_Pack(1, __pyx_kp_u_Format_string_allocated_too_shor); if (unlikely(!__pyx_tuple__9)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 799; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__9);
+  __Pyx_GIVEREF(__pyx_tuple__9);
 
   /* "../../../../../../../usr/local/lib/python2.7/site-packages/Cython/Includes/numpy/__init__.pxd":803
  *         if ((child.byteorder == c'>' and little_endian) or
@@ -23705,9 +27919,9 @@ static int __Pyx_InitCachedConstants(void) {
  *             # One could encode it in the format string and have Cython
  *             # complain instead, BUT: < and > in format strings also imply
  */
-  __pyx_tuple__11 = PyTuple_Pack(1, __pyx_kp_u_Non_native_byte_order_not_suppor); if (unlikely(!__pyx_tuple__11)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 803; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__11);
-  __Pyx_GIVEREF(__pyx_tuple__11);
+  __pyx_tuple__10 = PyTuple_Pack(1, __pyx_kp_u_Non_native_byte_order_not_suppor); if (unlikely(!__pyx_tuple__10)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 803; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__10);
+  __Pyx_GIVEREF(__pyx_tuple__10);
 
   /* "../../../../../../../usr/local/lib/python2.7/site-packages/Cython/Includes/numpy/__init__.pxd":823
  *             t = child.type_num
@@ -23716,9 +27930,9 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  *             # Until ticket #99 is fixed, use integers to avoid warnings
  */
-  __pyx_tuple__12 = PyTuple_Pack(1, __pyx_kp_u_Format_string_allocated_too_shor_2); if (unlikely(!__pyx_tuple__12)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 823; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__12);
-  __Pyx_GIVEREF(__pyx_tuple__12);
+  __pyx_tuple__11 = PyTuple_Pack(1, __pyx_kp_u_Format_string_allocated_too_shor_2); if (unlikely(!__pyx_tuple__11)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 823; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__11);
+  __Pyx_GIVEREF(__pyx_tuple__11);
 
   /* "View.MemoryView":127
  * 
@@ -23727,9 +27941,9 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  *         if itemsize <= 0:
  */
-  __pyx_tuple__13 = PyTuple_Pack(1, __pyx_kp_s_Empty_shape_tuple_for_cython_arr); if (unlikely(!__pyx_tuple__13)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 127; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__13);
-  __Pyx_GIVEREF(__pyx_tuple__13);
+  __pyx_tuple__12 = PyTuple_Pack(1, __pyx_kp_s_Empty_shape_tuple_for_cython_arr); if (unlikely(!__pyx_tuple__12)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 127; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__12);
+  __Pyx_GIVEREF(__pyx_tuple__12);
 
   /* "View.MemoryView":130
  * 
@@ -23738,9 +27952,9 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  *         if isinstance(format, unicode):
  */
-  __pyx_tuple__14 = PyTuple_Pack(1, __pyx_kp_s_itemsize_0_for_cython_array); if (unlikely(!__pyx_tuple__14)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 130; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__14);
-  __Pyx_GIVEREF(__pyx_tuple__14);
+  __pyx_tuple__13 = PyTuple_Pack(1, __pyx_kp_s_itemsize_0_for_cython_array); if (unlikely(!__pyx_tuple__13)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 130; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__13);
+  __Pyx_GIVEREF(__pyx_tuple__13);
 
   /* "View.MemoryView":142
  * 
@@ -23749,9 +27963,9 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  * 
  */
-  __pyx_tuple__15 = PyTuple_Pack(1, __pyx_kp_s_unable_to_allocate_shape_and_str); if (unlikely(!__pyx_tuple__15)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 142; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__15);
-  __Pyx_GIVEREF(__pyx_tuple__15);
+  __pyx_tuple__14 = PyTuple_Pack(1, __pyx_kp_s_unable_to_allocate_shape_and_str); if (unlikely(!__pyx_tuple__14)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 142; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__14);
+  __Pyx_GIVEREF(__pyx_tuple__14);
 
   /* "View.MemoryView":170
  *             self.data = <char *>malloc(self.len)
@@ -23760,9 +27974,9 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  *             if self.dtype_is_object:
  */
-  __pyx_tuple__16 = PyTuple_Pack(1, __pyx_kp_s_unable_to_allocate_array_data); if (unlikely(!__pyx_tuple__16)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 170; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__16);
-  __Pyx_GIVEREF(__pyx_tuple__16);
+  __pyx_tuple__15 = PyTuple_Pack(1, __pyx_kp_s_unable_to_allocate_array_data); if (unlikely(!__pyx_tuple__15)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 170; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__15);
+  __Pyx_GIVEREF(__pyx_tuple__15);
 
   /* "View.MemoryView":186
  *             bufmode = PyBUF_F_CONTIGUOUS | PyBUF_ANY_CONTIGUOUS
@@ -23771,9 +27985,9 @@ static int __Pyx_InitCachedConstants(void) {
  *         info.buf = self.data
  *         info.len = self.len
  */
-  __pyx_tuple__17 = PyTuple_Pack(1, __pyx_kp_s_Can_only_create_a_buffer_that_is); if (unlikely(!__pyx_tuple__17)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 186; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__17);
-  __Pyx_GIVEREF(__pyx_tuple__17);
+  __pyx_tuple__16 = PyTuple_Pack(1, __pyx_kp_s_Can_only_create_a_buffer_that_is); if (unlikely(!__pyx_tuple__16)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 186; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__16);
+  __Pyx_GIVEREF(__pyx_tuple__16);
 
   /* "View.MemoryView":445
  *             result = struct.unpack(self.view.format, bytesitem)
@@ -23782,9 +27996,9 @@ static int __Pyx_InitCachedConstants(void) {
  *         else:
  *             if len(self.view.format) == 1:
  */
-  __pyx_tuple__18 = PyTuple_Pack(1, __pyx_kp_s_Unable_to_convert_item_to_object); if (unlikely(!__pyx_tuple__18)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 445; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__18);
-  __Pyx_GIVEREF(__pyx_tuple__18);
+  __pyx_tuple__17 = PyTuple_Pack(1, __pyx_kp_s_Unable_to_convert_item_to_object); if (unlikely(!__pyx_tuple__17)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 445; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__17);
+  __Pyx_GIVEREF(__pyx_tuple__17);
 
   /* "View.MemoryView":521
  *             if self.view.strides == NULL:
@@ -23793,9 +28007,9 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  *             return tuple([self.view.strides[i] for i in xrange(self.view.ndim)])
  */
-  __pyx_tuple__19 = PyTuple_Pack(1, __pyx_kp_s_Buffer_view_does_not_expose_stri); if (unlikely(!__pyx_tuple__19)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 521; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__19);
-  __Pyx_GIVEREF(__pyx_tuple__19);
+  __pyx_tuple__18 = PyTuple_Pack(1, __pyx_kp_s_Buffer_view_does_not_expose_stri); if (unlikely(!__pyx_tuple__18)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 521; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__18);
+  __Pyx_GIVEREF(__pyx_tuple__18);
 
   /* "View.MemoryView":638
  *         if item is Ellipsis:
@@ -23804,9 +28018,9 @@ static int __Pyx_InitCachedConstants(void) {
  *                 seen_ellipsis = True
  *             else:
  */
-  __pyx_slice__20 = PySlice_New(Py_None, Py_None, Py_None); if (unlikely(!__pyx_slice__20)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 638; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_slice__20);
-  __Pyx_GIVEREF(__pyx_slice__20);
+  __pyx_slice__19 = PySlice_New(Py_None, Py_None, Py_None); if (unlikely(!__pyx_slice__19)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 638; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_slice__19);
+  __Pyx_GIVEREF(__pyx_slice__19);
 
   /* "View.MemoryView":641
  *                 seen_ellipsis = True
@@ -23815,9 +28029,9 @@ static int __Pyx_InitCachedConstants(void) {
  *             have_slices = True
  *         else:
  */
-  __pyx_slice__21 = PySlice_New(Py_None, Py_None, Py_None); if (unlikely(!__pyx_slice__21)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 641; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_slice__21);
-  __Pyx_GIVEREF(__pyx_slice__21);
+  __pyx_slice__20 = PySlice_New(Py_None, Py_None, Py_None); if (unlikely(!__pyx_slice__20)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 641; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_slice__20);
+  __Pyx_GIVEREF(__pyx_slice__20);
 
   /* "View.MemoryView":652
  *     nslices = ndim - len(result)
@@ -23826,9 +28040,9 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  *     return have_slices or nslices, tuple(result)
  */
-  __pyx_slice__22 = PySlice_New(Py_None, Py_None, Py_None); if (unlikely(!__pyx_slice__22)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 652; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_slice__22);
-  __Pyx_GIVEREF(__pyx_slice__22);
+  __pyx_slice__21 = PySlice_New(Py_None, Py_None, Py_None); if (unlikely(!__pyx_slice__21)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 652; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_slice__21);
+  __Pyx_GIVEREF(__pyx_slice__21);
 
   /* "View.MemoryView":660
  *     for i in range(ndim):
@@ -23837,9 +28051,9 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  * 
  */
-  __pyx_tuple__23 = PyTuple_Pack(1, __pyx_kp_s_Indirect_dimensions_not_supporte); if (unlikely(!__pyx_tuple__23)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 660; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__23);
-  __Pyx_GIVEREF(__pyx_tuple__23);
+  __pyx_tuple__22 = PyTuple_Pack(1, __pyx_kp_s_Indirect_dimensions_not_supporte); if (unlikely(!__pyx_tuple__22)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 660; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__22);
+  __Pyx_GIVEREF(__pyx_tuple__22);
 
   /* "View.MemoryView":276
  *         return self.name
@@ -23848,9 +28062,9 @@ static int __Pyx_InitCachedConstants(void) {
  * cdef strided = Enum("<strided and direct>") # default
  * cdef indirect = Enum("<strided and indirect>")
  */
-  __pyx_tuple__24 = PyTuple_Pack(1, __pyx_kp_s_strided_and_direct_or_indirect); if (unlikely(!__pyx_tuple__24)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 276; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__24);
-  __Pyx_GIVEREF(__pyx_tuple__24);
+  __pyx_tuple__23 = PyTuple_Pack(1, __pyx_kp_s_strided_and_direct_or_indirect); if (unlikely(!__pyx_tuple__23)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 276; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__23);
+  __Pyx_GIVEREF(__pyx_tuple__23);
 
   /* "View.MemoryView":277
  * 
@@ -23859,9 +28073,9 @@ static int __Pyx_InitCachedConstants(void) {
  * cdef indirect = Enum("<strided and indirect>")
  * 
  */
-  __pyx_tuple__25 = PyTuple_Pack(1, __pyx_kp_s_strided_and_direct); if (unlikely(!__pyx_tuple__25)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 277; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__25);
-  __Pyx_GIVEREF(__pyx_tuple__25);
+  __pyx_tuple__24 = PyTuple_Pack(1, __pyx_kp_s_strided_and_direct); if (unlikely(!__pyx_tuple__24)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 277; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__24);
+  __Pyx_GIVEREF(__pyx_tuple__24);
 
   /* "View.MemoryView":278
  * cdef generic = Enum("<strided and direct or indirect>")
@@ -23870,9 +28084,9 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  * 
  */
-  __pyx_tuple__26 = PyTuple_Pack(1, __pyx_kp_s_strided_and_indirect); if (unlikely(!__pyx_tuple__26)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 278; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__26);
-  __Pyx_GIVEREF(__pyx_tuple__26);
+  __pyx_tuple__25 = PyTuple_Pack(1, __pyx_kp_s_strided_and_indirect); if (unlikely(!__pyx_tuple__25)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 278; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__25);
+  __Pyx_GIVEREF(__pyx_tuple__25);
 
   /* "View.MemoryView":281
  * 
@@ -23881,9 +28095,9 @@ static int __Pyx_InitCachedConstants(void) {
  * cdef indirect_contiguous = Enum("<contiguous and indirect>")
  * 
  */
-  __pyx_tuple__27 = PyTuple_Pack(1, __pyx_kp_s_contiguous_and_direct); if (unlikely(!__pyx_tuple__27)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 281; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__27);
-  __Pyx_GIVEREF(__pyx_tuple__27);
+  __pyx_tuple__26 = PyTuple_Pack(1, __pyx_kp_s_contiguous_and_direct); if (unlikely(!__pyx_tuple__26)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 281; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__26);
+  __Pyx_GIVEREF(__pyx_tuple__26);
 
   /* "View.MemoryView":282
  * 
@@ -23892,9 +28106,9 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  * 
  */
-  __pyx_tuple__28 = PyTuple_Pack(1, __pyx_kp_s_contiguous_and_indirect); if (unlikely(!__pyx_tuple__28)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 282; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__28);
-  __Pyx_GIVEREF(__pyx_tuple__28);
+  __pyx_tuple__27 = PyTuple_Pack(1, __pyx_kp_s_contiguous_and_indirect); if (unlikely(!__pyx_tuple__27)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 282; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__27);
+  __Pyx_GIVEREF(__pyx_tuple__27);
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -23913,8 +28127,10 @@ static int __Pyx_InitGlobals(void) {
   __pyx_int_0 = PyInt_FromLong(0); if (unlikely(!__pyx_int_0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_int_1 = PyInt_FromLong(1); if (unlikely(!__pyx_int_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_int_4 = PyInt_FromLong(4); if (unlikely(!__pyx_int_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_int_9 = PyInt_FromLong(9); if (unlikely(!__pyx_int_9)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_int_16 = PyInt_FromLong(16); if (unlikely(!__pyx_int_16)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_int_10000 = PyInt_FromLong(10000L); if (unlikely(!__pyx_int_10000)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_int_17 = PyInt_FromLong(17); if (unlikely(!__pyx_int_17)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_int_1000000 = PyInt_FromLong(1000000L); if (unlikely(!__pyx_int_1000000)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_int_neg_1 = PyInt_FromLong(-1); if (unlikely(!__pyx_int_neg_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   return 0;
   __pyx_L1_error:;
@@ -24057,54 +28273,103 @@ PyMODINIT_FUNC PyInit_c_dana(void)
   __pyx_type_6c_dana_Group.tp_print = 0;
   if (PyObject_SetAttrString(__pyx_m, "Group", (PyObject *)&__pyx_type_6c_dana_Group) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 89; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_ptype_6c_dana_Group = &__pyx_type_6c_dana_Group;
-  if (PyType_Ready(&__pyx_type_6c_dana_Structure) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 208; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyType_Ready(&__pyx_type_6c_dana_Structure) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 214; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_type_6c_dana_Structure.tp_print = 0;
-  if (PyObject_SetAttrString(__pyx_m, "Structure", (PyObject *)&__pyx_type_6c_dana_Structure) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 208; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyObject_SetAttrString(__pyx_m, "Structure", (PyObject *)&__pyx_type_6c_dana_Structure) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 214; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_ptype_6c_dana_Structure = &__pyx_type_6c_dana_Structure;
   __pyx_type_6c_dana_AssociativeStructure.tp_base = __pyx_ptype_6c_dana_Structure;
-  if (PyType_Ready(&__pyx_type_6c_dana_AssociativeStructure) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 239; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyType_Ready(&__pyx_type_6c_dana_AssociativeStructure) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 263; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_type_6c_dana_AssociativeStructure.tp_print = 0;
-  if (PyObject_SetAttrString(__pyx_m, "AssociativeStructure", (PyObject *)&__pyx_type_6c_dana_AssociativeStructure) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 239; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyObject_SetAttrString(__pyx_m, "AssociativeStructure", (PyObject *)&__pyx_type_6c_dana_AssociativeStructure) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 263; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_ptype_6c_dana_AssociativeStructure = &__pyx_type_6c_dana_AssociativeStructure;
-  if (PyType_Ready(&__pyx_type_6c_dana_Connection) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 262; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyType_Ready(&__pyx_type_6c_dana_ArmStructure) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 285; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_type_6c_dana_ArmStructure.tp_print = 0;
+  if (PyObject_SetAttrString(__pyx_m, "ArmStructure", (PyObject *)&__pyx_type_6c_dana_ArmStructure) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 285; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_ptype_6c_dana_ArmStructure = &__pyx_type_6c_dana_ArmStructure;
+  if (PyType_Ready(&__pyx_type_6c_dana_Connection) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 317; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_type_6c_dana_Connection.tp_print = 0;
-  if (PyObject_SetAttrString(__pyx_m, "Connection", (PyObject *)&__pyx_type_6c_dana_Connection) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 262; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyObject_SetAttrString(__pyx_m, "Connection", (PyObject *)&__pyx_type_6c_dana_Connection) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 317; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_ptype_6c_dana_Connection = &__pyx_type_6c_dana_Connection;
   __pyx_type_6c_dana_OneToOne.tp_base = __pyx_ptype_6c_dana_Connection;
-  if (PyType_Ready(&__pyx_type_6c_dana_OneToOne) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 314; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyType_Ready(&__pyx_type_6c_dana_OneToOne) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 396; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_type_6c_dana_OneToOne.tp_print = 0;
-  if (PyObject_SetAttrString(__pyx_m, "OneToOne", (PyObject *)&__pyx_type_6c_dana_OneToOne) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 314; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyObject_SetAttrString(__pyx_m, "OneToOne", (PyObject *)&__pyx_type_6c_dana_OneToOne) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 396; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_ptype_6c_dana_OneToOne = &__pyx_type_6c_dana_OneToOne;
   __pyx_type_6c_dana_OneToAll.tp_base = __pyx_ptype_6c_dana_Connection;
-  if (PyType_Ready(&__pyx_type_6c_dana_OneToAll) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 324; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyType_Ready(&__pyx_type_6c_dana_OneToAll) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 406; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_type_6c_dana_OneToAll.tp_print = 0;
-  if (PyObject_SetAttrString(__pyx_m, "OneToAll", (PyObject *)&__pyx_type_6c_dana_OneToAll) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 324; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyObject_SetAttrString(__pyx_m, "OneToAll", (PyObject *)&__pyx_type_6c_dana_OneToAll) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 406; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_ptype_6c_dana_OneToAll = &__pyx_type_6c_dana_OneToAll;
   __pyx_type_6c_dana_AllToAll.tp_base = __pyx_ptype_6c_dana_Connection;
-  if (PyType_Ready(&__pyx_type_6c_dana_AllToAll) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 335; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyType_Ready(&__pyx_type_6c_dana_AllToAll) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 431; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_type_6c_dana_AllToAll.tp_print = 0;
-  if (PyObject_SetAttrString(__pyx_m, "AllToAll", (PyObject *)&__pyx_type_6c_dana_AllToAll) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 335; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyObject_SetAttrString(__pyx_m, "AllToAll", (PyObject *)&__pyx_type_6c_dana_AllToAll) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 431; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_ptype_6c_dana_AllToAll = &__pyx_type_6c_dana_AllToAll;
   __pyx_type_6c_dana_AssToMot.tp_base = __pyx_ptype_6c_dana_Connection;
-  if (PyType_Ready(&__pyx_type_6c_dana_AssToMot) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 350; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyType_Ready(&__pyx_type_6c_dana_AssToMot) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 446; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_type_6c_dana_AssToMot.tp_print = 0;
-  if (PyObject_SetAttrString(__pyx_m, "AssToMot", (PyObject *)&__pyx_type_6c_dana_AssToMot) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 350; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyObject_SetAttrString(__pyx_m, "AssToMot", (PyObject *)&__pyx_type_6c_dana_AssToMot) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 446; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_ptype_6c_dana_AssToMot = &__pyx_type_6c_dana_AssToMot;
   __pyx_type_6c_dana_AssToCog.tp_base = __pyx_ptype_6c_dana_Connection;
-  if (PyType_Ready(&__pyx_type_6c_dana_AssToCog) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 362; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyType_Ready(&__pyx_type_6c_dana_AssToCog) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 458; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_type_6c_dana_AssToCog.tp_print = 0;
-  if (PyObject_SetAttrString(__pyx_m, "AssToCog", (PyObject *)&__pyx_type_6c_dana_AssToCog) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 362; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyObject_SetAttrString(__pyx_m, "AssToCog", (PyObject *)&__pyx_type_6c_dana_AssToCog) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 458; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_ptype_6c_dana_AssToCog = &__pyx_type_6c_dana_AssToCog;
   __pyx_type_6c_dana_MotToAss.tp_base = __pyx_ptype_6c_dana_Connection;
-  if (PyType_Ready(&__pyx_type_6c_dana_MotToAss) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 375; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyType_Ready(&__pyx_type_6c_dana_MotToAss) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 471; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_type_6c_dana_MotToAss.tp_print = 0;
-  if (PyObject_SetAttrString(__pyx_m, "MotToAss", (PyObject *)&__pyx_type_6c_dana_MotToAss) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 375; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyObject_SetAttrString(__pyx_m, "MotToAss", (PyObject *)&__pyx_type_6c_dana_MotToAss) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 471; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_ptype_6c_dana_MotToAss = &__pyx_type_6c_dana_MotToAss;
   __pyx_type_6c_dana_CogToAss.tp_base = __pyx_ptype_6c_dana_Connection;
-  if (PyType_Ready(&__pyx_type_6c_dana_CogToAss) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 387; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyType_Ready(&__pyx_type_6c_dana_CogToAss) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 483; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_type_6c_dana_CogToAss.tp_print = 0;
-  if (PyObject_SetAttrString(__pyx_m, "CogToAss", (PyObject *)&__pyx_type_6c_dana_CogToAss) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 387; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyObject_SetAttrString(__pyx_m, "CogToAss", (PyObject *)&__pyx_type_6c_dana_CogToAss) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 483; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_ptype_6c_dana_CogToAss = &__pyx_type_6c_dana_CogToAss;
+  __pyx_type_6c_dana_MotToPPC.tp_base = __pyx_ptype_6c_dana_Connection;
+  if (PyType_Ready(&__pyx_type_6c_dana_MotToPPC) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 495; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_type_6c_dana_MotToPPC.tp_print = 0;
+  if (PyObject_SetAttrString(__pyx_m, "MotToPPC", (PyObject *)&__pyx_type_6c_dana_MotToPPC) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 495; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_ptype_6c_dana_MotToPPC = &__pyx_type_6c_dana_MotToPPC;
+  __pyx_type_6c_dana_ARMtoPPC.tp_base = __pyx_ptype_6c_dana_Connection;
+  if (PyType_Ready(&__pyx_type_6c_dana_ARMtoPPC) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 507; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_type_6c_dana_ARMtoPPC.tp_print = 0;
+  if (PyObject_SetAttrString(__pyx_m, "ARMtoPPC", (PyObject *)&__pyx_type_6c_dana_ARMtoPPC) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 507; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_ptype_6c_dana_ARMtoPPC = &__pyx_type_6c_dana_ARMtoPPC;
+  __pyx_type_6c_dana_PFCtoSMA.tp_base = __pyx_ptype_6c_dana_Connection;
+  if (PyType_Ready(&__pyx_type_6c_dana_PFCtoSMA) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 519; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_type_6c_dana_PFCtoSMA.tp_print = 0;
+  if (PyObject_SetAttrString(__pyx_m, "PFCtoSMA", (PyObject *)&__pyx_type_6c_dana_PFCtoSMA) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 519; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_ptype_6c_dana_PFCtoSMA = &__pyx_type_6c_dana_PFCtoSMA;
+  __pyx_type_6c_dana_ARMtoSMA.tp_base = __pyx_ptype_6c_dana_Connection;
+  if (PyType_Ready(&__pyx_type_6c_dana_ARMtoSMA) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 532; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_type_6c_dana_ARMtoSMA.tp_print = 0;
+  if (PyObject_SetAttrString(__pyx_m, "ARMtoSMA", (PyObject *)&__pyx_type_6c_dana_ARMtoSMA) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 532; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_ptype_6c_dana_ARMtoSMA = &__pyx_type_6c_dana_ARMtoSMA;
+  __pyx_type_6c_dana_SMAtoARM.tp_base = __pyx_ptype_6c_dana_Connection;
+  if (PyType_Ready(&__pyx_type_6c_dana_SMAtoARM) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 544; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_type_6c_dana_SMAtoARM.tp_print = 0;
+  if (PyObject_SetAttrString(__pyx_m, "SMAtoARM", (PyObject *)&__pyx_type_6c_dana_SMAtoARM) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 544; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_ptype_6c_dana_SMAtoARM = &__pyx_type_6c_dana_SMAtoARM;
+  __pyx_type_6c_dana_PPCtoPFC.tp_base = __pyx_ptype_6c_dana_Connection;
+  if (PyType_Ready(&__pyx_type_6c_dana_PPCtoPFC) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 560; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_type_6c_dana_PPCtoPFC.tp_print = 0;
+  if (PyObject_SetAttrString(__pyx_m, "PPCtoPFC", (PyObject *)&__pyx_type_6c_dana_PPCtoPFC) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 560; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_ptype_6c_dana_PPCtoPFC = &__pyx_type_6c_dana_PPCtoPFC;
+  __pyx_type_6c_dana_PPCtoSTR.tp_base = __pyx_ptype_6c_dana_Connection;
+  if (PyType_Ready(&__pyx_type_6c_dana_PPCtoSTR) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 576; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_type_6c_dana_PPCtoSTR.tp_print = 0;
+  if (PyObject_SetAttrString(__pyx_m, "PPCtoSTR", (PyObject *)&__pyx_type_6c_dana_PPCtoSTR) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 576; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_ptype_6c_dana_PPCtoSTR = &__pyx_type_6c_dana_PPCtoSTR;
+  __pyx_type_6c_dana_PFCtoSTR.tp_base = __pyx_ptype_6c_dana_Connection;
+  if (PyType_Ready(&__pyx_type_6c_dana_PFCtoSTR) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 587; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_type_6c_dana_PFCtoSTR.tp_print = 0;
+  if (PyObject_SetAttrString(__pyx_m, "PFCtoSTR", (PyObject *)&__pyx_type_6c_dana_PFCtoSTR) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 587; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_ptype_6c_dana_PFCtoSTR = &__pyx_type_6c_dana_PFCtoSTR;
+  __pyx_type_6c_dana_STRpfcToBG.tp_base = __pyx_ptype_6c_dana_Connection;
+  if (PyType_Ready(&__pyx_type_6c_dana_STRpfcToBG) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 598; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_type_6c_dana_STRpfcToBG.tp_print = 0;
+  if (PyObject_SetAttrString(__pyx_m, "STRpfcToBG", (PyObject *)&__pyx_type_6c_dana_STRpfcToBG) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 598; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_ptype_6c_dana_STRpfcToBG = &__pyx_type_6c_dana_STRpfcToBG;
   if (PyType_Ready(&__pyx_type___pyx_array) < 0) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 99; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_type___pyx_array.tp_print = 0;
   __pyx_array_type = &__pyx_type___pyx_array;
@@ -24262,27 +28527,40 @@ PyMODINIT_FUNC PyInit_c_dana(void)
   __Pyx_GIVEREF(__pyx_t_5);
   __pyx_t_5 = 0;
 
-  /* "c_dana.pyx":212
- *     cdef Group _cog
+  /* "c_dana.pyx":220
+ *     cdef Group _pfcth2
  * 
- *     def __init__(self, tau=0.01, rest=0, noise=0, activation=Identity()):             # <<<<<<<<<<<<<<
- *         self._mot = Group(np.zeros(4,dtype=dtype), tau=tau, rest=rest,
+ *     def __init__(self, tau=0.01, rest=0, noise=0, activation=Identity(), n=4, n_pfc=17):             # <<<<<<<<<<<<<<
+ *         self._mot = Group(np.zeros(n,dtype=dtype), tau=tau, rest=rest,
  *                            noise=noise, activation=activation)
  */
-  __pyx_t_5 = __Pyx_PyObject_Call(((PyObject *)((PyObject*)__pyx_ptype_6c_dana_Identity)), __pyx_empty_tuple, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 212; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_5 = __Pyx_PyObject_Call(((PyObject *)((PyObject*)__pyx_ptype_6c_dana_Identity)), __pyx_empty_tuple, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 220; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_5);
   __pyx_k__2 = __pyx_t_5;
   __Pyx_GIVEREF(__pyx_t_5);
   __pyx_t_5 = 0;
 
-  /* "c_dana.pyx":242
+  /* "c_dana.pyx":266
  *     cdef public Group _ass
  * 
  *     def __init__(self, tau=0.01, rest=0, noise=0, activation=Identity()):             # <<<<<<<<<<<<<<
  *         Structure.__init__(self, tau, rest, noise, activation)
  *         self._ass = Group(np.zeros(16,dtype=dtype), tau=tau, rest=rest,
  */
-  __pyx_t_5 = __Pyx_PyObject_Call(((PyObject *)((PyObject*)__pyx_ptype_6c_dana_Identity)), __pyx_empty_tuple, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 242; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_5 = __Pyx_PyObject_Call(((PyObject *)((PyObject*)__pyx_ptype_6c_dana_Identity)), __pyx_empty_tuple, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 266; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_k__3 = __pyx_t_5;
+  __Pyx_GIVEREF(__pyx_t_5);
+  __pyx_t_5 = 0;
+
+  /* "c_dana.pyx":289
+ *     cdef Group _theta2
+ * 
+ *     def __init__(self, tau=0.01, rest=0, noise=0, activation=Identity(), n = 17):             # <<<<<<<<<<<<<<
+ *         self._theta1 = Group(np.zeros(n,dtype=dtype), tau=tau, rest=rest,
+ *                            noise=noise, activation=activation)
+ */
+  __pyx_t_5 = __Pyx_PyObject_Call(((PyObject *)((PyObject*)__pyx_ptype_6c_dana_Identity)), __pyx_empty_tuple, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 289; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_5);
   __pyx_k__5 = __pyx_t_5;
   __Pyx_GIVEREF(__pyx_t_5);
@@ -24318,7 +28596,7 @@ PyMODINIT_FUNC PyInit_c_dana(void)
  * cdef strided = Enum("<strided and direct>") # default
  * cdef indirect = Enum("<strided and indirect>")
  */
-  __pyx_t_5 = __Pyx_PyObject_Call(((PyObject *)((PyObject *)__pyx_MemviewEnum_type)), __pyx_tuple__24, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 276; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_5 = __Pyx_PyObject_Call(((PyObject *)((PyObject *)__pyx_MemviewEnum_type)), __pyx_tuple__23, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 276; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_XGOTREF(generic);
   __Pyx_DECREF_SET(generic, __pyx_t_5);
@@ -24332,7 +28610,7 @@ PyMODINIT_FUNC PyInit_c_dana(void)
  * cdef indirect = Enum("<strided and indirect>")
  * 
  */
-  __pyx_t_5 = __Pyx_PyObject_Call(((PyObject *)((PyObject *)__pyx_MemviewEnum_type)), __pyx_tuple__25, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 277; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_5 = __Pyx_PyObject_Call(((PyObject *)((PyObject *)__pyx_MemviewEnum_type)), __pyx_tuple__24, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 277; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_XGOTREF(strided);
   __Pyx_DECREF_SET(strided, __pyx_t_5);
@@ -24346,7 +28624,7 @@ PyMODINIT_FUNC PyInit_c_dana(void)
  * 
  * 
  */
-  __pyx_t_5 = __Pyx_PyObject_Call(((PyObject *)((PyObject *)__pyx_MemviewEnum_type)), __pyx_tuple__26, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 278; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_5 = __Pyx_PyObject_Call(((PyObject *)((PyObject *)__pyx_MemviewEnum_type)), __pyx_tuple__25, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 278; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_XGOTREF(indirect);
   __Pyx_DECREF_SET(indirect, __pyx_t_5);
@@ -24360,7 +28638,7 @@ PyMODINIT_FUNC PyInit_c_dana(void)
  * cdef indirect_contiguous = Enum("<contiguous and indirect>")
  * 
  */
-  __pyx_t_5 = __Pyx_PyObject_Call(((PyObject *)((PyObject *)__pyx_MemviewEnum_type)), __pyx_tuple__27, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 281; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_5 = __Pyx_PyObject_Call(((PyObject *)((PyObject *)__pyx_MemviewEnum_type)), __pyx_tuple__26, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 281; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_XGOTREF(contiguous);
   __Pyx_DECREF_SET(contiguous, __pyx_t_5);
@@ -24374,7 +28652,7 @@ PyMODINIT_FUNC PyInit_c_dana(void)
  * 
  * 
  */
-  __pyx_t_5 = __Pyx_PyObject_Call(((PyObject *)((PyObject *)__pyx_MemviewEnum_type)), __pyx_tuple__28, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 282; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_5 = __Pyx_PyObject_Call(((PyObject *)((PyObject *)__pyx_MemviewEnum_type)), __pyx_tuple__27, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 282; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_XGOTREF(indirect_contiguous);
   __Pyx_DECREF_SET(indirect_contiguous, __pyx_t_5);

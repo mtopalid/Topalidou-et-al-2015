@@ -28,10 +28,11 @@ class Task_B(Task):
         self.build(2 * n)
 
         # All combinations of cues or positions
-        Z = np.array([[0, 1], [0, 2], [0, 3], [1, 2], [1, 3], [2, 3]])
+        Z = np.array([[0, 1], [0, 2], [0, 3]])#, [1, 2], [1, 3], [2, 3]])
 
         # n//6 x all combinations of cues
-        M = np.repeat(np.arange(6), n // 6)
+        # M = np.repeat(np.arange(6), n // 6)
+        M = np.repeat(np.arange(3), n // 3)
         np.random.shuffle(M)
         mot = Z[M]
         for i in range(mot.shape[0]):
