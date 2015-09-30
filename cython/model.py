@@ -28,12 +28,14 @@ structures = (CTX, STR, STN, GPE, GPI, THL)
 # Cue vector includes shapes, positions and the shapes' value used in reinforcement learning
 CUE = np.zeros(4, dtype=[("mot", float),
                          ("cog", float),
-                         ("value", float)])
+                         ("cvalue", float),
+                         ("mvalue", float)])
 
 # Initialization of the values
 CUE["mot"] = 0, 1, 2, 3
 CUE["cog"] = 0, 1, 2, 3
-CUE["value"] = 0.5
+CUE["cvalue"] = 0.5
+CUE["mvalue"] = 0.5
 
 
 # Add noise to weights
@@ -126,7 +128,8 @@ def iterate(dt):
 def reset():
     CUE["mot"] = 0, 1, 2, 3
     CUE["cog"] = 0, 1, 2, 3
-    CUE["value"] = 0.5
+    CUE["cvalue"] = 0.5
+    CUE["mvalue"] = 0.5
     reset_weights()
     reset_activities()
 
@@ -196,37 +199,46 @@ def process(task, n=2, learn=True, trial=0, debugging=True, RT=0):
         reward = int(reward)
 
         # Compute prediction error
-        error = reward - CUE["value"][choice]
+        error = reward - CUE["cvalue"][choice]
 
         # Update cues values
-        CUE["value"][choice] += error * alpha_CUE
+        CUE["cvalue"][choice] += error * alpha_CUE #* CUE["cvalue"][choice] #* (1 - CUE["cvalue"][choice]) * \
+                                 #CUE["cvalue"][choice]
 
         # Reinforcement striatal learning
         lrate = alpha_LTP if error > 0 else alpha_LTD
         dw = error * lrate * STR.cog.V[choice]
         W = connections["CTX.cog -> STR.cog"].weights
-        W[choice] += + dw * (Wmax - W[choice]) * (W[choice] - Wmin)
+        W[choice] += dw * (Wmax - W[choice]) * (W[choice] - Wmin)
         connections["CTX.cog -> STR.cog"].weights = W
 
+        # Compute prediction error
+        error = reward - CUE["mvalue"][mot_choice]
+
+        # Update cues values
+        CUE["mvalue"][mot_choice] += error * alpha_CUE #* CUE["mvalue"][mot_choice] #* (1 - CUE["mvalue"][mot_choice])
+        #  * \
+                                 #CUE[ "mvalue"][mot_choice]
         dw = error * lrate * STR.mot.V[mot_choice]
         W = connections["CTX.mot -> STR.mot"].weights
-        W[mot_choice] += + dw * (Wmax - W[mot_choice]) * (W[mot_choice] - Wmin)
+        W[mot_choice] += dw * (Wmax - W[mot_choice]) * (W[mot_choice] - Wmin)
         connections["CTX.mot -> STR.mot"].weights = W
 
         # Hebbian cortical learning
         dw = alpha_LTP_ctx * CTX.cog.V[choice]
         W = connections["CTX.cog -> CTX.ass"].weights
-        W[choice] += + dw * (Wmax - W[choice]) * (W[choice] - Wmin)
+        W[choice] += dw * (Wmax - W[choice]) * (W[choice] - Wmin)
         connections["CTX.cog -> CTX.ass"].weights = W
 
         dw = alpha_LTP_ctx * CTX.mot.V[mot_choice]
         W = connections["CTX.mot -> CTX.ass"].weights
-        W[mot_choice] += + dw * (Wmax - W[mot_choice]) * (W[mot_choice] - Wmin)
+        W[mot_choice] += dw * (Wmax - W[mot_choice]) * (W[mot_choice] - Wmin)
         connections["CTX.mot -> CTX.ass"].weights = W
 
 
-def debug_learning(Wcog, Wmot, Wstrc, Wstrm, cues_value):
-    print "  Cues Values			: ", cues_value
+def debug_learning(Wcog, Wmot, Wstrc, Wstrm, cog_value, mot_value):
+    print "  Cues Values Cognitive			: ", cog_value
+    print "  Cues Values Motor			: ", mot_value
     print "  Cortical Weights Cognitive	: ", Wcog
     print "  Cortical Weights Motor	: ", Wmot
     print "  Striatal Weights Cognitive	: ", Wstrc

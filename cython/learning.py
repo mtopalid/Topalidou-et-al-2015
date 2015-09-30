@@ -18,7 +18,8 @@ def learning(task, trial_n=0, learn=True, debugging=True):
 
     if debugging and learn:
         debug_learning(connections["CTX.cog -> CTX.ass"].weights, connections["CTX.mot -> CTX.ass"].weights,
-                       connections["CTX.cog -> STR.cog"].weights, CUE["value"])
+                       connections["CTX.cog -> STR.cog"].weights, connections["CTX.mot -> STR.mot"].weights,
+                       CUE["cvalue"], CUE["mvalue"])
 
     return
 
@@ -40,7 +41,6 @@ def learning_trials(task, trials=n_trials, learn=True, debugging=True, debugging
         print '   Done!'
     if debugging_learning:
         debug_learning(task.records["Wcog"][-1], task.records["Wmot"][-1], task.records["Wstrc"][-1], task.records[
-            "Wstrm"][-1],
-                       task.records["CueValues"][-1])
+            "Wstrm"][-1], task.records["CogValues"][-1], task.records["MotValues"][-1])
 
     return

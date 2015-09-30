@@ -54,7 +54,8 @@ class Task(object):
                                     ("best", float, 1),
                                     ("RTcog", float, 1),
                                     ("RTmot", float, 1),
-                                    ("CueValues", float, 4),
+                                    ("CogValues", float, 4),
+                                    ("MotValues", float, 4),
                                     ("Wstrc", float, 4),
                                     ("Wstrm", float, 4),
                                     ("Wcog", float, 4),
@@ -108,6 +109,7 @@ class Task(object):
         self.records[self.index]["reward"] = reward
 
         if debug:
+            print "  Positions			: %d / %d " % (m1, m2)
             P = self.records[:self.index + 1]["best"]
             print "  Mean performance		: %.1f %%" % np.array(P * 100).mean()
             R = self.records[:self.index + 1]["reward"]

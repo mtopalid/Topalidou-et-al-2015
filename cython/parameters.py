@@ -11,7 +11,7 @@
 # Population size
 n = 4
 # Protocol A
-n_trials = 480
+n_trials = 204*3
 # Protocol C
 n_reverse_trials = 720  # 4800#
 n_reverse_trials_Piron = 2400

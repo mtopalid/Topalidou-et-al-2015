@@ -40,7 +40,8 @@ def trial(task, cues_pres=True, learn=True, debugging=False, trial_n=0, wholeFig
             if time and cog_time:
                 process(task, learn=learn, debugging=debugging, trial=trial_n, RT=time)
                 task.records["RTcog"][trial_n] = cog_time
-                task.records["CueValues"][trial_n] = CUE["value"]
+                task.records["CogValues"][trial_n] = CUE["cvalue"]
+                task.records["MotValues"][trial_n] = CUE["mvalue"]
                 task.records["Wstrc"][trial_n] = connections["CTX.cog -> STR.cog"].weights
                 task.records["Wstrm"][trial_n] = connections["CTX.mot -> STR.mot"].weights
                 task.records["Wcog"][trial_n] = connections["CTX.cog -> CTX.ass"].weights
