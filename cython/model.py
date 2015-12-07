@@ -183,7 +183,7 @@ def process(task, n=2, learn=True, trial=0, debugging=True, RT=0):
     # The actual cognitive choice may differ from the cognitive choice
     # Only the motor decision can designate the chosen cue
     mot_choice = np.argmax(CTX.mot.U)
-    reward, best = task.process(task[trial], action=mot_choice, debug=debugging, RT=RT)
+    reward = task.process(task[trial], action=mot_choice, debug=debugging, RT=RT)
     cog_choice = np.argmax(CTX.cog.U)
     task.records["cog_choice"][trial] = cog_choice
 

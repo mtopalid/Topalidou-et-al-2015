@@ -114,7 +114,7 @@ class Task(object):
             rt = self.records[:self.index + 1]["RTmot"]
             print "  Mean Response time	: %.3f ms" % np.array(rt).mean()
 
-        return reward, best
+        return reward
 
 
 # -----------------------------------------------------------------------------

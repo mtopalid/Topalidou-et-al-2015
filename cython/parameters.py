@@ -17,9 +17,9 @@ n_reverse_trials = 720  # 4800#
 n_reverse_trials_Piron = 2400
 # Protocol B, D
 n_learning_trials = 4800 #960 #720 #240 #
-n_testing_trials = 240
+n_testing_trials = 120#240
 
-simulations = 250
+simulations = 100#250
 threshold = 40
 
 # --- Time ---
@@ -29,9 +29,9 @@ dt = 1 * ms
 tau = 10 * ms
 
 # --- Learning ---
-alpha_CUE = 0.0025  # 0.0005
-alpha_LTP = 0.005
-alpha_LTD = 0.00375
+alpha_CUE = 0.0025*1.5  # 0.0005
+alpha_LTP = 0.005*1.5
+alpha_LTD = 0.00375*1.5
 alpha_LTP_ctx = alpha_LTP ** 2  # 0.000025
 
 # --- Sigmoid ---

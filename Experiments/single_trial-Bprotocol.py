@@ -32,7 +32,7 @@ if __name__ == "__main__":
     # n should be multiple of 6 because there are 6 valuable combinations of positions
     task = Task_B(n=6)
 
-    GPi_lesion = False
+    GPi_lesion = False#True#
     # Make GPi lesion
     if GPi_lesion:
         connections["GPI.cog -> THL.cog"].active = False
@@ -45,7 +45,7 @@ if __name__ == "__main__":
 
     # Display cortical activity during the single trial
 
-    if 1: display_ctx(histor, 3.0)#, "single-trial.pdf"), "single-trial-NoBG.pdf")#
+    if 1: display_ctx(histor, 3.0, "single-trial.pdf")#, "single-trial-NoBG.pdf")#)#
 
     # Display activity from all structures during the single trial
     if 0: display_all(histor, 3.0)  # , "single-trial-all.pdf")

@@ -13,8 +13,8 @@ import matplotlib.pyplot as plt
 
 # Cortex activity display
 # -----------------------
-def display_ctx(history, duration=3.0, filename=None):
-    fig = plt.figure(figsize=(12,5))
+def display_ctx(history, duration=3.0, filename=None, dpi = 50):
+    fig = plt.figure(figsize=(6,3), facecolor="w", dpi=dpi)
     plt.subplots_adjust(bottom=0.15)
 
     timesteps = np.linspace(0,duration, len(history))
@@ -33,12 +33,12 @@ def display_ctx(history, duration=3.0, filename=None):
 
     plt.xlabel("Time (seconds)")
     plt.ylabel("Activity (Hz)")
-    plt.legend(frameon=False, loc='upper left')
-    plt.xlim(0.0,duration)
-    plt.ylim(0.0,60.0)
+    plt.legend(frameon=False, loc='right')#, loc='upper left')#
+    plt.xlim(0.0,2.5)
+    plt.ylim(-10.0,60.0)
 
-    plt.xticks([0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0],
-               ['0.0','0.5\n(Trial start)','1.0','1.5', '2.0','2.5\n(Trial stop)','3.0'])
+    plt.xticks([0.0, 0.5, 1.0, 1.5, 2.0, 2.5],
+               ['0.0','0.5\n(Trial start)','1.0','1.5', '2.0','2.5'])
 
     if filename is not None:
         plt.savefig(filename)
