@@ -26,7 +26,7 @@ def learning(task, trial_n=0, learn=True, debugging=True):
 def learning_trials(task, trials=n_trials, learn=True, debugging=True, debug_simulation=False):
     if debug_simulation:
         steps = trials / 10
-        print '  Starting   ',
+        print('  Starting   ', end=' ')
 
     for i in range(trials):
 
@@ -34,10 +34,10 @@ def learning_trials(task, trials=n_trials, learn=True, debugging=True, debug_sim
 
         if debug_simulation:
             if i % steps == 0:
-                print '\b.',
+                print('\b.', end=' ')
                 sys.stdout.flush()
     if debug_simulation:
-        print '   Done!'
+        print('   Done!')
     if debugging:
         debug_learning(task.records["Wcog"][-1], task.records["Wmot"][-1], task.records["Wstr"][-1],
                        task.records["CueValues"][-1])

@@ -48,13 +48,13 @@ np.save(file, PfnG.mean(axis=0))
 file = folder + '/MeanPerformanceUfnG.npy'
 np.save(file, PUfnG.mean(axis=0))
 
-print "HC with GPi: ", Pf.mean(axis=0).mean()
-print "HC without GPi: ", PfnG.mean(axis=0).mean()
+print("HC with GPi: ", Pf.mean(axis=0).mean())
+print("HC without GPi: ", PfnG.mean(axis=0).mean())
 
-print "NC with GPi start: ", PUf.mean(axis=0)[:30].mean()
-print "NC with GPi last: ", PUf.mean(axis=0)[-30:].mean()
+print("NC with GPi start: ", PUf.mean(axis=0)[:30].mean())
+print("NC with GPi last: ", PUf.mean(axis=0)[-30:].mean())
 
-print "NC without GPi: ", PUfnG.mean(axis=0).mean()
+print("NC without GPi: ", PUfnG.mean(axis=0).mean())
 
 from matplotlib import rcParams
 
@@ -274,14 +274,14 @@ np.save(file, RTfnG.mean(axis=0))
 file = folder + '/MeanRTUfnG.npy'
 np.save(file, RTUfnG.mean(axis=0))
 
-print "RT HC with GPi: ", RTf.mean(axis=0).mean()
-print "RT HC without GPi: ", RTfnG.mean(axis=0).mean()
+print("RT HC with GPi: ", RTf.mean(axis=0).mean())
+print("RT HC without GPi: ", RTfnG.mean(axis=0).mean())
 
-print "RT NC with GPi start: ", RTUf.mean(axis=0)[:30].mean()
-print "RT NC with GPi last: ", RTUf.mean(axis=0)[-30:].mean()
-print "RT NC with GPi : ", RTUf.mean(axis=0).mean()
+print("RT NC with GPi start: ", RTUf.mean(axis=0)[:30].mean())
+print("RT NC with GPi last: ", RTUf.mean(axis=0)[-30:].mean())
+print("RT NC with GPi : ", RTUf.mean(axis=0).mean())
 
-print "RT NC without GPi: ", RTUfnG.mean(axis=0).mean()
+print("RT NC without GPi: ", RTUfnG.mean(axis=0).mean())
 # fig = plt.figure(figsize=(18,12), dpi=72, facecolor="white")
 fig = plt.figure(figsize=(9, 6), dpi=72, facecolor="white")
 fig.subplots_adjust(bottom=0.25)

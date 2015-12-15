@@ -34,12 +34,12 @@ X = np.hstack([x1, x2, x3, x4])
 X = np.hstack([1 + np.arange(118), np.linspace(126,140, 15)])
 X = 1 + np.arange(150)
 fitParams, fitCovariances = curve_fit(fitFunc, X[:93], Num_trials[:93])
-print Num_trials.shape, X.shape, Num_trials[119], t1.shape, t2.shape
+print(Num_trials.shape, X.shape, Num_trials[119], t1.shape, t2.shape)
 z2 = np.polyfit(X[:119], Num_trials[:119], 2)
-print z2
+print(z2)
 p2 = np.poly1d(z2)
 z = np.polyfit(X[:119], Num_trials[:119], 1)
-print z
+print(z)
 p = np.poly1d(z)
 fig = plt.figure(figsize=(20,10), facecolor="w", dpi = 72)
 ax = plt.subplot()

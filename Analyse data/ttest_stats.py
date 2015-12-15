@@ -42,14 +42,14 @@ PUfD2f = PUfD2[:, :25].mean(axis=1)
 PUfD2l = PUfD2[:, -25:].mean(axis=1)
 
 # sc_st.ttest_ind returns two values: statistic : the calculated t-statistic & the two-tailed p-value.
-print sc_st.ttest_ind(PUfnG25f,PUf25f, equal_var=False)
-print sc_st.ttest_ind(PUfnG25l,PUf25l, equal_var=False)
-print
+print(sc_st.ttest_ind(PUfnG25f,PUf25f, equal_var=False))
+print(sc_st.ttest_ind(PUfnG25l,PUf25l, equal_var=False))
+print()
 # print sc_st.ttest_ind(PUf25l,PUf25f, equal_var=False)
 # print sc_st.ttest_ind(PUfnG25f,PUfnG25l, equal_var=False)
-print
-print (sc_st.ttest_ind(PUfD1f,PUfD2f, equal_var=False))
-print sc_st.ttest_ind(PUfD1l,PUfD2l, equal_var=False)
-print
-print sc_st.ttest_ind(PUfD1f,PUfD1l, equal_var=False)
-print sc_st.ttest_ind(PUfD2f,PUfD2l, equal_var=False)
+print()
+print((sc_st.ttest_ind(PUfD1f,PUfD2f, equal_var=False)))
+print(sc_st.ttest_ind(PUfD1l,PUfD2l, equal_var=False))
+print()
+print(sc_st.ttest_ind(PUfD1f,PUfD1l, equal_var=False))
+print(sc_st.ttest_ind(PUfD2f,PUfD2l, equal_var=False))

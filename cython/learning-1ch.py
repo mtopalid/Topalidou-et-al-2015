@@ -21,18 +21,18 @@ def learning(reverse = False, reverse_all = True, f = None, trial_n = 0, debuggi
 	if not len(P) == trial_n+1:
 		P.append(0)
 	if hist:
-		print "Mean Cognitive Striatal activity: [",
+		print("Mean Cognitive Striatal activity: [", end=' ')
 		for i in range(n):
-			print np.amax(histor["STR"]["cog"][:,i]),
+			print(np.amax(histor["STR"]["cog"][:,i]), end=' ')
 
 			#print histor["STR"]["cog"][np.nonzero(histor["STR"]["cog"][:,i]),i].mean(),
 			#print histor["STR"]["cog"][:,i].mean(),
-		print "]"
-		print "Mean Motor Striatal activity: [",
+		print("]")
+		print("Mean Motor Striatal activity: [", end=' ')
 		for i in range(n):
-			print histor["STR"]["mot"][np.nonzero(histor["STR"]["mot"][:,i]),i].mean(),
+			print(histor["STR"]["mot"][np.nonzero(histor["STR"]["mot"][:,i]),i].mean(), end=' ')
 			#print histor["STR"]["mot"][:,i].mean(),
-		print "]"
+		print("]")
 		return histor, RT, P
 	else:
 		return RT, P
@@ -53,7 +53,7 @@ def learning_trials(inversable = 0, reverse_all = True, reverse_trial = 50, less
 		for j in range(less_trained_trials):
 
 			if debugging:
-				print 'Trial: ', j + 1
+				print('Trial: ', j + 1)
 			if hist:
 				histor, RT, P = learning(f = f, trial_n = j, debugging = debugging, protocol = protocol, familiar = familiar, hist = hist, P = P, RT = RT, ncues = ncues)
 			else:
@@ -68,7 +68,7 @@ def learning_trials(inversable = 0, reverse_all = True, reverse_trial = 50, less
 
 	else:
 		reverse = False
-		print 'Starting   ',
+		print('Starting   ', end=' ')
 		steps = trials/10
 		for i in range(j+1, trials):
 			if inversable == 1:
@@ -88,16 +88,16 @@ def learning_trials(inversable = 0, reverse_all = True, reverse_trial = 50, less
 			else:
 				reverse = False
 			if debugging:
-				print 'Trial: ', i + 1
+				print('Trial: ', i + 1)
 			if hist:
 				histor, RT, P = learning(reverse = reverse, reverse_all = reverse_all, f = f, trial_n = i, debugging = debugging, protocol = protocol, familiar = familiar, hist = hist, P = P, RT = RT, ncues = ncues)
 			else:
 				RT, P = learning(reverse = reverse, reverse_all = reverse_all, f = f, trial_n = i, debugging = debugging, protocol = protocol, familiar = familiar, hist = hist, P = P, RT = RT, ncues = ncues)
 
 			if i%steps == 0:
-				print '\b.',
+				print('\b.', end=' ')
 				sys.stdout.flush()
-		print '   Done!'
+		print('   Done!')
 		if debugging:
 			wCog[i,:] = connections["CTX.cog -> CTX.ass"].weights
 			wMot[i,:] = connections["CTX.mot -> CTX.ass"].weights

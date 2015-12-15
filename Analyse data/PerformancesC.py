@@ -26,7 +26,7 @@ suptitle += 'Protocol: C'
 folder = '../Results/C'
 reverse = 1
 reverse_all = 1
-reverse_trial = input('After how many trials is the reverse?\n')
+reverse_trial = eval(input('After how many trials is the reverse?\n'))
 folder += '/' + str(reverse_trial)
 title = 'reverse probabilities of\n'
 title += 'all ' if reverse_all else 'middle '
@@ -55,11 +55,11 @@ ax.xaxis.set_label_coords(0.5, -0.08)
 X = np.linspace(0.,len(P[0])/20,len(P[0])/20+1)*20
 X[-1] = X[-1] - 1
 X = tuple(X)
-print P.shape
-print P.mean(axis=0)[:30].mean(), P.mean(axis=0)[-30:].mean()
+print(P.shape)
+print(P.mean(axis=0)[:30].mean(), P.mean(axis=0)[-30:].mean())
 Pmean = np.take(P.mean(axis=0),X)
 Pstd  = np.take(P.std(axis = 0),X)
-print Pmean.shape
+print(Pmean.shape)
 plt.plot(X, Pmean, c='b', lw=1.5, zorder=30)
 plt.plot(X, Pmean+Pstd, c='.5',lw=.5, zorder=20)
 plt.plot(X, Pmean-Pstd, c='.5',lw=.5, zorder=20)
@@ -141,8 +141,8 @@ if RTcog_mot:
 	ax.yaxis.set_label_coords(-0.06, 0.5)
 	ax.xaxis.set_label_coords(0.5, -0.08)
 
-	print RTcog.mean(axis=0)[-30:].mean()
-	print RTmot.mean(axis=0)[-30:].mean()
+	print(RTcog.mean(axis=0)[-30:].mean())
+	print(RTmot.mean(axis=0)[-30:].mean())
 	#X = 1+np.arange(len(RTmean[0]))
 	RTmean_cog = np.take(RTcog.mean(axis=0),X)
 	RTstd_cog = np.take(RTcog.std(axis=0),X)
@@ -186,8 +186,8 @@ if RTdifference:
 	ax.yaxis.set_label_coords(-0.06, 0.5)
 	ax.xaxis.set_label_coords(0.5, -0.08)
 
-	print RTcog.mean(axis=0)[-30:].mean()
-	print RTmot.mean(axis=0)[-30:].mean()
+	print(RTcog.mean(axis=0)[-30:].mean())
+	print(RTmot.mean(axis=0)[-30:].mean())
 	RTdiff = RTmot - RTcog
 	RTmean_diff = np.take(RTdiff.mean(axis=0),X)
 	RTstd_diff = np.take(RTdiff.std(axis=0),X)

@@ -61,7 +61,7 @@ if __name__ == "__main__":
 
     existing_learning = True
     for i in range(157,simulations):
-        print 'Experiment: ', i + 1
+        print('Experiment: ', i + 1)
         reset()
 
         # Formation of Habits or use of pre-learned weights
@@ -72,7 +72,7 @@ if __name__ == "__main__":
             connections["CTX.mot -> CTX.ass"].weights = temp["Wmot"][-1, :]
             connections["CTX.cog -> STR.cog"].weights = temp["Wstr"][-1, :]
         else:
-            print '-----------------Learning Phase----------------'
+            print('-----------------Learning Phase----------------')
 
             # Be sure that the GPi-Thalamus connections are active
             connections["GPI.cog -> THL.cog"].active = True
@@ -97,13 +97,13 @@ if __name__ == "__main__":
             np.save(file, task.records)
 
             # Debugging information
-            print "Mean performance of 30 last trials	: %.1f %%\n" % (
-                np.array(task.records["best"][-30:]).mean() * 100)
-            print "Mean RT								: %.1f ms\n" % (np.array(task.records["RTmot"][-30:]).mean())
+            print("Mean performance of 30 last trials	: %.1f %%\n" % (
+                np.array(task.records["best"][-30:]).mean() * 100))
+            print("Mean RT								: %.1f ms\n" % (np.array(task.records["RTmot"][-30:]).mean()))
             debug_learning(task.records["Wcog"][-1], task.records["Wmot"][-1], task.records["Wstr"][-1],
                            task.records["CueValues"][-1])
 
-        print '\n--------Testing with GPi--------'
+        print('\n--------Testing with GPi--------')
         # Be sure that the GPi-Thalamus connections are active
         connections["GPI.cog -> THL.cog"].active = True
         connections["GPI.mot -> THL.mot"].active = True
@@ -111,7 +111,7 @@ if __name__ == "__main__":
         task = Task_B(n=n_testing_trials)
         # Debugging information
         steps = n_testing_trials / 10
-        print 'Starting   ',
+        print('Starting   ', end=' ')
 
         # Test changes between familiar and unfamiliar cues every 10 trials
         for j in range(n_testing_trials / 10):
@@ -120,27 +120,27 @@ if __name__ == "__main__":
             learning_trials(t, trials=10, debugging=False)
 
             # Debugging information
-            print '\b.',
+            print('\b.', end=' ')
             sys.stdout.flush()
             # unfamiliar cues [2,3]
             t = task[n_testing_trials + j * 10:n_testing_trials + (j + 1) * 10]
             learning_trials(t, trials=10, debugging=False)
 
             # Debugging information
-            print '\b.',
+            print('\b.', end=' ')
             sys.stdout.flush()
 
 
         # Debugging information
-        print '   Done!'
-        print '\n--------Familiar--------'
-        print " Mean performance	: %.1f %%\n" % (np.array(task.records["best"][:n_testing_trials]).mean() * 100)
-        print " Mean RT			: %.1f ms\n" % (np.array(task.records["RTmot"][:n_testing_trials]).mean())
-        print
-        print '--------UnFamiliar--------'
-        print " Mean performance	: %.1f %%\n" % (np.array(task.records["best"][n_testing_trials:]).mean() * 100)
-        print " Mean RT			: %.1f ms\n" % (np.array(task.records["RTmot"][n_testing_trials:]).mean())
-        print
+        print('   Done!')
+        print('\n--------Familiar--------')
+        print(" Mean performance	: %.1f %%\n" % (np.array(task.records["best"][:n_testing_trials]).mean() * 100))
+        print(" Mean RT			: %.1f ms\n" % (np.array(task.records["RTmot"][:n_testing_trials]).mean()))
+        print()
+        print('--------UnFamiliar--------')
+        print(" Mean performance	: %.1f %%\n" % (np.array(task.records["best"][n_testing_trials:]).mean() * 100))
+        print(" Mean RT			: %.1f ms\n" % (np.array(task.records["RTmot"][n_testing_trials:]).mean()))
+        print()
 
         # Save results in files
         file = folderTf + '/Cues' + "%03d" % (i + 1) + '.npy'
@@ -152,7 +152,7 @@ if __name__ == "__main__":
         file = folderTuf + '/Records' + "%03d" % (i + 1) + '.npy'
         np.save(file, task.records[n_testing_trials:])
 
-        print '\n\n-----------------Testing without GPi----------------'
+        print('\n\n-----------------Testing without GPi----------------')
         # Make GPI lesion
         connections["GPI.cog -> THL.cog"].active = False
         connections["GPI.mot -> THL.mot"].active = False
@@ -165,7 +165,7 @@ if __name__ == "__main__":
         task = Task_B(n=n_testing_trials)
         # Debugging information
         steps = n_testing_trials / 10
-        print 'Starting   ',
+        print('Starting   ', end=' ')
         # Test changes between familiar and unfamiliar cues every 10 trials
         for j in range(n_testing_trials / 10):
             # familiar cues [0,1]
@@ -173,27 +173,27 @@ if __name__ == "__main__":
             learning_trials(t, trials=10, debugging=False)
 
             # Debugging information
-            print '\b.',
+            print('\b.', end=' ')
             sys.stdout.flush()
 
             # unfamiliar cues [2,3]
             t = task[n_testing_trials + j * 10:n_testing_trials + (j + 1) * 10]
             learning_trials(t, trials=10, debugging=False)
             # Debugging information
-            print '\b.',
+            print('\b.', end=' ')
             sys.stdout.flush()
 
 
         # Debugging information
-        print '   Done!'
-        print '\n--------Familiar--------'
-        print "Mean performance	: %.1f %%\n" % (np.array(task.records["best"][:n_testing_trials]).mean() * 100)
-        print "Mean RT			: %.1f ms\n" % (np.array(task.records["RTmot"][:n_testing_trials]).mean())
-        print
-        print '--------UnFamiliar--------'
-        print "Mean performance	: %.1f %%\n" % (np.array(task.records["best"][n_testing_trials:]).mean() * 100)
-        print "Mean RT			: %.1f ms\n" % (np.array(task.records["RTmot"][n_testing_trials:]).mean())
-        print
+        print('   Done!')
+        print('\n--------Familiar--------')
+        print("Mean performance	: %.1f %%\n" % (np.array(task.records["best"][:n_testing_trials]).mean() * 100))
+        print("Mean RT			: %.1f ms\n" % (np.array(task.records["RTmot"][:n_testing_trials]).mean()))
+        print()
+        print('--------UnFamiliar--------')
+        print("Mean performance	: %.1f %%\n" % (np.array(task.records["best"][n_testing_trials:]).mean() * 100))
+        print("Mean RT			: %.1f ms\n" % (np.array(task.records["RTmot"][n_testing_trials:]).mean()))
+        print()
 
         # Save results in files
         file = folderTfnG + '/Cues' + "%03d" % (i + 1) + '.npy'

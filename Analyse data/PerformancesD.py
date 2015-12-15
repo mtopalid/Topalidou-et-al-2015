@@ -16,17 +16,21 @@ from parameters import *
 def fitFunc(t, a, b, c):
     return a * np.exp(-b * t) + c
 
-folder = '../Results/D'#-half_noise'
+folder = '../Results/D-D1_D2_D3'#-half_noise'
 folderUf = folder + '/Testing_unfam'
 folderUfnG = folder + '/Testing_unfam_NoGPi'
+folderTufnG2 = folder + '/Testing_unfam_NoGPi_2'
 folderTuf_first_day = folder + '/Control/Testing_unfam'
 folderTuf_second_day = folder + '/Control/Testing_unfam_2'
+folderTuf_third_day = folder + '/Control/Testing_unfam_3'
 
-n_testing_trials = 100
-PUf = np.zeros((simulations, n_testing_trials))
+n_testing_trials = 120
+PUf = np.zeros((simulations, 1200))
 PUfnG = np.zeros((simulations, n_testing_trials))
+PUfnG2 = np.zeros((simulations, n_testing_trials))
 PUfD1 = np.zeros((simulations, n_testing_trials))
-PUfD2 = np.zeros((simulations, n_testing_trials))
+PUfD2 = np.zeros((simulations, 1200))
+PUfD3 = np.zeros((simulations, n_testing_trials))
 for i in range(simulations):
     file = folderUf + '/Records' + "%03d" % (i + 1) + '.npy'
     temp = np.load(file)
@@ -34,42 +38,54 @@ for i in range(simulations):
     file = folderUfnG + '/Records' + "%03d" % (i + 1) + '.npy'
     temp = np.load(file)
     PUfnG[i, :] = temp["best"]
+    file = folderTufnG2 + '/Records' + "%03d" % (i + 1) + '.npy'
+    temp = np.load(file)
+    PUfnG2[i, :] = temp["best"]
     file = folderTuf_first_day + '/Records' + "%03d" % (i + 1) + '.npy'
     temp = np.load(file)
     PUfD1[i, :] = temp["best"]
     file = folderTuf_second_day + '/Records' + "%03d" % (i + 1) + '.npy'
     temp = np.load(file)
     PUfD2[i, :] = temp["best"]
+    file = folderTuf_third_day + '/Records' + "%03d" % (i + 1) + '.npy'
+    temp = np.load(file)
+    PUfD3[i, :] = temp["best"]
 file = folder + '/MeanPerformanceUf.npy'
 np.save(file, PUf.mean(axis=0))
 file = folder + '/MeanPerformanceUfnG.npy'
 np.save(file, PUfnG.mean(axis=0))
+file = folder + '/MeanPerformanceUfnG.npy'
+np.save(file, PUfnG2.mean(axis=0))
 file = folder + '/MeanPerformanceUfD1.npy'
 np.save(file, PUfD1.mean(axis=0))
 file = folder + '/MeanPerformanceUfD2.npy'
 np.save(file, PUfD2.mean(axis=0))
+file = folder + '/MeanPerformanceUfD3.npy'
+np.save(file, PUfD3.mean(axis=0))
 
 PUf = PUf.mean(axis=0)
 PUfnG = PUfnG.mean(axis=0)
+PUfnG2 = PUfnG2.mean(axis=0)
 PUfD1 = PUfD1.mean(axis=0)
 PUfD2 = PUfD2.mean(axis=0)
-print 'Mean'
-print 'NoGPi -> GPi'
-print 'First 25: ', PUfnG[:25].mean(), PUf[:25].mean()
-print 'Last 25: ', PUfnG[-25:].mean(), PUf[-25:].mean(),
-print
-print 'GPi -> GPi'
-print 'First 25: ',  PUfD1[:25].mean(), PUfD2[:25].mean()
-print 'Last 25: ', PUfD1[-25:].mean(), PUfD2[-25:].mean()
-print
-print 'Std'
-print 'NoGPi -> GPi'
-print 'First 25: ', PUfnG[:25].std(), PUf[:25].std()
-print 'Last 25: ', PUfnG[-25:].std(), PUf[-25:].std(),
-print
-print 'GPi -> GPi'
-print 'First 25: ',  PUfD1[:25].std(), PUfD2[:25].std()
-print 'Last 25: ', PUfD1[-25:].std(), PUfD2[-25:].std()
+PUfD3 = PUfD3.mean(axis=0)
+print('Mean')
+print('NoGPi -> GPi -> NoGPi')
+print('First 25: ', PUfnG[:25].mean(), PUf[:25].mean(), PUfnG2[:25].mean())
+print('Last 25: ', PUfnG[-25:].mean(), PUf[-25:].mean(), PUfnG2[-25:].mean())
+print()
+print('GPi -> GPi -> GPi')
+print('First 25: ',  PUfD1[:25].mean(), PUfD2[:25].mean(), PUfD3[:25].mean())
+print('Last 25: ', PUfD1[-25:].mean(), PUfD2[-25:].mean(), PUfD3[-25:].mean())
+print()
+print('Std')
+print('NoGPi -> GPi -> NoGPi')
+print('First 25: ', PUfnG[:25].std(), PUf[:25].std(), PUfnG2[:25].std())
+print('Last 25: ', PUfnG[-25:].std(), PUf[-25:].std(), PUfnG2[-25:].std())
+print()
+print('GPi -> GPi -> GPi')
+print('First 25: ',  PUfD1[:25].std(), PUfD2[:25].std(), PUfD3[:25].std())
+print('Last 25: ', PUfD1[-25:].std(), PUfD2[-25:].std(), PUfD3[-25:].std())
 '''
 from matplotlib import rcParams
 

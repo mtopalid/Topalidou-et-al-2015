@@ -20,18 +20,18 @@ n_trials = 120
 cues_cog, cues_mot = trials_cues(ntrials = n_trials)
 P = []
 for i in range(n_trials):
-	print 'Task: ', i
-	print 'Cog cues: ', cues_cog[i,:]
-	print 'Mot cues: ', cues_mot[i,:]
+	print('Task: ', i)
+	print('Cog cues: ', cues_cog[i,:])
+	print('Mot cues: ', cues_mot[i,:])
 	mot_choice = np.random.choice(cues_mot[i,:],1)[0]
 	cog_choice = cues_cog[i,0] if mot_choice == cues_mot[i,0] else cues_cog[i,1]
-	print 'Mot choice: ', mot_choice
-	print 'Cog choice: ', cog_choice
+	print('Mot choice: ', mot_choice)
+	print('Cog choice: ', cog_choice)
 	P.append(1 if cog_choice == np.min(cues_cog[i]) else 0)
-	print 'Performance : ', P[i]
-	print 'Mean performance : ', np.array(P).mean()
-	print
+	print('Performance : ', P[i])
+	print('Mean performance : ', np.array(P).mean())
+	print()
 
-print np.array(P).mean()
+print(np.array(P).mean())
 
 

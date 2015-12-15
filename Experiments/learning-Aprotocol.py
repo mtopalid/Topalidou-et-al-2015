@@ -28,16 +28,16 @@ if __name__ == "__main__":
 	np.save(file,task.records)
 	'''
 	learning_trials(task)
-	print 'Mean performance of the 25 first trials: ', np.array(task.records["best"][:25]).mean()
-	print 'Mean performance of the 25 last trials: ', np.array(task.records["best"][-25:]).mean()
+	print('Mean performance of the 25 first trials: ', np.array(task.records["best"][:25]).mean())
+	print('Mean performance of the 25 last trials: ', np.array(task.records["best"][-25:]).mean())
 
 	if 0:
 		t = np.load('records.npy')
-		print t["RTmot"][-1]
-		print t["Wstr"][-1]
-		print t["Wmot"][-1]
-		print t["Wcog"][-1]
-		print t["CueValues"][-1]
+		print(t["RTmot"][-1])
+		print(t["Wstr"][-1])
+		print(t["Wmot"][-1])
+		print(t["Wcog"][-1])
+		print(t["CueValues"][-1])
 
 	if 0: display_all(hist, 3.0)#, "single-trial-all.pdf")
 	if 0: display_ctx(hist, 3.0)

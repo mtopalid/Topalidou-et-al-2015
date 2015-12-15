@@ -23,7 +23,7 @@ class Task(object):
         self.index = -1
         return self
 
-    def next(self):
+    def __next__(self):
         self.index += 1
         if self.index < len(self.trials):
             return self.trials[self.index]
@@ -72,33 +72,33 @@ class Task(object):
         r1, r2 = trial["rwd"][c1], trial["rwd"][c2]
 
         if debug:
-            print "Trial %d" % (self.index + 1)
+            print("Trial %d" % (self.index + 1))
         if action == m1:
             reward = np.random.uniform(0, 1) < trial["rwd"][c1]
             self.records[self.index]["shape"] = c1
             best = r1 > r2
             if debug:
                 if best:
-                    print "  Choice			: [%d] / %d  (good)" % (c1, c2)
+                    print("  Choice			: [%d] / %d  (good)" % (c1, c2))
                 else:
-                    print "  Choice			: [%d] / %d  (bad)" % (c1, c2)
-                print "  Reward (p=%.2f)		: %d" % (trial["rwd"][c1], reward)
+                    print("  Choice			: [%d] / %d  (bad)" % (c1, c2))
+                print("  Reward (p=%.2f)		: %d" % (trial["rwd"][c1], reward))
         elif action == m2:
             reward = np.random.uniform(0, 1) < trial["rwd"][c2]
             self.records[self.index]["shape"] = c2
             best = r2 > r1
             if debug:
                 if best:
-                    print "  Choice			: %d / [%d] (good)" % (c1, c2)
+                    print("  Choice			: %d / [%d] (good)" % (c1, c2))
                 else:
-                    print "  Choice			: %d / [%d] (bad)" % (c1, c2)
-                print "  Reward (p=%.2f)		: %d" % (trial["rwd"][c2], reward)
+                    print("  Choice			: %d / [%d] (bad)" % (c1, c2))
+                print("  Reward (p=%.2f)		: %d" % (trial["rwd"][c2], reward))
         else:
             reward = 0.0
             best = False
             if debug:
-                print "  Choice			: %d /  %d  (bad)" % (c1, c2)
-                print "  No Reward"
+                print("  Choice			: %d /  %d  (bad)" % (c1, c2))
+                print("  No Reward")
 
         # Record action, best action (was it the best action), reward and RT
         self.records[self.index]["action"] = action
@@ -108,11 +108,11 @@ class Task(object):
 
         if debug:
             P = self.records[:self.index + 1]["best"]
-            print "  Mean performance		: %.1f %%" % np.array(P * 100).mean()
+            print("  Mean performance		: %.1f %%" % np.array(P * 100).mean())
             R = self.records[:self.index + 1]["reward"]
-            print "  Mean reward			: %.3f" % np.array(R).mean()
+            print("  Mean reward			: %.3f" % np.array(R).mean())
             rt = self.records[:self.index + 1]["RTmot"]
-            print "  Mean Response time	: %.3f ms" % np.array(rt).mean()
+            print("  Mean Response time	: %.3f ms" % np.array(rt).mean())
 
         return reward
 

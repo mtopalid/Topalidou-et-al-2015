@@ -24,7 +24,7 @@ if __name__ == "__main__":
     connections["GPI.mot -> THL.mot"].active = False
     learning_trials(task, trials=n_testing_trials, debugging=True)
     P = task.records[:]["best"]
-    print "  Mean performance		: %.1f %%" % np.array(P * 100).mean()
+    print("  Mean performance		: %.1f %%" % np.array(P * 100).mean())
 
 
     task = Task_B(n=n_testing_trials)
@@ -33,6 +33,6 @@ if __name__ == "__main__":
     connections["GPI.mot -> THL.mot"].active = True
     learning_trials(task, trials=n_testing_trials, debugging=True)
 
-    print "Mean performance	: %.1f %%\n" % (np.array(task.records["best"]).mean() * 100)
+    print("Mean performance	: %.1f %%\n" % (np.array(task.records["best"]).mean() * 100))
     if 0: display_ctx(P, 3.0)
     if 0: display_ctx(hist, 3.0)

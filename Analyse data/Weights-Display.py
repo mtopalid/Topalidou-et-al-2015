@@ -56,7 +56,7 @@ ax.yaxis.set_label_coords(-0.04, 0.5)
 ax.xaxis.set_label_coords(0.5, -0.08)
 
 mean = Wstr.mean(axis=0)
-print "striatal	", mean[-1,0], mean[-1,1], mean[-1,2], mean[-1,3]
+print("striatal	", mean[-1,0], mean[-1,1], mean[-1,2], mean[-1,3])
 std  = Wstr.std(axis = 0)
 plt.plot(X, mean[:,0], c='b', lw=1.5, zorder=30)
 plt.plot(X, mean[:,0]+std[:,0], c='.5',lw=.5, zorder=20)
@@ -101,7 +101,7 @@ ax.yaxis.set_label_coords(-0.04, 0.5)
 ax.xaxis.set_label_coords(0.5, -0.08)
 
 mean = Wcog.mean(axis=0)
-print "cognitive	", mean[-1,0], mean[-1,1], mean[-1,2], mean[-1,3]
+print("cognitive	", mean[-1,0], mean[-1,1], mean[-1,2], mean[-1,3])
 std  = Wcog.std(axis = 0)
 plt.plot(X, mean[:,0], c='b', lw=1.5, zorder=30)
 plt.plot(X, mean[:,0]+std[:,0], c='.5',lw=.5, zorder=20)
@@ -146,7 +146,7 @@ ax.yaxis.set_label_coords(-0.04, 0.5)
 ax.xaxis.set_label_coords(0.5, -0.08)
 
 mean = Wmot.mean(axis=0)
-print "motor	", mean[-1,0], mean[-1,1], mean[-1,2], mean[-1,3]
+print("motor	", mean[-1,0], mean[-1,1], mean[-1,2], mean[-1,3])
 std  = Wmot.std(axis = 0)
 plt.plot(X, mean[:,0], c='b', lw=1.5, zorder=30)
 plt.plot(X, mean[:,0]+std[:,0], c='.5',lw=.5, zorder=20)

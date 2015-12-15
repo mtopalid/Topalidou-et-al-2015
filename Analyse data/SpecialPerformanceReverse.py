@@ -11,7 +11,7 @@ from parameters import *
 folder = '../Results/C-Piron'
 reverse = 1
 reverse_all = 1
-reverse_trial = input('After how many trials is the reverse?\n')
+reverse_trial = eval(input('After how many trials is the reverse?\n'))
 folder += '/' + str(reverse_trial)
 title = 'reverse probabilities of\n'
 title += 'all ' if reverse_all else 'middle '

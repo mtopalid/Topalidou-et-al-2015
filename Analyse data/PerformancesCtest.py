@@ -20,7 +20,7 @@ folder = '../Results/C-1-100'
 reverse = np.hstack((np.linspace(11,25,15),np.linspace(35,50,16), np.linspace(60,75,16), np.linspace(86,100,15)))
 for j in reverse:
 	f = folder + '/Reverse' + "%03d" % (j)
-	print 'Reverse:' + "%03d" % (j)
+	print('Reverse:' + "%03d" % (j))
 	for i in range(simulations):
 		file = f + '/All-Results' + "%03d" % (i+1) + '.npy'
 		temp = np.load(file)

@@ -39,7 +39,7 @@ else:
 		#for k in range(n):
 			j = k * 5 + start
 			f = folder + '/Reverse' + "%03d" % (j)
-			print 'Reverse:' + "%03d" % (j)
+			print('Reverse:' + "%03d" % (j))
 			for i in range(simulations):
 				file = f + '/Records' + "%03d" % (i+1) + '.npy'
 				temp = np.load(file)

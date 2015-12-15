@@ -16,7 +16,7 @@ def tt(result):
 	result["W"]["STR"] = 5
 if 0:
 	tt(result[1])
-	print result["W"]["STR"]
-	print result["W"]["STR"][1]
-	print result[1]["W"]["STR"]
+	print(result["W"]["STR"])
+	print(result["W"]["STR"][1])
+	print(result[1]["W"]["STR"])
 #histor, time = trial(result = result[0], hist = True, debugging = True, protocol = 'Guthrie', wholeFig = True)

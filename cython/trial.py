@@ -18,7 +18,7 @@ def trial(task, cues_pres=True, learn=True, debugging=False, trial_n=0, wholeFig
     cog_time = None
     time = None
     choice_made = False
-    for i in xrange(0, 500):
+    for i in range(0, 500):
         iterate(dt)
         if CTX.cog.delta > 20 and not ct:
             ct = 1
@@ -26,7 +26,7 @@ def trial(task, cues_pres=True, learn=True, debugging=False, trial_n=0, wholeFig
             cog_time = i - 500
     if cues_pres:
         set_trial(task, n=2, trial=trial_n)
-    for i in xrange(500, duration):
+    for i in range(500, duration):
         iterate(dt)
         if i == 2500:
             CTX.mot.Iext = 0
@@ -50,8 +50,8 @@ def trial(task, cues_pres=True, learn=True, debugging=False, trial_n=0, wholeFig
                 if 0:  # ch[-1] is None:
                     mot_choice = np.argmax(CTX.mot.U)
                     cog_choice = np.argmax(CTX.cog.U)
-                    print 'Wrong choice... \nMotor choice: %d\nCognitive choice: %d' % (mot_choice, cog_choice)
-                    print Cue["mot"][:n], CUE["cog"][:n]
+                    print('Wrong choice... \nMotor choice: %d\nCognitive choice: %d' % (mot_choice, cog_choice))
+                    print(Cue["mot"][:n], CUE["cog"][:n])
 
                 if wholeFig:
                     choice_made = True
@@ -60,7 +60,7 @@ def trial(task, cues_pres=True, learn=True, debugging=False, trial_n=0, wholeFig
     time = 2500
 
     if debugging:
-        print 'Trial Failed!'
-        print 'NoMove trial: ', trial_n
+        print('Trial Failed!')
+        print('NoMove trial: ', trial_n)
 
     return time

@@ -21,9 +21,9 @@ if __name__ == "__main__":
 	cues_cog, cues_mot = trials_cues(protocol = 'OneChoice', perc1 = 0.05, perc2 = 0.95)
 	hist, P = learning_trials(trials = n_trials, hist = True, protocol = 'OneChoice', debugging = False, debug_simulation = True)
 	debug_learning(connections["CTX.cog -> CTX.ass"].weights, connections["CTX.mot -> CTX.ass"].weights, connections["CTX.cog -> STR.cog"].weights, CUE["value"])
-	print
-	print
-	print
+	print()
+	print()
+	print()
 	global learning_cues_cog, testing_cues_cog_fam, testing_cues_cog_unfam, learning_cues_mot, testing_cues_mot_fam, testing_cues_mot_unfam
 	learning_cues_cog, testing_cues_cog_fam, testing_cues_cog_unfam, learning_cues_mot, testing_cues_mot_fam, testing_cues_mot_unfam = trials_cues(protocol = 'Piron', ltrials = 10, ttrials = 10)
 	result = results(n_trials = 1)

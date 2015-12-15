@@ -87,7 +87,7 @@ connections = {
     "CTX.cog -> CTX.ass": CogToAss(CTX.cog.V, CTX.ass.Isyn, weights(4, 0.00005)),  # plastic (HL)
     "CTX.mot -> CTX.ass": MotToAss(CTX.mot.V, CTX.ass.Isyn, weights(4, 0.00005)),  # plastic (HL)
 }
-for name, gain in gains.items():
+for name, gain in list(gains.items()):
     connections[name].gain = gain
 
 
@@ -111,11 +111,11 @@ def set_trial(task, n=2, trial=0, protocol='Guthrie', familiar=True):
 
 def iterate(dt):
     # Flush connections
-    for connection in connections.values():
+    for connection in list(connections.values()):
         connection.flush()
 
     # Propagate activities
-    for connection in connections.values():
+    for connection in list(connections.values()):
         connection.propagate()
 
     # Compute new activities
@@ -221,21 +221,21 @@ def process(task, n=2, learn=True, trial=0, debugging=True, RT=0):
 
 
 def debug_learning(Wcog, Wmot, Wstr, cues_value):
-    print "  Cues Values			: ", cues_value
-    print "  Cortical Weights Cognitive	: ", Wcog
-    print "  Cortical Weights Motor	: ", Wmot
-    print "  Striatal Weights		: ", Wstr
+    print("  Cues Values			: ", cues_value)
+    print("  Cortical Weights Cognitive	: ", Wcog)
+    print("  Cortical Weights Motor	: ", Wmot)
+    print("  Striatal Weights		: ", Wstr)
 
 
 def debug_total(P, RT=None, CV=None, Wcog=None, Wmot=None, Wstr=None):
-    print "Mean Performance		: ", (P.mean(axis=1)).mean(axis=0) * 100, '%'
+    print("Mean Performance		: ", (P.mean(axis=1)).mean(axis=0) * 100, '%')
     if RT is not None:
-        print "Mean Reaction Time	:", (RT.mean(axis=1)).mean(axis=0) * 100, '%'
+        print("Mean Reaction Time	:", (RT.mean(axis=1)).mean(axis=0) * 100, '%')
     if CV is not None:
-        print "Mean Cues Values		:" + str(CV.mean(axis=0))
-        print 'Mean Cortical Weights Cog	: ' + str(Wcog[:, -1].mean(axis=0))
-        print 'Mean Cortical Weights Mot	: ' + str(Wmot[:, -1].mean(axis=0))
-        print 'Mean Striatal Weights		: ' + str(Wstr[:, -1].mean(axis=0))
+        print("Mean Cues Values		:" + str(CV.mean(axis=0)))
+        print('Mean Cortical Weights Cog	: ' + str(Wcog[:, -1].mean(axis=0)))
+        print('Mean Cortical Weights Mot	: ' + str(Wmot[:, -1].mean(axis=0)))
+        print('Mean Striatal Weights		: ' + str(Wstr[:, -1].mean(axis=0)))
 
 # def debug1ch(cgchoice=None, c1=None, m1=None, P=None, RT=None):
 #     if cgchoice is not None:

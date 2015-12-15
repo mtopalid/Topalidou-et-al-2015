@@ -32,7 +32,6 @@ if __name__ == "__main__":
 
     import numpy as np
     import os
-
     # model file build the structures and initialize the model
     from model import *
     from learning import *
@@ -40,10 +39,9 @@ if __name__ == "__main__":
     from task_b import Task_B
 
     # Creation of folders to save the results
-    folder = '../Results/D'#-half_noise'
+    folder = '../Results/D-D1_D2_D3'  # -half_noise'
     if not os.path.exists(folder):
         os.makedirs(folder)
-
 
     folderTuf = folder + '/Testing_unfam'
     if not os.path.exists(folderTuf):
@@ -56,25 +54,23 @@ if __name__ == "__main__":
         os.makedirs(folderTufnG2)
 
     for i in range(simulations):
-        print 'Experiment: ', i + 1
+        print('Experiment: ', i + 1)
 
         reset()
 
-
-
-        print '\n\n-----------------Testing without GPi----------------'
+        print('\n\n-----------------Testing without GPi----------------')
         # Make GPI lesion
         connections["GPI.cog -> THL.cog"].active = False
         connections["GPI.mot -> THL.mot"].active = False
 
         task = Task_B(n=n_testing_trials)
-        task = task[n_testing_trials:]
-        ntt = 100
-        task = task[:ntt]
-        learning_trials(task, trials=ntt, debugging=False, debug_simulation=True)
+        task = task[:n_testing_trials]
+        # ntt = 100
+        # task = task[:ntt]
+        learning_trials(task, trials=n_testing_trials, debugging=False, debug_simulation=True)
 
-        print "Mean performance	: %.1f %%\n" % (np.array(task.records["best"]).mean() * 100)
-        print
+        print("Mean performance	: %.1f %%\n" % (np.array(task.records["best"]).mean() * 100))
+        print()
 
         # Save results in files
         file = folderTufnG + '/Cues' + "%03d" % (i + 1) + '.npy'
@@ -82,41 +78,41 @@ if __name__ == "__main__":
         file = folderTufnG + '/Records' + "%03d" % (i + 1) + '.npy'
         np.save(file, task.records)
 
-
-        print '\n--------Testing with GPi--------'
+        print('\n--------Testing with GPi--------')
         # Reactivation of GPi
         connections["GPI.cog -> THL.cog"].active = True
         connections["GPI.mot -> THL.mot"].active = True
 
-        task = Task_B(n=n_testing_trials)
-        task = task[n_testing_trials:]
-        task = task[:ntt]
-        learning_trials(task, trials=ntt, debugging=False, debug_simulation=True)
+        nt = 1200
+        task = Task_B(n=nt)#n_testing_trials)
+        task = task[:nt]#n_testing_trials:]
+        # task = task[:ntt]
+        learning_trials(task, trials=nt, debugging=False, debug_simulation=True)
 
-        print "Mean performance	: %.1f %%\n" % (np.array(task.records["best"]).mean() * 100)
-        print
+        print("Mean performance	: %.1f %%\n" % (np.array(task.records["best"]).mean() * 100))
+        print()
 
         # Save results in files
         file = folderTuf + '/Cues' + "%03d" % (i + 1) + '.npy'
         np.save(file, task.trials)
         file = folderTuf + '/Records' + "%03d" % (i + 1) + '.npy'
         np.save(file, task.records)
-        #
-        # print '\n\n-----------------Testing without GPi----------------'
-        # # Make GPI lesion
-        # connections["GPI.cog -> THL.cog"].active = False
-        # connections["GPI.mot -> THL.mot"].active = False
-        #
-        # task = Task_B(n=n_testing_trials)
-        # task = task[n_testing_trials:]
+
+        print('\n\n-----------------Testing without GPi----------------')
+        # Make GPI lesion
+        connections["GPI.cog -> THL.cog"].active = False
+        connections["GPI.mot -> THL.mot"].active = False
+
+        task = Task_B(n=n_testing_trials)
+        task = task[:n_testing_trials]
         # task = task[:ntt]
-        # learning_trials(task, trials=ntt, debugging=False, debug_simulation=True)
-        #
-        # print "Mean performance	: %.1f %%\n" % (np.array(task.records["best"]).mean() * 100)
-        # print
-        #
-        # # Save results in files
-        # file = folderTufnG2 + '/Cues' + "%03d" % (i + 1) + '.npy'
-        # np.save(file, task.trials)
-        # file = folderTufnG2 + '/Records' + "%03d" % (i + 1) + '.npy'
-        # np.save(file, task.records)
+        learning_trials(task, trials=n_testing_trials, debugging=False, debug_simulation=True)
+
+        print("Mean performance	: %.1f %%\n" % (np.array(task.records["best"]).mean() * 100))
+        print()
+
+        # Save results in files
+        file = folderTufnG2 + '/Cues' + "%03d" % (i + 1) + '.npy'
+        np.save(file, task.trials)
+        file = folderTufnG2 + '/Records' + "%03d" % (i + 1) + '.npy'
+        np.save(file, task.records)

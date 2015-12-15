@@ -24,8 +24,8 @@ RTcog_mot		= True
 suptitle += 'Protocol: C'
 
 folder = '../Results/C-Piron'
-reverse_trial = input('After how many trials is the reverse?\n')
-print
+reverse_trial = eval(input('After how many trials is the reverse?\n'))
+print()
 folder += '/' + str(reverse_trial)
 
 P = np.zeros((simulations, n_reverse_trials_Piron))
@@ -54,7 +54,7 @@ ax.xaxis.set_label_coords(0.5, -0.08)
 #X[-1] = X[-1] - 1
 #X = tuple(X)
 X = np.arange(len(P[0]))
-print P.mean(axis=0)[:30].mean(), P.mean(axis=0)[-30:].mean()
+print(P.mean(axis=0)[:30].mean(), P.mean(axis=0)[-30:].mean())
 Pmean = np.take(P.mean(axis=0),X)
 Pstd  = np.take(P.std(axis = 0),X)
 plt.plot(X, Pmean, c='b', lw=1.5, zorder=30)

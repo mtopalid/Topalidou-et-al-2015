@@ -32,23 +32,23 @@ if __name__ == "__main__":
 	# Creation of folder to save the results
 	fld = '../Results/C-1-100-Piron'
 
-	start = input('First reverse after how many trials?\n')
-	print start
-	finish = input('Last reverse after how many trials?\n')
-	print finish
-	print
+	start = eval(input('First reverse after how many trials?\n'))
+	print(start)
+	finish = eval(input('Last reverse after how many trials?\n'))
+	print(finish)
+	print()
 
 
 	for j in range (1, finish - start + 2):
-		print 'Reverse after: ', j
-		print
+		print('Reverse after: ', j)
+		print()
 
 		folder = fld + '/Reverse' + "%03d" % j
 		if not os.path.exists(folder):
 			os.makedirs(folder)
 
 		for i in range(simulations):
-			print 'Experiment: ', i + 1
+			print('Experiment: ', i + 1)
 			reset()
             # Define the shapes and the positions that we'll be used to each trial
             # n number of trials for each simulation, should be multiple of 6 because there are 6 valuable combinations of shapes and positions
@@ -57,7 +57,7 @@ if __name__ == "__main__":
 			learning_trials(task, trials = n_reverse_trials_Piron, debugging = False, debug_simulation = True)
 
             # Debugging information
-			print "Mean performance of 30 last trials	: %.1f %%\n" %(np.array(task.records["best"][-30:]).mean()*100)
+			print("Mean performance of 30 last trials	: %.1f %%\n" %(np.array(task.records["best"][-30:]).mean()*100))
 			debug_learning(task.records["Wcog"][-1], task.records["Wmot"][-1], task.records["Wstr"][-1], task.records["CueValues"][-1])
 
             # Save the results in files
@@ -65,8 +65,8 @@ if __name__ == "__main__":
 			np.save(file,task.trials)
 			file = folder + '/Records'  + "%03d" % (i+1) + '.npy'
 			np.save(file,task.records)
-			print
-		print
+			print()
+		print()
 
 
 

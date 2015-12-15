@@ -17,7 +17,7 @@ if __name__ == "__main__":
 	from learning import *
 	from task_cp import Task_C
 
-	reverse_trial = input('\nAfter how many trials will be the reverse?\n')
+	reverse_trial = eval(input('\nAfter how many trials will be the reverse?\n'))
 
 	reset()
 
@@ -25,7 +25,7 @@ if __name__ == "__main__":
 	learning_trials(task, trials = n_reverse_trials_Piron)
 
 
-	print 'Mean performance of the 25 last trials: ', np.array(task.records["best"]).mean()
+	print('Mean performance of the 25 last trials: ', np.array(task.records["best"]).mean())
 	if 0: display_all(hist, 3.0)#, "single-trial-all.pdf")
 	if 0: display_ctx(hist, 3.0)
 	if 0: display_all(hist, 3.0)#, "single-trial-all.pdf")

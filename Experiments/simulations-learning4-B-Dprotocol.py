@@ -52,7 +52,7 @@ if __name__ == "__main__":
         os.makedirs(folderDL)
 
     for i in range(simulations):
-        print 'Experiment: ', i + 1
+        print('Experiment: ', i + 1)
         reset()
 
         # Formation of Habits
@@ -80,8 +80,8 @@ if __name__ == "__main__":
         np.save(file, task.records)
 
         # Debugging information
-        print " Mean performance of 30 last trials	: %.1f %%" % (np.array(task.records["best"][-30:]).mean() * 100)
-        print " Mean RT								: %.1f ms" % (np.array(task.records["RTmot"][-30:]).mean())
+        print(" Mean performance of 30 last trials	: %.1f %%" % (np.array(task.records["best"][-30:]).mean() * 100))
+        print(" Mean RT								: %.1f ms" % (np.array(task.records["RTmot"][-30:]).mean()))
         debug_learning(task.records["Wcog"][-1], task.records["Wmot"][-1], task.records["Wstr"][-1],
                        task.records["CueValues"][-1])
-        print
+        print()

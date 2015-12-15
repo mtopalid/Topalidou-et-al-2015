@@ -27,7 +27,7 @@ if neverSavedBefore:
 		r = int(reverses[j])
 		f = folder + '/Reverse' + "%03d" % (r)
 		#f = folder + '/Reverse' + "%03d" % (j)
-		print 'Reverse:' + "%03d" % (r)
+		print('Reverse:' + "%03d" % (r))
 		for i in range(simulations):
 			file = f + '/All-Results' + "%03d" % (i+1) + '.npy'
 			temp = np.load(file)
@@ -73,7 +73,7 @@ for i in range(len(reverses)):
 		if P[i,j:j+30].mean()>0.9:
 			Num_trials[i] = j-r-1
 			break
-print Num_trials
+print(Num_trials)
 file = folder+ '/Num_trials_2_recover_0_9_performance119-150.npy'
 np.save(file, Num_trials)
 
