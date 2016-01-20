@@ -16,20 +16,20 @@ from parameters import *
 def fitFunc(t, a, b, c):
     return a * np.exp(-b * t) + c
 
-folder = '../Results/D-D1_D2_D3'#-half_noise'
-folderUf = folder + '/Testing_unfam'
-folderUfnG = folder + '/Testing_unfam_NoGPi'
-folderTufnG2 = folder + '/Testing_unfam_NoGPi_2'
-folderTuf_first_day = folder + '/Control/Testing_unfam'
-folderTuf_second_day = folder + '/Control/Testing_unfam_2'
-folderTuf_third_day = folder + '/Control/Testing_unfam_3'
+folder = '../Results/D-D1_D2_D3-120'#-half_noise'
+folderUf = folder + '/D2'
+folderUfnG = folder + '/D1'
+folderTufnG2 = folder + '/D3'
+folderTuf_first_day = folder + '/Control/D1'
+folderTuf_second_day = folder + '/Control/D2'
+folderTuf_third_day = folder + '/Control/D3'
 
 n_testing_trials = 120
-PUf = np.zeros((simulations, 1200))
+PUf = np.zeros((simulations, n_testing_trials))#1200
 PUfnG = np.zeros((simulations, n_testing_trials))
 PUfnG2 = np.zeros((simulations, n_testing_trials))
-PUfD1 = np.zeros((simulations, n_testing_trials))
-PUfD2 = np.zeros((simulations, 1200))
+PUfD1 = np.zeros((simulations, n_testing_trials))#1200
+PUfD2 = np.zeros((simulations, n_testing_trials))
 PUfD3 = np.zeros((simulations, n_testing_trials))
 for i in range(simulations):
     file = folderUf + '/Records' + "%03d" % (i + 1) + '.npy'

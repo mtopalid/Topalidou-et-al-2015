@@ -10,14 +10,9 @@
 
 # Population size
 n = 4
-# Protocol A
-n_trials = 480
-# Protocol C
-n_reverse_trials = 720  # 4800#
-n_reverse_trials_Piron = 2400
-# Protocol B, D
+# Simulation size
 n_learning_trials = 4800 #960 #720 #240 #
-n_testing_trials = 120#240
+n_trials = 120#240
 
 simulations = 100#250
 threshold = 40
@@ -29,10 +24,11 @@ dt = 1 * ms
 tau = 10 * ms
 
 # --- Learning ---
-alpha_CUE = 0.0025*1.5  # 0.0005
-alpha_LTP = 0.005*1.5
-alpha_LTD = 0.00375*1.5
-alpha_LTP_ctx = alpha_LTP ** 2  # 0.000025
+a = 2.
+alpha_CUE = 0.0025*a  # 0.0005
+alpha_LTP = 0.005*a
+alpha_LTD = 0.00375*a
+alpha_LTP_ctx = alpha_LTP  ** 2*a  # 0.000025
 
 # --- Sigmoid ---
 Vmin = 0
@@ -61,11 +57,7 @@ Thalamus_N = 0.01
 Value_cue = 7
 noise_cue = 0.001
 
-rewards_Guthrie = 3 / 3., 2 / 3., 1 / 3., 0 / 3.
-rewards_Guthrie_reverse_all = 0 / 3., 1 / 3., 2 / 3., 3 / 3.
-rewards_Guthrie_reverse_middle = 3 / 3., 1 / 3., 2 / 3., 0 / 3
 rewards_Piron = 0.75, 0.25, 0.75, 0.25
-rewards_Piron_reverse = 0.25, 0.75, 0.25, 0.75
 
 # -- Weight ---
 Wmin = 0.25

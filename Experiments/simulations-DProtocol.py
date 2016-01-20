@@ -36,20 +36,20 @@ if __name__ == "__main__":
     from model import *
     from learning import *
     from parameters import *
-    from task_b import Task_B
+    from task import Task
 
     # Creation of folders to save the results
-    folder = '../Results/D-D1_D2_D3'  # -half_noise'
+    folder = '../Results/D-D1_D2_D3-120'  # -half_noise'
     if not os.path.exists(folder):
         os.makedirs(folder)
 
-    folderTuf = folder + '/Testing_unfam'
+    folderTuf = folder + '/D2'
     if not os.path.exists(folderTuf):
         os.makedirs(folderTuf)
-    folderTufnG = folder + '/Testing_unfam_NoGPi'
+    folderTufnG = folder + '/D1'
     if not os.path.exists(folderTufnG):
         os.makedirs(folderTufnG)
-    folderTufnG2 = folder + '/Testing_unfam_NoGPi_2'
+    folderTufnG2 = folder + '/D3'
     if not os.path.exists(folderTufnG2):
         os.makedirs(folderTufnG2)
 
@@ -63,11 +63,9 @@ if __name__ == "__main__":
         connections["GPI.cog -> THL.cog"].active = False
         connections["GPI.mot -> THL.mot"].active = False
 
-        task = Task_B(n=n_testing_trials)
-        task = task[:n_testing_trials]
-        # ntt = 100
-        # task = task[:ntt]
-        learning_trials(task, trials=n_testing_trials, debugging=False, debug_simulation=True)
+        task = Task(n=n_trials)
+        task = task[:n_trials]
+        learning_trials(task, trials=n_trials, debugging=False, debug_simulation=True)
 
         print("Mean performance	: %.1f %%\n" % (np.array(task.records["best"]).mean() * 100))
         print()
@@ -83,11 +81,9 @@ if __name__ == "__main__":
         connections["GPI.cog -> THL.cog"].active = True
         connections["GPI.mot -> THL.mot"].active = True
 
-        nt = 1200
-        task = Task_B(n=nt)#n_testing_trials)
-        task = task[:nt]#n_testing_trials:]
-        # task = task[:ntt]
-        learning_trials(task, trials=nt, debugging=False, debug_simulation=True)
+        task = Task(n=n_trials)#n_testing_trials)
+        task = task[:n_trials]#n_testing_trials:]
+        learning_trials(task, trials=n_trials, debugging=False, debug_simulation=True)
 
         print("Mean performance	: %.1f %%\n" % (np.array(task.records["best"]).mean() * 100))
         print()
@@ -103,10 +99,9 @@ if __name__ == "__main__":
         connections["GPI.cog -> THL.cog"].active = False
         connections["GPI.mot -> THL.mot"].active = False
 
-        task = Task_B(n=n_testing_trials)
-        task = task[:n_testing_trials]
-        # task = task[:ntt]
-        learning_trials(task, trials=n_testing_trials, debugging=False, debug_simulation=True)
+        task = Task(n=n_trials)
+        task = task[:n_trials]
+        learning_trials(task, trials=n_trials, debugging=False, debug_simulation=True)
 
         print("Mean performance	: %.1f %%\n" % (np.array(task.records["best"]).mean() * 100))
         print()
