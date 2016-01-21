@@ -47,11 +47,6 @@ def trial(task, cues_pres=True, learn=True, debugging=False, trial_n=0, wholeFig
                 task.records["Wstr"][trial_n] = connections["CTX.cog -> STR.cog"].weights
                 task.records["Wcog"][trial_n] = connections["CTX.cog -> CTX.ass"].weights
                 task.records["Wmot"][trial_n] = connections["CTX.mot -> CTX.ass"].weights
-                if 0:  # ch[-1] is None:
-                    mot_choice = np.argmax(CTX.mot.U)
-                    cog_choice = np.argmax(CTX.cog.U)
-                    print('Wrong choice... \nMotor choice: %d\nCognitive choice: %d' % (mot_choice, cog_choice))
-                    print(Cue["mot"][:n], CUE["cog"][:n])
 
                 if wholeFig:
                     choice_made = True
@@ -59,7 +54,7 @@ def trial(task, cues_pres=True, learn=True, debugging=False, trial_n=0, wholeFig
                     return time
     time = 2500
 
-    if debugging:
+    if debugging and not choice_made:
         print('Trial Failed!')
         print('NoMove trial: ', trial_n)
 

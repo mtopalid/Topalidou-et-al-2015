@@ -11,10 +11,9 @@
 # Population size
 n = 4
 # Simulation size
-n_learning_trials = 4800 #960 #720 #240 #
-n_trials = 120#240
+n_trials = 120
 
-simulations = 100#250
+simulations = 100
 threshold = 40
 
 # --- Time ---
@@ -24,11 +23,10 @@ dt = 1 * ms
 tau = 10 * ms
 
 # --- Learning ---
-a = 2.
-alpha_CUE = 0.0025*a  # 0.0005
-alpha_LTP = 0.005*a
-alpha_LTD = 0.00375*a
-alpha_LTP_ctx = alpha_LTP  ** 2*a  # 0.000025
+alpha_CUE = 0.0075
+alpha_LTP = 0.015
+alpha_LTD = 0.01125
+alpha_LTP_ctx = alpha_LTP  ** 2*2
 
 # --- Sigmoid ---
 Vmin = 0

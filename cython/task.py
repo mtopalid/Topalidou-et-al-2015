@@ -166,14 +166,9 @@ class Task(object):
 if __name__ == "__main__":
     import random
 
-    from task_a import Task_A
-    from task_b import Task_B
-    # from task_cg import Task_C
-    # from task_cp import Task_C
+    from task import Task
 
-    # task = Task_A(n=180)
-    task = Task_B(n=120)
-    # task = Task_C(n=30, r=6)
+    task = Task(n=6)
 
     for trial in task:
         # Only the associative group can provide (m1,c1), (m2,c2)
