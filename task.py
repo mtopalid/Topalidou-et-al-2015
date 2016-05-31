@@ -87,6 +87,7 @@ class Task(object):
                                      ("Values",  float, 4),
                                      ("WeightsStr", float, 4),
                                      ("WeightsCtx", float, 4),
+                                     ("WeightsINP", float, 4),
                                      ("reward", float, 1)] )
 
         # We draw all random probabilities at once (faster)
@@ -189,7 +190,7 @@ class Task(object):
 
         return reward, cue, best
 
-    def save_learning(self, values=0.5, WStr=0.5, WCtx=0.5):
+    def save_learning(self, values=0.5, WStr=0.5, WCtx=0.5, WINP=0.5):
         """
     	Save the values of the cues in reinforcement learning and
     	both cortical and striatal weights changes through learning
@@ -197,6 +198,7 @@ class Task(object):
         self.records[self.index]["Values"] = values
         self.records[self.index]["WeightsStr"] = WStr
         self.records[self.index]["WeightsCtx"] = WCtx
+        self.records[self.index]["WeightsINP"] = WINP
 
 
 # -----------------------------------------------------------------------------

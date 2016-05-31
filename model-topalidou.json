@@ -27,6 +27,7 @@
         "LTP" : 0.001
     },
             
+    "INP"   : { "tau" : 0.01, "rest" :   0.0, "noise" : 0.000 },
     "CTX"   : { "tau" : 0.01, "rest" :  -3.0, "noise" : 0.005 },
     "STR"   : { "tau" : 0.01, "rest" :   0.0, "noise" : 0.005 },
     "STN"   : { "tau" : 0.01, "rest" : -10.0, "noise" : 0.005 },
@@ -35,6 +36,10 @@
     "THL"   : { "tau" : 0.01, "rest" : -40.0, "noise" : 0.005 },
 
     "gain" :  {
+        "INP:cog → CTX:cog" :  0.5,
+        "INP:mot → CTX:mot" :  0.5,
+        "INP:ass → CTX:ass" :  0.5,
+
         "CTX:cog → STR:cog" :  1.0,
         "CTX:cog → STR:ass" :  0.2,
         "CTX:cog → STN:cog" :  1.0,

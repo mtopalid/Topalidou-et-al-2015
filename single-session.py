@@ -46,7 +46,7 @@ experiment = Experiment(model = mdl,
                         n_session = 1, n_block = 1, seed = 123)#None)
 records = experiment.run(session, "Piron Protocol")
 records = np.squeeze(records)
-
+print(records["best"])
 
 
 cog = records["CtxCog"][-1]

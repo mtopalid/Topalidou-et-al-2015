@@ -34,10 +34,46 @@ model.process(task, trial, stop=False, debug=False, cortical_activity=True)
 
 cog = model["CTX"]["cog"].history[:3000]
 mot = model["CTX"]["mot"].history[:3000]
+init_cog = model["INP"]["cog"].history[:3000]
+init_mot = model["INP"]["mot"].history[:3000]
 
 
 duration = 3.0
 timesteps = np.linspace(0, duration, 3000)
+fig = plt.figure(figsize=(9,7), facecolor="w")
+ax = plt.subplot(111)
+ax.patch.set_facecolor("w")
+ax.spines['right'].set_color('none')
+ax.spines['top'].set_color('none')
+ax.yaxis.set_ticks_position('left')
+ax.yaxis.set_tick_params(direction="in")
+ax.xaxis.set_ticks_position('bottom')
+ax.xaxis.set_tick_params(direction="in")
+
+
+plt.plot(timesteps, init_cog[:,0], c='r', label="Cognitive Cortex")
+plt.plot(timesteps, init_cog[:,1], c='r')
+plt.plot(timesteps, init_cog[:,2], c='r')
+plt.plot(timesteps, init_cog[:,3], c='r')
+plt.plot(timesteps, init_mot[:,0], c='b', label="Motor Cortex")
+plt.plot(timesteps, init_mot[:,1], c='b')
+plt.plot(timesteps, init_mot[:,2], c='b')
+plt.plot(timesteps, init_mot[:,3], c='b')
+
+# plt.title("Single trial (GPi ON)")
+plt.xlabel("Time (seconds)")
+plt.ylabel("Activity (Hz)")
+plt.legend(frameon=False, loc='upper left')
+plt.xlim(0.0,duration)
+plt.ylim(-10.0,60.0)
+plt.xticks([0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0],
+           ['0.0','0.5\n(Trial start)','1.0','1.5', '2.0','2.5','3.0'])
+file = folder + "single-trial-GPi-ON.pdf"
+plt.savefig(file)
+
+
+
+
 fig = plt.figure(figsize=(9,7), facecolor="w")
 ax = plt.subplot(111)
 ax.patch.set_facecolor("w")
@@ -182,8 +218,8 @@ for i in range(4):
     plt.plot(timesteps, histor["THL"]["cog"][:,i], c='k', lw=.5)
 ax.set_xticks([])
 
-
-file = folder + "single-trial-GPi-ON-all.pdf"
-plt.savefig(file)
+#
+# file = folder + "single-trial-GPi-ON-all.pdf"
+# plt.savefig(file)
 
 plt.show()

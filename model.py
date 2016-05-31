@@ -33,6 +33,9 @@ class Model(object):
 
 
         self._structures = {
+            "INP" : { "cog" : Group(4, activation = clamp),
+                      "mot" : Group(4, activation = clamp),
+                      "ass" : Group(16, activation = clamp) },
             "CTX" : { "cog" : Group(4, activation = clamp),
                       "mot" : Group(4, activation = clamp),
                       "ass" : Group(16, activation = clamp) },
@@ -55,6 +58,7 @@ class Model(object):
                 group.noise = _[name]["noise"]
         self._structures["value"] = np.zeros(4)
 
+        INP = self["INP"]
         CTX = self["CTX"]
         STR = self["STR"]
         STN = self["STN"]
@@ -64,7 +68,8 @@ class Model(object):
         self["value"][...] = _["RL"]["init"]
         # self["value"][0] = 0.75
 
-        self._groups = (CTX["cog"], CTX["mot"], CTX["ass"],
+        self._groups = (INP["cog"], INP["mot"], INP["ass"],
+        				CTX["cog"], CTX["mot"], CTX["ass"],
                         STR["cog"], STR["mot"], STR["ass"],
                         STN["cog"], STN["mot"],
                         GPe["cog"], GPe["mot"],
@@ -75,6 +80,12 @@ class Model(object):
         W2 = (2 * np.eye(16) - np.ones((16, 16))).ravel()
 
         self._links = {
+            "INP:cog → CTX:cog" :
+                OneToOne(INP["cog"]["V"], CTX["cog"]["Isyn"], weights(4), 0.0),
+            "INP:mot → CTX:mot" :
+                OneToOne(INP["mot"]["V"], CTX["mot"]["Isyn"], np.ones(4), 0.0),
+            "INP:ass → CTX:ass" :
+                OneToOne(INP["ass"]["V"], CTX["ass"]["Isyn"], np.ones(16), 0.0),
             "CTX:cog → STR:cog" :
                 OneToOne(CTX["cog"]["V"], STR["cog"]["Isyn"], weights(4), 0.0),
             "CTX:cog → STR:ass" :
@@ -144,9 +155,9 @@ class Model(object):
             "CTX:ass → CTX:mot":
                 AssToMot(CTX["ass"]["V"], CTX["mot"]["Isyn"], np.ones(4), 0.0),
             "CTX:cog → CTX:ass":
-                CogToAss(CTX["cog"]["V"], CTX["ass"]["Isyn"], weights(4), 0.0),
+                CogToAss(CTX["cog"]["V"], CTX["ass"]["Isyn"], np.ones(4), 0.0),
             "CTX:mot → CTX:ass":
-                MotToAss(CTX["mot"]["V"], CTX["ass"]["Isyn"], weights(4), 0.0)
+                MotToAss(CTX["mot"]["V"], CTX["ass"]["Isyn"], np.ones(4), 0.0)
         }
         for key, link in self._links.items():
             if key in _["gain"].keys():
@@ -199,9 +210,9 @@ class Model(object):
         # Trial setup
         V     = _["input"]["potential"]
         noise = _["input"]["noise"]
-        self["CTX"]["cog"]["Iext"] = V * trial["cog"] * (1 + np.random.normal(0, noise, 4))
-        self["CTX"]["mot"]["Iext"] = V * trial["mot"] * (1 + np.random.normal(0, noise, 4))
-        self["CTX"]["ass"]["Iext"] = V * trial["ass"].ravel() * (1 + np.random.normal(0, noise, 16))
+        self["INP"]["cog"]["Iext"] = V * trial["cog"] * (1 + np.random.normal(0, noise, 4))
+        self["INP"]["mot"]["Iext"] = V * trial["mot"] * (1 + np.random.normal(0, noise, 4))
+        self["INP"]["ass"]["Iext"] = V * trial["ass"].ravel() * (1 + np.random.normal(0, noise, 16))
 
         # Trial process (max 2500ms)
         decision = False
@@ -248,21 +259,32 @@ class Model(object):
             # This is the chosen cue by the model (may be different from the actual cue)
             cue = np.argmax(self["CTX"]["cog"]["U"])
 
-            LTP = _["Hebbian"]["LTP"]
-            dw = LTP * self["CTX"]["cog"]["V"][cue]
-            W = self["CTX:cog → CTX:ass"].weights
+            # LTP = _["Hebbian"]["LTP"]
+            # dw = LTP * self["CTX"]["cog"]["V"][cue]
+            # print(dw,)
+            # W = self["CTX:cog → CTX:ass"].weights
+            # W[cue] += dw * (Wmax-W[cue])*(W[cue]-Wmin)
+            # W[cue] += dw
+            # if W[cue] > Wmax:
+            #     W[cue] = Wmax
+            # elif W[cue] < Wmin:
+            #     W[cue] = Wmin
+
+            dw = LTP*0.1 * self["INP"]["cog"]["V"][cue]
+            W = self["INP:cog → CTX:cog"].weights
             W[cue] += dw * (Wmax-W[cue])*(W[cue]-Wmin)
             # W[cue] += dw
             # if W[cue] > Wmax:
             #     W[cue] = Wmax
             # elif W[cue] < Wmin:
             #     W[cue] = Wmin
-            WCtx = W
-            task.save_learning(self["value"], WStr, WCtx)
+            Winp = W
+            task.save_learning(self["value"], WStr, WINP=Winp)
 
     def history(self, duration):
 
-        dtype = [("CTX", [("mot", float, 4), ("cog", float, 4), ("ass", float, 16)]),
+        dtype = [("INP", [("mot", float, 4), ("cog", float, 4), ("ass", float, 16)]),
+        ("CTX", [("mot", float, 4), ("cog", float, 4), ("ass", float, 16)]),
          ("STR", [("mot", float, 4), ("cog", float, 4), ("ass", float, 16)]),
          ("GPE", [("mot", float, 4), ("cog", float, 4)]),
          ("GPI", [("mot", float, 4), ("cog", float, 4)]),
@@ -270,6 +292,9 @@ class Model(object):
          ("STN", [("mot", float, 4), ("cog", float, 4)])]
 
         histor = np.zeros(duration, dtype=dtype)
+        histor["INP"]["mot"] = self["INP"]["mot"].history[:duration]
+        histor["INP"]["cog"] = self["INP"]["cog"].history[:duration]
+        histor["INP"]["ass"] = self["INP"]["ass"].history[:duration]
         histor["CTX"]["mot"] = self["CTX"]["mot"].history[:duration]
         histor["CTX"]["cog"] = self["CTX"]["cog"].history[:duration]
         histor["CTX"]["ass"] = self["CTX"]["ass"].history[:duration]
