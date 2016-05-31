@@ -140,9 +140,9 @@ class Model(object):
             "CTX:ass → CTX:ass":
                 AllToAll(CTX["ass"]["V"], CTX["ass"]["Isyn"], W2, 0.0),
             "CTX:ass → CTX:cog":
-                AssToCog(CTX["ass"]["V"], CTX["cog"]["Isyn"], np.ones(4), 0.0),
+                AssToCog(CTX["ass"]["V"], CTX["cog"]["Isyn"], weights(4), 0.0),
             "CTX:ass → CTX:mot":
-                AssToMot(CTX["ass"]["V"], CTX["mot"]["Isyn"], np.ones(4), 0.0),
+                AssToMot(CTX["ass"]["V"], CTX["mot"]["Isyn"], weights(4), 0.0),
             "CTX:cog → CTX:ass":
                 CogToAss(CTX["cog"]["V"], CTX["ass"]["Isyn"], weights(4), 0.0),
             "CTX:mot → CTX:ass":
@@ -199,9 +199,9 @@ class Model(object):
         # Trial setup
         V     = _["input"]["potential"]
         noise = _["input"]["noise"]
-        self["CTX"]["cog"]["Iext"] = V * trial["cog"] * (1 + np.random.normal(0, noise, 4))
-        self["CTX"]["mot"]["Iext"] = V * trial["mot"] * (1 + np.random.normal(0, noise, 4))
-        self["CTX"]["ass"]["Iext"] = V * trial["ass"].ravel() * (1 + np.random.normal(0, noise, 16))
+        self["CTX"]["cog"]["Iext"] = V * trial["cog"] #* (1 + np.random.normal(0, noise, 4))
+        self["CTX"]["mot"]["Iext"] = V * trial["mot"] #* (1 + np.random.normal(0, noise, 4))
+        self["CTX"]["ass"]["Iext"] = V * trial["ass"].ravel() #* (1 + np.random.normal(0, noise, 16))
 
         # Trial process (max 2500ms)
         decision = False
@@ -249,8 +249,8 @@ class Model(object):
             cue = np.argmax(self["CTX"]["cog"]["U"])
 
             LTP = _["Hebbian"]["LTP"]
-            dw = LTP * self["CTX"]["cog"]["V"][cue]
-            W = self["CTX:cog → CTX:ass"].weights
+            dw = LTP * self["CTX"]["ass"]["V"][cue]
+            W = self["CTX:ass → CTX:cog"].weights
             W[cue] += dw * (Wmax-W[cue])*(W[cue]-Wmin)
             # W[cue] += dw
             # if W[cue] > Wmax:
