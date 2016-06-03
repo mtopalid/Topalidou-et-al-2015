@@ -36,9 +36,9 @@
     "THL"   : { "tau" : 0.01, "rest" : -40.0, "noise" : 0.005 },
 
     "gain" :  {
-        "INP:cog → CTX:cog" :  0.5,
-        "INP:mot → CTX:mot" :  0.5,
-        "INP:ass → CTX:ass" :  0.5,
+        "INP:cog → CTX:cog" :  5.0,
+        "INP:mot → CTX:mot" :  5.0,
+        "INP:ass → CTX:ass" :  5.0,
 
         "CTX:cog → STR:cog" :  1.0,
         "CTX:cog → STR:ass" :  0.2,

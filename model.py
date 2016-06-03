@@ -80,12 +80,15 @@ class Model(object):
         W2 = (2 * np.eye(16) - np.ones((16, 16))).ravel()
 
         self._links = {
+
             "INP:cog → CTX:cog" :
                 OneToOne(INP["cog"]["V"], CTX["cog"]["Isyn"], weights(4), 0.0),
             "INP:mot → CTX:mot" :
-                OneToOne(INP["mot"]["V"], CTX["mot"]["Isyn"], np.ones(4), 0.0),
+                OneToOne(INP["mot"]["V"], CTX["mot"]["Isyn"], weights(4), 0.0),
             "INP:ass → CTX:ass" :
-                OneToOne(INP["ass"]["V"], CTX["ass"]["Isyn"], np.ones(16), 0.0),
+                OneToOne(INP["ass"]["V"], CTX["ass"]["Isyn"], weights(16), 0.0),
+
+
             "CTX:cog → STR:cog" :
                 OneToOne(CTX["cog"]["V"], STR["cog"]["Isyn"], weights(4), 0.0),
             "CTX:cog → STR:ass" :
@@ -249,8 +252,10 @@ class Model(object):
             error = reward - self["value"][cue]
             self["value"][cue] += error * alpha
 
+            # The RL alpha is different from from the one computed below.
+            # The latter is the learning rate of the weights that depends on LTP and LTD
             alpha   = LTP if error > 0 else LTD
-            dw      = error * alpha * self["STR"]["cog"]["V"][cue]
+            dw      = error * alpha * self["STR"]["cog"]["U"][cue] # Check if there is a difference in U & V Nico had it V
             W       = self["CTX:cog → STR:cog"].weights
             W[cue] += dw * (Wmax-W[cue])*(W[cue]-Wmin)
             WStr    = W
@@ -258,8 +263,7 @@ class Model(object):
             # Hebbian learning
             # This is the chosen cue by the model (may be different from the actual cue)
             cue = np.argmax(self["CTX"]["cog"]["U"])
-
-            # LTP = _["Hebbian"]["LTP"]
+            LTP = _["Hebbian"]["LTP"]
             # dw = LTP * self["CTX"]["cog"]["V"][cue]
             # print(dw,)
             # W = self["CTX:cog → CTX:ass"].weights
@@ -270,7 +274,7 @@ class Model(object):
             # elif W[cue] < Wmin:
             #     W[cue] = Wmin
 
-            dw = LTP*0.1 * self["INP"]["cog"]["V"][cue]
+            dw = LTP * self["INP"]["cog"]["V"][cue] #*0.025
             W = self["INP:cog → CTX:cog"].weights
             W[cue] += dw * (Wmax-W[cue])*(W[cue]-Wmin)
             # W[cue] += dw
