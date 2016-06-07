@@ -186,7 +186,7 @@ plt.ylim(0,1.05)
 fl = folderFig + "NoGPi.pdf"
 plt.savefig(fl)
 
-
+plt.show()
 
 
 
@@ -411,4 +411,4 @@ ax.add_line(lines.Line2D(x+2.5, y, lw=.5, color='k', clip_on=False))
 fl = folderFig + "hist-RT-NoGpi.pdf"
 plt.savefig(fl)
 
-plt.show()
+# plt.show()

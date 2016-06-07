@@ -11,15 +11,15 @@ folder = "data/"
 if not os.path.exists(folder):
     os.makedirs(folder)
 
-folderRes = folder + "results/reverse/"
+folderRes = folder + "results/reverse-NoCtx/"
 if not os.path.exists(folderRes):
     os.makedirs(folderRes)
 
-folderRep = folder + "reports/reverse/"
+folderRep = folder + "reports/reverse-NoCtx/"
 if not os.path.exists(folderRep):
     os.makedirs(folderRep)
 
-folderFig = folder + "figures/reverse/"
+folderFig = folder + "figures/reverse-NoCtx/"
 if not os.path.exists(folderFig):
     os.makedirs(folderFig)
 
@@ -32,7 +32,7 @@ def session(exp):
 
 
 mdl = "model-topalidou.json"
-revr = [50,100,200,300,400,500,600,700,800,900,1000,1100]#,1200,1300,1400,1500]
+revr = [50,100,200,300,400,500,600,700,800,900,1000,1100,1200,1300,1400,1500]
 
 wh_explr = []
 wh_explt = []
@@ -97,8 +97,9 @@ plt.plot(revr, np.array(wh_explt), 'ro-', lw=2)
 plt.xlabel("\nReverse trial", fontsize=16)
 plt.ylabel("Number of trials\n", fontsize=16)
 # plt.xlim(1,n_trial)
-plt.ylim(-10,1010)
+plt.ylim(-10,2500)
 plt.xticks(revr)
+
 
 fl = folderFig + "relearn-display.pdf"
 plt.savefig(fl)

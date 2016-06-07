@@ -14,7 +14,7 @@ def session(exp):
     return exp.task.records
 
 
-mdl = "model-topalidou-meropi-NoCtx.json"
+mdl = "model-topalidou.json"
 #revr = [10,20,30,40,50,60,70,80,90,100,200,300,400,500]
 revr = 200
 dt = "data_new"

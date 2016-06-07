@@ -11,15 +11,15 @@ folder = "data/"
 if not os.path.exists(folder):
     os.makedirs(folder)
 
-folderRes = folder + "results/reverse/"
+folderRes = folder + "results/reverse-NoCtx/"
 if not os.path.exists(folderRes):
     os.makedirs(folderRes)
 
-folderRep = folder + "reports/reverse/"
+folderRep = folder + "reports/reverse-NoCtx/"
 if not os.path.exists(folderRep):
     os.makedirs(folderRep)
 
-folderFig = folder + "figures/reverse/"
+folderFig = folder + "figures/reverse-NoCtx/"
 if not os.path.exists(folderFig):
     os.makedirs(folderFig)
 
@@ -38,9 +38,9 @@ def session(exp):
 
     return exp.task.records
 
-mdl = "model-topalidou.json"
+mdl = "model-topalidou-NoCtx.json"
 
-revr = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500]#10,50,
+revr = [1100, 1200, 1300, 1400, 1500, 2000]#[50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]#, #10,50,
 # revr = [300]
 for i in revr:
     trial = str(i)

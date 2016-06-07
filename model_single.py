@@ -41,8 +41,6 @@ class Model(object):
                       "ass" : Group(16, activation = sigmoid) },
             "STN" : { "cog" : Group(4, activation = clamp),
                       "mot" : Group(4, activation = clamp) },
-            "GPe" : { "cog" : Group(4, activation = clamp),
-                      "mot" : Group(4, activation = clamp) },
             "GPi" : { "cog" : Group(4, activation = clamp),
                       "mot" : Group(4, activation = clamp) },
             "THL" : { "cog" : Group(4, activation = clamp),
@@ -58,7 +56,6 @@ class Model(object):
         CTX = self["CTX"]
         STR = self["STR"]
         STN = self["STN"]
-        GPe = self["GPe"]
         GPi = self["GPi"]
         THL = self["THL"]
         self["value"][...] = _["RL"]["init"]
@@ -67,7 +64,6 @@ class Model(object):
         self._groups = (CTX["cog"], CTX["mot"], CTX["ass"],
                         STR["cog"], STR["mot"], STR["ass"],
                         STN["cog"], STN["mot"],
-                        GPe["cog"], GPe["mot"],
                         GPi["cog"], GPi["mot"],
                         THL["cog"], THL["mot"] )
 
@@ -95,15 +91,6 @@ class Model(object):
 
             "CTX:ass → STR:ass" :
                 OneToOne(CTX["ass"]["V"], STR["ass"]["Isyn"], weights(16), 0.0),
-            "STR:cog -> GPe:cog":
-                OneToOne(STR["cog"]["V"], GPe["cog"]["Isyn"], np.ones(4), 0.0),
-            "STR:mot -> GPe:mot":
-                OneToOne(STR["mot"]["V"], GPe["mot"]["Isyn"], np.ones(4), 0.0),
-            "STR:ass -> GPe:cog":
-                AssToCog(STR["ass"]["V"], GPe["cog"]["Isyn"], np.ones(4), 0.0),
-            "STR:ass -> GPe:mot":
-                AssToMot(STR["ass"]["V"], GPe["mot"]["Isyn"], np.ones(4), 0.0),
-
             "STR:cog → GPi:cog" :
                 OneToOne(STR["cog"]["V"], GPi["cog"]["Isyn"], np.ones(4), 0.0),
             "STR:mot → GPi:mot" :
@@ -117,11 +104,6 @@ class Model(object):
                 OneToAll(STN["cog"]["V"], GPi["cog"]["Isyn"], np.ones(4), 0.0),
             "STN:mot → GPi:mot" :
                 OneToAll(STN["mot"]["V"], GPi["mot"]["Isyn"], np.ones(4), 0.0),
-
-            "GPe:cog -> STN:cog":
-                OneToOne(GPe["cog"]["V"], STN["cog"]["Isyn"], np.ones(4), 0.0),
-            "GPe:mot -> STN:mot":
-                OneToOne(GPe["mot"]["V"], STN["mot"]["Isyn"], np.ones(4), 0.0),
 
             "GPi:cog → THL:cog" :
                 OneToOne(GPi["cog"]["V"], THL["cog"]["Isyn"], np.ones(4), 0.0),
@@ -249,8 +231,9 @@ class Model(object):
             cue = np.argmax(self["CTX"]["cog"]["U"])
 
             LTP = _["Hebbian"]["LTP"]
-            dw = LTP * self["CTX"]["cog"]["V"][cue]
-            W = self["CTX:cog → CTX:ass"].weights
+            dw = LTP * self["CTX"]["ass"]["V"].reshape((4,4))[cue,choice]
+
+            W = self["CTX:ass → CTX:cog"].weights
             W[cue] += dw * (Wmax-W[cue])*(W[cue]-Wmin)
             # W[cue] += dw
             # if W[cue] > Wmax:
@@ -280,8 +263,6 @@ class Model(object):
         histor["STR"]["ass"] = self["STR"]["ass"].history[:duration]
         histor["STN"]["mot"] = self["STN"]["mot"].history[:duration]
         histor["STN"]["cog"] = self["STN"]["cog"].history[:duration]
-        histor["GPE"]["mot"] = self["GPe"]["mot"].history[:duration]
-        histor["GPE"]["cog"] = self["GPe"]["cog"].history[:duration]
         histor["GPI"]["mot"] = self["GPi"]["mot"].history[:duration]
         histor["GPI"]["cog"] = self["GPi"]["cog"].history[:duration]
         histor["THL"]["mot"] = self["THL"]["mot"].history[:duration]

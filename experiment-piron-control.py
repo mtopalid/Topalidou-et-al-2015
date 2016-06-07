@@ -175,6 +175,8 @@ plt.ylim(0,1.05)
 fl = folderFig + "control.pdf"
 plt.savefig(fl)
 
+plt.show()
+
 
 start,end = experiment.task.blocks[1]
 D2 = records["RT"][:,start:end] * 1000
@@ -382,4 +384,4 @@ ax.add_line(lines.Line2D(x+2.5, y, lw=.5, color='k', clip_on=False))
 fl = folderFig + "hist-RT-control.pdf"
 plt.savefig(fl)
 
-plt.show()
+# plt.show()

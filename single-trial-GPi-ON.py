@@ -150,17 +150,6 @@ for i in range(16):
     plt.plot(timesteps, histor["STR"]["ass"][:,i], c='k', lw=.5)
 ax.set_xticks([])
 
-ax = subplot(6,3,10)
-ax.set_ylabel("GPe", fontsize=24)
-for i in range(4):
-    plt.plot(timesteps, histor["GPE"]["mot"][:,i], c='k', lw=.5)
-ax.set_xticks([])
-
-ax = subplot(6,3,11)
-for i in range(4):
-    plt.plot(timesteps, histor["GPE"]["cog"][:,i], c='k', lw=.5)
-ax.set_xticks([])
-
 ax = subplot(6,3,13)
 ax.set_ylabel("GPi", fontsize=24)
 for i in range(4):
