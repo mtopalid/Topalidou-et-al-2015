@@ -233,13 +233,15 @@ class Model(object):
 
             LTP = _["Hebbian"]["LTP"]
 
-            dw = LTP * self["CTX"]["ass"]["V"].reshape((4,4))[cue,choice] #self["CTX"]["ass"]["V"][cue]
-            W = self["CTX:ass → CTX:cog"].weights
+
+
+            # dw = LTP * self["CTX"]["ass"]["V"].reshape((4,4))[cue,choice] #self["CTX"]["ass"]["V"][cue]
+#             W = self["CTX:ass → CTX:cog"].weights
 
 
 
-#             dw = LTP * self["CTX"]["cog"]["V"][cue] #self["CTX"]["ass"]["V"][cue]
-#             W = self["CTX:cog → CTX:ass"].weights
+            dw = LTP * self["CTX"]["cog"]["V"][cue]
+            W = self["CTX:cog → CTX:ass"].weights
 
 
 

@@ -18,7 +18,7 @@
 
     "RL" : {
         "init"  : 0.5,
-        "alpha" : 0.002,
+        "alpha" : 0.001,
         "LTP"   : 0.01,
         "LTD"   : 0.008
     },
@@ -64,9 +64,9 @@
         "CTX:cog → CTX:cog" :  0.5,
         "CTX:ass → CTX:ass" :  0.5,
         
-        "CTX:cog → CTX:ass" :  0.03,
-        "CTX:ass → CTX:mot" :  0.03,
-        "CTX:mot → CTX:ass" :  0.03,
-        "CTX:ass → CTX:cog" :  0.03        
+        "CTX:cog → CTX:ass" :  0.01,
+        "CTX:ass → CTX:mot" :  0.01,
+        "CTX:mot → CTX:ass" :  0.01,
+        "CTX:ass → CTX:cog" :  0.01        
     }
 }
