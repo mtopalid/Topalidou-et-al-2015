@@ -105,19 +105,12 @@ class Task(object):
             rwd = block["rwd"]
 
             for i in range(n):
-                c1 = c2 =  np.searchsorted(P_cue, random.uniform(0,1))
-                while c1 == c2:
-                    c2 = np.searchsorted(P_cue, random.uniform(0,1))
-
-                m1 = m2 =  np.searchsorted(P_pos, random.uniform(0,1))
-                while m1 == m2:
-                    m2 = np.searchsorted(P_pos, random.uniform(0,1))
+                c1 = np.searchsorted(P_cue, random.uniform(0,1))
 
                 trial = self.trials[index]
-                trial["cog"][[c1,c2]] = 1
-                trial["mot"][[m1,m2]] = 1
-                trial["ass"][c1,m1]   = 1
-                trial["ass"][c2,m2]   = 1
+                trial["cog"][c1] = 1
+                trial["mot"][:] = 1
+                trial["ass"][c1]   = 1
                 trial["rwd"][...]     = rwd
                 index += 1
 
@@ -155,8 +148,6 @@ class Task(object):
 
         # Do we have a choice at least ?
         if choice < 0:
-            # No cue chosen
-            cue = -1
             # Choice is not valid
             valid = False
             # Not the best move
@@ -166,12 +157,10 @@ class Task(object):
         else:
             # Check if choice is valid
             valid = (trial["mot"][choice] == 1.0)
-            # Get cue corresponding to motor choice
-            cue = np.argmax(trial["ass"][:,choice])
             # Get whether this is the best choice
-            best = (np.argmax(trial["cog"]*trial["rwd"]) == cue)
+            best = (np.argmax(trial["cog"]*trial["rwd"]) == choice)
             # Get actual reward
-            reward = trial["rnd"] < trial["rwd"][cue]
+            reward = trial["rnd"] < trial["rwd"][choice]
 
         # Record everything
         self.records[self.index]["RT"] = RT
@@ -189,7 +178,7 @@ class Task(object):
             R = self.records[:self.index+1]["reward"]
             print("  Mean reward:      %.3f" % np.array(R).mean())
 
-        return reward, cue, best
+        return reward, best
 
     def save_learning(self, values=0.5, WStr=0.5, WCtx=0.5):
         """
@@ -212,14 +201,13 @@ class Task(object):
 
 # -----------------------------------------------------------------------------
 if __name__ == "__main__":
-    task = Task()
+    task = Task(filename="tasks/task.json")
 
     for trial in task:
         # Best choice
-        best = np.argmax(trial["cog"]*trial["rwd"])
-        choice = np.argmax(trial["ass"][best])
+        choice = np.argmax(trial["cog"]*trial["rwd"])
         # Random choice
         # n = len(trial["mot"]) - 1 - random.randint(0,trial["mot"].sum()-1)
         # choice = np.argsort(trial["mot"])[n]
         # Process choice
-        reward, cue, best = task.process(trial, choice, debug=True)
+        reward, best = task.process(trial, choice, debug=True)

@@ -36,7 +36,7 @@ def session(exp):
     return exp.task.records
 
 mdl = "model-topalidou.json"
-tsk = "tasks/task-topalidou.json"
+tsk = "tasks/task.json"
 rslt = folderRes + "single-session.npy"
 rprt = folderRep + "single-session.txt"
 experiment = Experiment(model = mdl,

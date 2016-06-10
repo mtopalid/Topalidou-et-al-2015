@@ -34,7 +34,7 @@ def session(exp):
 
 
 mdl = "model-topalidou.json"
-tsk = "tasks/task-guthrie.json"
+tsk = "tasks/task.json"
 rslt = folderRes + "control.npy"
 rprt = folderRep + "control.txt"
 experiment = Experiment(model = mdl,
@@ -159,14 +159,14 @@ plt.savefig(fl)
 
 
 
-V_mean = np.mean(records["Values"], axis=0)
-V_std = np.std(records["Values"], axis=0)
+V_mean = np.mean(records["ValuesMot"], axis=0)
+V_std = np.std(records["ValuesMot"], axis=0)
 
-Wctx_mean = np.mean(records["WeightsCtx"], axis=0)
-Wctx_std = np.std(records["WeightsCtx"], axis=0)
+Wctx_mean = np.mean(records["WeightsCtxMot"], axis=0)
+Wctx_std = np.std(records["WeightsCtxMot"], axis=0)
 
-Wstr_mean = np.mean(records["WeightsStr"], axis=0)
-Wstr_std = np.std(records["WeightsStr"], axis=0)
+Wstr_mean = np.mean(records["WeightsStrMot"], axis=0)
+Wstr_std = np.std(records["WeightsStrMot"], axis=0)
 
 
 

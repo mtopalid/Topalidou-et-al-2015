@@ -51,14 +51,16 @@ class Model(object):
                 group.tau  = _[name]["tau"]
                 group.rest = _[name]["rest"]
                 group.noise = _[name]["noise"]
-        self._structures["value"] = np.zeros(4)
+        self._structures["value-cog"] = np.zeros(4)
+        self._structures["value-mot"] = np.zeros(4)
 
         CTX = self["CTX"]
         STR = self["STR"]
         STN = self["STN"]
         GPi = self["GPi"]
         THL = self["THL"]
-        self["value"][...] = _["RL"]["init"]
+        self["value-cog"][...] = _["RL"]["init"]
+        self["value-mot"][...] = _["RL"]["init"]
         # self["value"][0] = 0.75
 
         self._groups = (CTX["cog"], CTX["mot"], CTX["ass"],
@@ -182,9 +184,9 @@ class Model(object):
         # Trial setup
         V     = _["input"]["potential"]
         noise = _["input"]["noise"]
-        self["CTX"]["cog"]["Iext"] = V * trial["cog"] #* (1 + np.random.normal(0, noise, 4))
-        self["CTX"]["mot"]["Iext"] = V * trial["mot"] #* (1 + np.random.normal(0, noise, 4))
-        self["CTX"]["ass"]["Iext"] = V * trial["ass"].ravel() #* (1 + np.random.normal(0, noise, 16))
+        self["CTX"]["cog"]["Iext"] = V * trial["cog"] * (1 + np.random.normal(0, noise, 4))
+        self["CTX"]["mot"]["Iext"] = V * trial["mot"] * (1 + np.random.normal(0, noise, 4))
+        self["CTX"]["ass"]["Iext"] = V * trial["ass"].ravel() * (1 + np.random.normal(0, noise, 16))
 
         # Trial process (max 2500ms)
         decision = False
@@ -203,12 +205,13 @@ class Model(object):
 
         if decision is False:
             # print("  No decision")
-            reward, cue, best = task.process(trial, -1, RT, debug=debug)
+            reward, best = task.process(trial, -1, RT, debug=debug)
         else:
             choice = np.argmax(self["CTX"]["mot"]["U"])
+            cue = np.argmax(self["CTX"]["cog"]["U"])
             # actual_cue = np.argmax(self["CTX"]["cog"]["U"])
-            reward, cue, best = task.process(trial, choice, RT, debug=debug)
-            # print("  Motor decision: %d, Chosen cue: %d, Actual cue: %d" % (choice,cue, actual_cue))
+            reward, best = task.process(trial, choice, RT, debug=debug)
+            # print("  Motor decision: %d, Chosen choice: %d, Actual choice: %d" % (choice,choice, actual_cue))
 
             # Constants
             Wmin = _["weight"]["min"]
@@ -218,47 +221,52 @@ class Model(object):
             alpha = _["RL"]["alpha"]
             LTP   = _["RL"]["LTP"]
             LTD   = _["RL"]["LTD"]
-            error = reward - self["value"][cue]
-            self["value"][cue] += error * alpha
+
+
+
+            error = reward - self["value-cog"][choice]
+            self["value-cog"][choice] += error * alpha
 
             alpha   = LTP if error > 0 else LTD
-            dw      = error * alpha * self["STR"]["cog"]["V"][cue]
+            dw      = error * alpha * self["STR"]["cog"]["V"][choice]
             W       = self["CTX:cog → STR:cog"].weights
             W[cue] += dw * (Wmax-W[cue])*(W[cue]-Wmin)
-            WStr    = W
+            WStrCog    = W
+
+
+
+
+            error = reward - self["value-mot"][choice]
+            self["value-mot"][choice] += error * alpha
+
+            alpha   = LTP if error > 0 else LTD
+            dw      = error * alpha * self["STR"]["mot"]["V"][choice]
+            W       = self["CTX:mot → STR:mot"].weights
+            W[choice] += dw * (Wmax-W[choice])*(W[choice]-Wmin)
+            WStrMot    = W
 
             # Hebbian learning
-            # This is the chosen cue by the model (may be different from the actual cue)
-            cue = np.argmax(self["CTX"]["cog"]["U"])
+            # This is the chosen choice by the model (may be different from the actual choice)
 
             LTP = _["Hebbian"]["LTP"]
 
-            dw = LTP * self["CTX"]["ass"]["V"].reshape((4,4))[cue,choice] #self["CTX"]["ass"]["V"][cue]
+            dw = LTP * self["CTX"]["ass"]["V"].reshape((4,4))[cue,choice] #self["CTX"]["ass"]["V"][choice]
             W = self["CTX:ass → CTX:cog"].weights
 
-
-
-#             dw = LTP * self["CTX"]["cog"]["V"][cue] #self["CTX"]["ass"]["V"][cue]
-#             W = self["CTX:cog → CTX:ass"].weights
-
-
-
             W[cue] += dw * (Wmax-W[cue])*(W[cue]-Wmin)
-            # W[cue] += dw
-            # if W[cue] > Wmax:
-            #     W[cue] = Wmax
-            # elif W[cue] < Wmin:
-            #     W[cue] = Wmin
-            WCtx = W
-            task.save_learning(self["value"], WStr, WCtx)
-#
-#         cdef int i,j
-#         for i in range(4):
-#             v = 0
-#             for j in range(4):
-#                 v += self._source[j+i*4] * self._weights[i]
-#             self._target[i] += v * self._gain
+            WCtxCog = W
 
+            LTP = _["Hebbian"]["LTP"]
+
+            dw = LTP * self["CTX"]["ass"]["V"].reshape((4,4))[cue,choice] #self["CTX"]["ass"]["V"][choice]
+            W = self["CTX:ass → CTX:mot"].weights
+
+
+            W[choice] += dw * (Wmax-W[choice])*(W[choice]-Wmin)
+            WCtxMot = W
+
+
+            task.save_learning(self["value-cog"], self["value-mot"], WStrCog, WStrMot, WCtxCog, WCtxMot)
     def history(self, duration):
 
         dtype = [("CTX", [("mot", float, 4), ("cog", float, 4), ("ass", float, 16)]),

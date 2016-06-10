@@ -202,12 +202,12 @@ class Model(object):
 
         if decision is False and stop:
             # print("  No decision")
-            reward, cue, best = task.process(trial, -1, RT, debug=debug)
+            reward, best = task.process(trial, -1, RT, debug=debug)
         else:
             choice = np.argmax(self["CTX"]["mot"]["U"])
             # actual_cue = np.argmax(self["CTX"]["cog"]["U"])
-            reward, cue, best = task.process(trial, choice, RT, debug=debug)
-            # print("  Motor decision: %d, Chosen cue: %d, Actual cue: %d" % (choice,cue, actual_cue))
+            reward, best = task.process(trial, choice, RT, debug=debug)
+            # print("  Motor decision: %d, Chosen choice: %d, Actual choice: %d" % (choice,choice, actual_cue))
 
             # Constants
             Wmin = _["weight"]["min"]
@@ -217,29 +217,25 @@ class Model(object):
             alpha = _["RL"]["alpha"]
             LTP   = _["RL"]["LTP"]
             LTD   = _["RL"]["LTD"]
-            error = reward - self["value"][cue]
-            self["value"][cue] += error * alpha
+            error = reward - self["value"][choice]
+            self["value"][choice] += error * alpha
 
             alpha   = LTP if error > 0 else LTD
-            dw      = error * alpha * self["STR"]["cog"]["V"][cue]
-            W       = self["CTX:cog → STR:cog"].weights
-            W[cue] += dw * (Wmax-W[cue])*(W[cue]-Wmin)
+            dw      = error * alpha * self["STR"]["mot"]["V"][choice]
+            W       = self["CTX:mot → STR:mot"].weights
+            W[choice] += dw * (Wmax-W[choice])*(W[choice]-Wmin)
             WStr    = W
 
             # Hebbian learning
-            # This is the chosen cue by the model (may be different from the actual cue)
-            cue = np.argmax(self["CTX"]["cog"]["U"])
+            # This is the chosen choice by the model (may be different from the actual choice)
+            choice = np.argmax(self["CTX"]["mot"]["U"])
 
             LTP = _["Hebbian"]["LTP"]
-            dw = LTP * self["CTX"]["ass"]["V"].reshape((4,4))[cue,choice]
+            dw = LTP * self["CTX"]["ass"]["V"].reshape((4,4))[choice,choice]
 
-            W = self["CTX:ass → CTX:cog"].weights
-            W[cue] += dw * (Wmax-W[cue])*(W[cue]-Wmin)
-            # W[cue] += dw
-            # if W[cue] > Wmax:
-            #     W[cue] = Wmax
-            # elif W[cue] < Wmin:
-            #     W[cue] = Wmin
+            W = self["CTX:ass → CTX:mot"].weights
+            W[choice] += dw * (Wmax-W[choice])*(W[choice]-Wmin)
+
             WCtx = W
             task.save_learning(self["value"], WStr, WCtx)
             if cortical_activity:
