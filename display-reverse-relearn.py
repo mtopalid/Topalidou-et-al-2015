@@ -8,20 +8,11 @@ import matplotlib.pyplot as plt
 from experiment import Experiment
 import os
 folder = "data/"
-if not os.path.exists(folder):
-    os.makedirs(folder)
-
 folderRes = folder + "results/reverse/"
-if not os.path.exists(folderRes):
-    os.makedirs(folderRes)
 
 folderRep = folder + "reports/reverse/"
-if not os.path.exists(folderRep):
-    os.makedirs(folderRep)
 
 folderFig = folder + "figures/reverse/"
-if not os.path.exists(folderFig):
-    os.makedirs(folderFig)
 
 
 def session(exp):
