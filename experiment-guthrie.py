@@ -68,16 +68,14 @@ print("End:   %.3f ± %.3f" % (RT_mean[-25:].mean(), RT_std[-25:].mean()))
 
 
 
+# -----------------------------------------------------------------------------
+P_mean = np.mean(records["best"], axis=0)
+P_std = np.std(records["best"], axis=0)
+RT_mean = np.mean(records["RT"]*1000, axis=0)
+RT_std = np.std(records["RT"]*1000, axis=0)
 
 
-
-
-sliding_window = 10
-
-
-f = plt.figure(figsize=(16, 10), facecolor="w")
-# f.suptitle("Guthrie Protocol", fontsize=18)
-
+plt.figure(figsize=(16,10), facecolor="w")
 n_trial = len(experiment.task)
 
 ax = plt.subplot(211)
@@ -88,30 +86,22 @@ ax.yaxis.set_ticks_position('left')
 ax.yaxis.set_tick_params(direction="in")
 ax.xaxis.set_ticks_position('bottom')
 ax.xaxis.set_tick_params(direction="in")
+X = 1+np.arange(n_trial)
+plt.plot(X, P_mean, c='b', lw=2)
+plt.plot(X, P_mean + P_std, c='b', lw=.5)
+plt.plot(X, P_mean - P_std, c='b', lw=.5)
+plt.fill_between(X, P_mean + P_std, P_mean - P_std, color='b', alpha=.1)
 
-alpha = 0.1
-X = 1 + np.arange(n_trial-1)
-global_mean = np.zeros(n_trial-1)
-global_std = np.zeros(n_trial-1)
-for i in range(n_trial-1):
-    imin, imax = max(i+1-sliding_window,0), i+1
-    global_mean[i] = P[:,imin:imax].mean()
-    global_std[i] = P[:,imin:imax].std()
-plt.plot(X, global_mean, c='b', lw=2)
-plt.plot(X, global_mean+global_std, c='b', lw=0.5)
-plt.plot(X, global_mean-global_std, c='b', lw=0.5)
-plt.fill_between(X, global_mean+global_std, global_mean-global_std, color='b', alpha=.1)
-
-plt.text(n_trial + 1, P_mean[-1], "%.2f" % P_mean[-1],
+plt.text(n_trial+1, P_mean[-1], "%.2f" % P_mean[-1],
          ha="left", va="center", color="b")
 
-plt.ylabel("Ratio of optimum trials\n(sliding window of %d trials)" % sliding_window, fontsize=16)
-plt.xlim(1, n_trial)
-plt.ylim(0, 1.25)
+plt.ylabel("Performance\n", fontsize=16)
+plt.xlim(1,n_trial)
+plt.ylim(0,1.25)
 
-plt.yticks([0.0, 0.2, 0.4, 0.6, 0.8, 1.0])
-# plt.text(0, P_mean[0], "%.2f" % P_mean[0],
-#          ha="right", va="center", color="b")
+plt.yticks([ 0.0,   0.2,   0.4,  0.6, 0.8,   1.0])
+plt.text(0, P_mean[0], "%.2f" % P_mean[0],
+         ha="right", va="center", color="b")
 
 ax = plt.subplot(212)
 
@@ -123,31 +113,24 @@ ax.yaxis.set_tick_params(direction="in")
 ax.xaxis.set_ticks_position('bottom')
 ax.xaxis.set_tick_params(direction="in")
 
-global_mean = np.zeros(n_trial-1)
-global_std = np.zeros(n_trial-1)
-for i in range(n_trial-1):
-    imin, imax = max(i+1-sliding_window,0), i+1
-    global_mean[i] = RT[:,imin:imax].mean()
-    global_std[i] = RT[:,imin:imax].std()
-plt.plot(X, global_mean, c='r', lw=2)
-plt.plot(X, global_mean+global_std, c='r', lw=0.5)
-plt.plot(X, global_mean-global_std, c='r', lw=0.5)
-plt.fill_between(X, global_mean+global_std, global_mean-global_std, color='r', alpha=.1)
+X = 1+np.arange(n_trial)
+plt.plot(X, RT_mean, c='r', lw=2)
+plt.plot(X, RT_mean + RT_std, c='r', lw=.5)
+plt.plot(X, RT_mean - RT_std, c='r', lw=.5)
+plt.fill_between(X, RT_mean + RT_std, RT_mean - RT_std, color='r', alpha=.1)
 plt.xlabel("Trial number", fontsize=16)
-plt.ylabel("Mean Motor Decision Time (ms)\n(sliding window of %d trials)" % sliding_window, fontsize=16)
-plt.xlim(1, n_trial)
-plt.yticks([400, 500, 600, 700, 800, 1000])
+plt.ylabel("Response time (ms)\n", fontsize=16)
+plt.xlim(1,n_trial)
+plt.yticks([400,500,600,700,800,1000])
 
-plt.text(n_trial + 1, RT_mean[-1], "%d ms" % RT_mean[-1],
+plt.text(n_trial+1, RT_mean[-1], "%d ms" % RT_mean[-1],
          ha="left", va="center", color="r")
-# plt.text(0, RT_mean[0], "%d" % RT_mean[0],
-#          ha="right", va="center", color="r")
+plt.text(0, RT_mean[0], "%d" % RT_mean[0],
+         ha="right", va="center", color="r")
 
 fl = folderFig + "control.pdf"
 plt.savefig(fl)
-
-
-
+plt.show()
 
 
 
@@ -338,7 +321,7 @@ plt.xlim(1, n_trial)
 # plt.text(0, RT_mean[0], "%d" % RT_mean[0],
 #          ha="right", va="center", color="r")
 
-fl = folderFig + "experiment-guthrie-meropi-learning.pdf"
+fl = folderFig + "learning.pdf"
 plt.savefig(fl)
 
 
