@@ -30,7 +30,7 @@ def session(exp):
     exp.model.setup()
     exp.task.setup()
 
-    # Block 1 : GPi ON
+    # Block 1 : Str ON
     for trial in exp.task.block(0):
         exp.model.process(exp.task, trial)
 

@@ -23,7 +23,7 @@ def session(exp):
 
 
 mdl = "model-topalidou.json"
-revr = [50,100,200,300,400,500,600,700,800,900,1000,1100]#,1200,1300,1400,1500]
+revr = [50,100,150,200,250,300,350,400,450,500,550,600,650,700,750,800,850,900,950,1000]#, 1050, 1100, 1150, 1200,1250, 1300, 1350, 1400, 1450, 1500, 1550]#,1100,1200,1300,1400,1500]
 
 wh_explr = []
 wh_explt = []
@@ -69,7 +69,8 @@ for i in revr:
 
 plt.close("all")
 plt.figure(figsize=(16, 10), facecolor="w")
-n_trial = len(experiment.task)
+n_trial = np.arange(50, revr[-1]+50, 50)
+
 
 ax = plt.subplot(111)
 
@@ -80,15 +81,16 @@ ax.yaxis.set_ticks_position('left')
 ax.yaxis.set_tick_params(direction="in")
 ax.xaxis.set_ticks_position('bottom')
 ax.xaxis.set_tick_params(direction="in")
-X = 1 + np.arange(n_trial)
+
 
 plt.plot(revr, np.array(wh_explr), 'bo-', lw=2)
 plt.plot(revr, np.array(wh_explt), 'ro-', lw=2)
+plt.plot(n_trial, n_trial, 'g', lw=2)
 
 plt.xlabel("\nReverse trial", fontsize=16)
 plt.ylabel("Number of trials\n", fontsize=16)
 # plt.xlim(1,n_trial)
-plt.ylim(-10,1010)
+# plt.ylim(-10,1010)
 plt.xticks(revr)
 
 fl = folderFig + "relearn-display.pdf"

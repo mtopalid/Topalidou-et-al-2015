@@ -47,7 +47,7 @@ def session(exp):
     for trial in exp.task.block(2):
         exp.model.process(exp.task, trial)
 
-    return records
+    return exp.task.records
 
 
 mdl = "model-topalidou.json"

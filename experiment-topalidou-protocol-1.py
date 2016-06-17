@@ -53,7 +53,7 @@ experiment = Experiment(model = mdl,
 						task = tsk,
 						result = rslt,
 						report = rprt,
-                        n_session = 25, n_block = 2, seed = None)
+                        n_session = 25, n_block = 2, seed = 842)
 records = experiment.run(session, "Topalidou Protocol 1")
 print(records.shape)
 

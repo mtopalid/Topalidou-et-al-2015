@@ -53,7 +53,7 @@ experiment = Experiment(model = mdl,
 						task = tsk,
 						result = rslt,
 						report = rprt,
-                        n_session = 25, n_block = 1, seed = 1)
+                        n_session = 25, n_block = 1, seed = 508)
 records = experiment.run(session, "Piron Protocol Control")
 records = np.squeeze(records)
 

@@ -1,7 +1,7 @@
 {
     "sigmoid" : { "Vmin" : 0.0, "Vmax" : 20.0, "Vh" : 16.0, "Vc" : 3.0 },
     "clamp"   : { "Vmin" : 0.0, "Vmax" : 1000.0 },
-    "weight"  : { "min" : 0.30, "max" : 0.70, "noise" : 0.005 },
+    "weight"  : { "min" : 0.25, "max" : 0.75, "noise" : 0.005 },
 
     "threshold" : 40.0,
             
@@ -18,7 +18,7 @@
 
     "RL" : {
         "init"  : 0.5,
-        "alpha" : 0.002,
+        "alpha" : 0.001,
         "LTP"   : 0.01,
         "LTD"   : 0.008
     },
@@ -27,7 +27,7 @@
         "LTP" : 0.001
     },
             
-    "CTX"   : { "tau" : 0.01, "rest" :  -3.0, "noise" : 0.005 },
+    "CTX"   : { "tau" : 0.01, "rest" :  -3.0, "noise" : 0.003 },
     "STR"   : { "tau" : 0.01, "rest" :   0.0, "noise" : 0.005 },
     "STN"   : { "tau" : 0.01, "rest" : -10.0, "noise" : 0.005 },
     "GPi"   : { "tau" : 0.01, "rest" : -10.0, "noise" : 0.005 },

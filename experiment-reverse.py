@@ -40,7 +40,8 @@ def session(exp):
 
 mdl = "model-topalidou.json"
 
-revr = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500]#10,50,
+revr = [1050]# [50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1250, 1300, 1350, 1400, 1450, 1500]
+#, 1100, 1200, 1300, 1400, 1500, 1550]#10,50,
 # revr = [300]
 for i in revr:
     trial = str(i)
@@ -51,7 +52,7 @@ for i in revr:
                             task = tsk,
                             result = rslt,
                             report = rprt,
-                            n_session = 25, n_block = 1, seed = 123)#None)
+                            n_session = 25, n_block = 1, seed = None)#None)
     records = experiment.run(session, "Protocol Reverse")
     records = np.squeeze(records)
 
